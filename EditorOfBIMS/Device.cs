@@ -11,11 +11,25 @@ namespace EditorOfBIMS
     public class BaseDevice : PictureBox
     {
         private Point mouse_offset = new Point();
+        private Panel mPanel;
+        private ContextMenuStrip mContextMenuStrip;
+
+        public Panel MPanel
+        {
+            get { return mPanel; }
+            set { mPanel = value; }
+        }
         public BaseDevice()
             : base()
         {
+            mContextMenuStrip = new ContextMenuStrip();
+            mContextMenuStrip.Items.Add("删除");
+            this.ContextMenuStrip = mContextMenuStrip;
+
             this.MouseMove += new MouseEventHandler(Common_MouseMove);
             this.MouseDown += new MouseEventHandler(Common_MouseDown);
+            this.MouseClick += new MouseEventHandler(Common_MouseClick);
+            this.mContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(Common_CancelClick);
 
         }
         private void Common_MouseMove(object sender, MouseEventArgs e)
@@ -32,10 +46,33 @@ namespace EditorOfBIMS
         {
             mouse_offset = new Point(e.X, e.Y);
         }
-    }
 
+        private void Common_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (Control.ModifierKeys != Keys.Control)
+            {
+                foreach (PictureBox c in mPanel.Controls)
+                {
+                    c.BorderStyle = BorderStyle.None;
+                }
+            }
+
+            BorderStyle = BorderStyle.FixedSingle;
+        }
+
+        private void Common_CancelClick(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+       
+    }
     public class ElectricityGauge : BaseDevice
     {
+        public ElectricityGauge()
+        {
+
+        }
 
     }
 }

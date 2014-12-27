@@ -10,13 +10,14 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Tools;
 using System.Reflection;
+using System.Collections;
 
 
 namespace EditorOfBIMS
 {
-    public partial class DFrmMain : DevExpress.XtraEditors.XtraForm
+    public partial class DFrmMain : Form 
     {
-        
+
         String[][] listItems = { new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge"}
                                , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
@@ -38,7 +39,7 @@ namespace EditorOfBIMS
 
         private void initImageEditor()
         {
-           
+            PanRight.BackColor = Color.LightBlue;
         }
 
         private void initToolsBox()
@@ -54,11 +55,7 @@ namespace EditorOfBIMS
         private void iLBC_Left_DrawItem(object sender, ListBoxDrawItemEventArgs e)
         {
             Brush myBrush = Brushes.Black;
-            if ((e.State & DrawItemState.Focus) == DrawItemState.Focus)
-            {
-                myBrush = new SolidBrush(Color.BlueViolet);
-            }
-            else if (e.Index % 2 == 0)
+            if(e.Index % 2 == 0)
             {
                 myBrush = new SolidBrush(Color.Azure);
             }
@@ -111,12 +108,62 @@ namespace EditorOfBIMS
             int index = (int)e.Data.GetData(typeof(Int32));
             ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
             rt.setPropertyInfo("Location", contextMenuPoint);
+            //rt.setPropertyInfo("Name", "Item"+this.PanRight.Controls.Count);
+            rt.setPropertyInfo("MPanel", this.PanRight);
             rt.setPropertyInfo("Image", ImageTools.getImage(listItems[index][1]));
             rt.setPropertyInfo("Size", new System.Drawing.Size(100, 100));
             this.PanRight.Controls.Add((Control)rt.MObj);
 
+        }
 
+        private void PanRight_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PanRight_MouseClick(object sender, MouseEventArgs e)
+        {
+            foreach (PictureBox c in this.PanRight.Controls)
+            { c.BorderStyle = BorderStyle.None; }
+        }
+
+        private void DFrmMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                ArrayList a =new ArrayList() ;
+                    foreach (PictureBox c in this.PanRight.Controls)
+                    {
+
+                        if (c.BorderStyle == BorderStyle.FixedSingle)
+                        {
+                            a.Add (PanRight.Controls.IndexOf(c));
+                            //c.Dispose();
+                        }       
+                    }
+                    for (int i = a.Count-1; i >=0; i--)
+                    {
+                        PanRight.Controls.RemoveAt((int)a[i]);
+                    }
+
+            }
+        }
+
+        private void BackgroundButton_Click(object sender, EventArgs e)
+        {
+            DialogResult a =this.mopenFileDialog.ShowDialog();
+            if (a == DialogResult.OK)
+            {
+                if (this.mopenFileDialog.SafeFileName.EndsWith("jpg"))
+                {
+                    PanRight.BackgroundImage = Image.FromFile(this.mopenFileDialog.FileName);
+                }     
+            } 
         }
 
 
