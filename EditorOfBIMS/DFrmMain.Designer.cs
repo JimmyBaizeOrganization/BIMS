@@ -36,10 +36,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.BackgroundButton = new System.Windows.Forms.ToolStripButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.BackgroundButton = new System.Windows.Forms.ToolStripButton();
             this.mfolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.mopenFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).BeginInit();
@@ -106,6 +106,15 @@
             this.toolStripButton1.Text = "删除";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // BackgroundButton
+            // 
+            this.BackgroundButton.Image = ((System.Drawing.Image)(resources.GetObject("BackgroundButton.Image")));
+            this.BackgroundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.BackgroundButton.Name = "BackgroundButton";
+            this.BackgroundButton.Size = new System.Drawing.Size(74, 28);
+            this.BackgroundButton.Text = "背景";
+            this.BackgroundButton.Click += new System.EventHandler(this.BackgroundButton_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -129,15 +138,6 @@
             this.删除ToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.删除ToolStripMenuItem.Text = "删除";
             // 
-            // BackgroundButton
-            // 
-            this.BackgroundButton.Image = ((System.Drawing.Image)(resources.GetObject("BackgroundButton.Image")));
-            this.BackgroundButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.BackgroundButton.Name = "BackgroundButton";
-            this.BackgroundButton.Size = new System.Drawing.Size(74, 28);
-            this.BackgroundButton.Text = "背景";
-            this.BackgroundButton.Click += new System.EventHandler(this.BackgroundButton_Click);
-            // 
             // mopenFileDialog
             // 
             this.mopenFileDialog.FileName = "openFileDialog1";
@@ -155,6 +155,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DFrmMain";
             this.Text = "DFrmMain";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DFrmMain_FormClosing);
             this.Load += new System.EventHandler(this.DFrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DFrmMain_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).EndInit();

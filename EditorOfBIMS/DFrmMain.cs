@@ -39,6 +39,7 @@ namespace EditorOfBIMS
 
         private void initImageEditor()
         {
+
             PanRight.BackColor = Color.LightBlue;
         }
 
@@ -162,8 +163,15 @@ namespace EditorOfBIMS
                 if (this.mopenFileDialog.SafeFileName.EndsWith("jpg"))
                 {
                     PanRight.BackgroundImage = Image.FromFile(this.mopenFileDialog.FileName);
+
+                    Tools.xmlHelper.CreateXmlDocument("config.xml", "config", "1.0", "utf-8",null);
                 }     
             } 
+        }
+
+        private void DFrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
 
 

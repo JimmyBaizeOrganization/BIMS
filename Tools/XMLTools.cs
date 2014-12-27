@@ -907,20 +907,23 @@ namespace Tools
 
             try
             {
-
                 XmlDocument xmlDoc = new XmlDocument();
 
-                XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration(version, encoding, standalone);
+                if (!File.Exists(xmlFileName))
+                {
 
-                XmlNode root = xmlDoc.CreateElement(rootNodeName);
+                    XmlDeclaration xmlDeclaration = xmlDoc.CreateXmlDeclaration(version, encoding, standalone);
 
-                xmlDoc.AppendChild(xmlDeclaration);
+                    XmlNode root = xmlDoc.CreateElement(rootNodeName);
 
-                xmlDoc.AppendChild(root);
+                    xmlDoc.AppendChild(xmlDeclaration);
 
-                xmlDoc.Save(xmlFileName);
+                    xmlDoc.AppendChild(root);
 
-                isSuccess = true;
+                    xmlDoc.Save(xmlFileName);
+
+                    isSuccess = true;
+                }
 
             }
 
