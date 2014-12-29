@@ -7,20 +7,40 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BIMS", "BIMS\BIMS.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorOfBIMS", "EditorOfBIMS\EditorOfBIMS.csproj", "{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "FileTools\Tools.csproj", "{978D36B2-291A-4006-BE64-F5121DE37579}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		DebugTest|Any CPU = DebugTest|Any CPU
 		Release|Any CPU = Release|Any CPU
+		WebDebugTest|Any CPU = WebDebugTest|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{72E96422-EF11-4FD5-9888-FB4EE7087372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72E96422-EF11-4FD5-9888-FB4EE7087372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E96422-EF11-4FD5-9888-FB4EE7087372}.DebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E96422-EF11-4FD5-9888-FB4EE7087372}.DebugTest|Any CPU.Build.0 = Debug|Any CPU
 		{72E96422-EF11-4FD5-9888-FB4EE7087372}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72E96422-EF11-4FD5-9888-FB4EE7087372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E96422-EF11-4FD5-9888-FB4EE7087372}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E96422-EF11-4FD5-9888-FB4EE7087372}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
 		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.DebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.DebugTest|Any CPU.Build.0 = Debug|Any CPU
 		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B9EB0C-9011-4CC7-8A77-9E42969DEC28}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.DebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.DebugTest|Any CPU.Build.0 = Debug|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{978D36B2-291A-4006-BE64-F5121DE37579}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

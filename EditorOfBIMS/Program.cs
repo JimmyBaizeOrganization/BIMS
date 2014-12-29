@@ -20,7 +20,7 @@ namespace EditorOfBIMS
             //使用统一的窗口皮肤
             SkinManager.EnableFormSkins();
             System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
-            Application.Run(new DXFrmMain());
+            Application.Run(new DFrmMain());
         }
     }
 }
