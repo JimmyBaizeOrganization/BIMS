@@ -10,14 +10,13 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using Tools;
 using System.Reflection;
-using Editor.Device;
 
 
 namespace EditorOfBIMS
 {
     public partial class DFrmMain : DevExpress.XtraEditors.XtraForm
     {
-        private Bitmap mImage;
+        
         String[][] listItems = { new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge"}
                                , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
@@ -39,17 +38,7 @@ namespace EditorOfBIMS
 
         private void initImageEditor()
         {
-            //this.pE_Rigth.AllowDrop = true;
-            //Size size = this.pE_Rigth.Size;
-            // mImage = new Bitmap(size.Width, size.Height);
-            //Type type = typeof(ElectricityGauge);
-            //FieldInfo[] field = type.GetFields();
-            //foreach (FieldInfo f in field)
-            //    Console.WriteLine(f.Name);
-            //PropertyInfo[] proper = type.GetProperties();
-            //foreach (PropertyInfo p in proper)
-            //    Console.WriteLine(p.Name);
-            //Console.ReadLine();
+           
         }
 
         private void initToolsBox()
@@ -108,28 +97,6 @@ namespace EditorOfBIMS
                 this.iLBC_Left.DoDragDrop(this.iLBC_Left.SelectedIndex, DragDropEffects.Copy);
             }
         }
-
-        private void pE_Rigth_DragDrop(object sender, DragEventArgs e)
-        {
-            //图片的大小
-            //int size = 60;
-            //Point contextMenuPoint = this.pE_Rigth.PointToClient(Control.MousePosition);
-            //Rectangle rect = new Rectangle(contextMenuPoint.X - size / 2, contextMenuPoint.Y - size / 2, size, size);
-            //Graphics g = Graphics.FromImage(mImage);
-            //g.DrawImage(FileTools.ImageTools.getImage("ElectricityGauge.png"), rect);
-
-        }
-
-        private void pE_Rigth_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
-
-        private void pE_Rigth_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.DrawImage(mImage, 0, 0);
-        }
-
         private void PanRight_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
@@ -140,16 +107,16 @@ namespace EditorOfBIMS
             //图片的大小
             int size = 60;
             Point contextMenuPoint = this.PanRight.PointToClient(Control.MousePosition);
-            Rectangle rect = new Rectangle(contextMenuPoint.X - size / 2, contextMenuPoint.Y - size / 2, size, size);
-            //Graphics g = Graphics.FromImage(mImage);
-            //g.DrawImage(FileTools.ImageTools.getImage("ElectricityGauge.png"), rect);
-
+            Rectangle rect = new Rectangle(contextMenuPoint.X - size / 2, contextMenuPoint.Y - size / 2, size, size);           
             int index = (int)e.Data.GetData(typeof(Int32));
             ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
-            rt.setPropertyInfo( "Location", new System.Drawing.Point(184, 120));
+            rt.setPropertyInfo("Location", contextMenuPoint);
             rt.setPropertyInfo("Image", ImageTools.getImage(listItems[index][1]));
-                            
+            rt.setPropertyInfo("Size", new System.Drawing.Size(100, 100));
             this.PanRight.Controls.Add((Control)rt.MObj);
+
+
+
         }
 
 
