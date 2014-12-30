@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Editor.Device;
 
 namespace Tools
 {
@@ -85,42 +84,16 @@ namespace Tools
             return returnValue;
         }
         /// <summary>
-        /// 修改属性
+        /// 
         /// </summary>
-        /// <param name="fieldname">字段名字</param>
-        /// <param name="newvaule">新的值</param>
+        /// <param name="propertyname">属性名</param>
+        /// <param name="newvaule"></param>
         public void setPropertyInfo(string propertyname, object newvaule)
         {
 
             PropertyInfo proper = clstype.GetProperty(propertyname);
             proper.SetValue(this.MObj,newvaule);
     
-           // FieldInfo[] field = type.GetFields( BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-           // field = mObj.GetType().GetFields( BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-           //// Type type1 = typeof(ElectricityGauge);
-           // field = clstype.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-           // foreach (FieldInfo f in field)
-           //     Console.WriteLine(f.Name);
-           // PropertyInfo[] proper = clstype.GetProperties();
-           // foreach (PropertyInfo p in proper)
-                
-           //     Console.WriteLine(p.Name);
-           // Console.ReadLine();
-
-           // // FieldInfo fi = clstype.GetField();
-           
-           // //FieldInfo fi = clstype.GetField(fieldname,BindingFlags.Public| BindingFlags.NonPublic | BindingFlags.Instance);//获得私有字段
-           //  foreach (FieldInfo f in field)
-           //  {
-           //      Console.WriteLine(f.Name);
-           //      if (f.Name == fieldname)
-           //      {
-           //          f.SetValue(mObj, newvaule); //改写私有字段
-           //      }
-           //  }
-
-
         }
 
     }

@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorOfBIMS", "EditorOfBIM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Device", "Editor.Device\Editor.Device.csproj", "{8C5F5124-5A28-4598-8156-DAE60AD76097}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,14 +41,6 @@ Global
 		{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.DebugTest|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.DebugTest|Any CPU.Build.0 = Debug|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C5F5124-5A28-4598-8156-DAE60AD76097}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

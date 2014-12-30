@@ -32,7 +32,10 @@
             this.iLBC_Left = new DevExpress.XtraEditors.ImageListBoxControl();
             this.dLF_Main = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.PanRight = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).BeginInit();
+            this.PanRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // iLBC_Left
@@ -54,6 +57,7 @@
             // PanRight
             // 
             this.PanRight.AllowDrop = true;
+            this.PanRight.Controls.Add(this.pictureBox1);
             this.PanRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanRight.Location = new System.Drawing.Point(184, 0);
             this.PanRight.Name = "PanRight";
@@ -61,6 +65,14 @@
             this.PanRight.TabIndex = 1;
             this.PanRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanRight_DragDrop);
             this.PanRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanRight_DragEnter);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(285, 168);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // DFrmMain
             // 
@@ -73,6 +85,8 @@
             this.Text = "DFrmMain";
             this.Load += new System.EventHandler(this.DFrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).EndInit();
+            this.PanRight.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -82,6 +96,7 @@
         private DevExpress.XtraEditors.ImageListBoxControl iLBC_Left;
         private DevExpress.LookAndFeel.DefaultLookAndFeel dLF_Main;
         private System.Windows.Forms.Panel PanRight;
+        private System.Windows.Forms.PictureBox pictureBox1;
 
     }
 }

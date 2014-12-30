@@ -137,6 +137,13 @@ namespace EditorOfBIMS
 
         private void PanRight_DragDrop(object sender, DragEventArgs e)
         {
+            //图片的大小
+            int size = 60;
+            Point contextMenuPoint = this.PanRight.PointToClient(Control.MousePosition);
+            Rectangle rect = new Rectangle(contextMenuPoint.X - size / 2, contextMenuPoint.Y - size / 2, size, size);
+            //Graphics g = Graphics.FromImage(mImage);
+            //g.DrawImage(FileTools.ImageTools.getImage("ElectricityGauge.png"), rect);
+
             int index = (int)e.Data.GetData(typeof(Int32));
             ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
             rt.setPropertyInfo( "Location", new System.Drawing.Point(184, 120));
