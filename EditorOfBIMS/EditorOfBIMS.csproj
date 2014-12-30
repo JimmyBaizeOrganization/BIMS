@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Device.cs" />
     <Compile Include="DFrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,8 +97,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileTools\Tools.csproj">
-      <Project>{978d36b2-291a-4006-be64-f5121de37579}</Project>
+    <ProjectReference Include="..\Editor.Device\Editor.Device.csproj">
+      <Project>{8c5f5124-5a28-4598-8156-dae60ad76097}</Project>
+      <Name>Editor.Device</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{d7026dad-3aa0-4edc-83e0-85787f07f27e}</Project>
       <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>

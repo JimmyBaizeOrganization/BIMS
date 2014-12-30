@@ -31,9 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.iLBC_Left = new DevExpress.XtraEditors.ImageListBoxControl();
             this.dLF_Main = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
-            this.pE_Rigth = new DevExpress.XtraEditors.PictureEdit();
+            this.PanRight = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pE_Rigth.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // iLBC_Left
@@ -52,29 +51,28 @@
             this.dLF_Main.LookAndFeel.SkinName = "Visual Studio 2013 Light";
             this.dLF_Main.LookAndFeel.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.False;
             // 
-            // pE_Rigth
+            // PanRight
             // 
-            this.pE_Rigth.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pE_Rigth.Location = new System.Drawing.Point(202, 0);
-            this.pE_Rigth.Name = "pE_Rigth";
-            this.pE_Rigth.Size = new System.Drawing.Size(680, 466);
-            this.pE_Rigth.TabIndex = 1;
-            this.pE_Rigth.DragDrop += new System.Windows.Forms.DragEventHandler(this.pE_Rigth_DragDrop);
-            this.pE_Rigth.DragEnter += new System.Windows.Forms.DragEventHandler(this.pE_Rigth_DragEnter);
-            this.pE_Rigth.Paint += new System.Windows.Forms.PaintEventHandler(this.pE_Rigth_Paint);
+            this.PanRight.AllowDrop = true;
+            this.PanRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanRight.Location = new System.Drawing.Point(184, 0);
+            this.PanRight.Name = "PanRight";
+            this.PanRight.Size = new System.Drawing.Size(698, 466);
+            this.PanRight.TabIndex = 1;
+            this.PanRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanRight_DragDrop);
+            this.PanRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanRight_DragEnter);
             // 
             // DFrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 466);
-            this.Controls.Add(this.pE_Rigth);
+            this.Controls.Add(this.PanRight);
             this.Controls.Add(this.iLBC_Left);
             this.Name = "DFrmMain";
             this.Text = "DFrmMain";
             this.Load += new System.EventHandler(this.DFrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pE_Rigth.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -83,7 +81,7 @@
 
         private DevExpress.XtraEditors.ImageListBoxControl iLBC_Left;
         private DevExpress.LookAndFeel.DefaultLookAndFeel dLF_Main;
-        private DevExpress.XtraEditors.PictureEdit pE_Rigth;
+        private System.Windows.Forms.Panel PanRight;
 
     }
 }
