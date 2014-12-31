@@ -28,17 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DFrmMain));
             this.iLBC_Left = new DevExpress.XtraEditors.ImageListBoxControl();
-            this.dLF_Main = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.dLF_Main = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.PanRight = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.BackgroundButton = new System.Windows.Forms.ToolStripButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip();
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mfolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.mopenFileDialog = new System.Windows.Forms.OpenFileDialog();
@@ -136,7 +135,7 @@
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.删除ToolStripMenuItem.Text = "删除";
             // 
             // mopenFileDialog
