@@ -11,6 +11,7 @@ using DevExpress.XtraEditors;
 using Tools;
 using System.Reflection;
 using System.Collections;
+using System.Xml;
 
 
 namespace EditorOfBIMS
@@ -40,6 +41,24 @@ namespace EditorOfBIMS
         private void initImageEditor()
         {
             PanRight.BackColor = Color.LightBlue;
+
+            XmlDocument xmlDoc = new XmlDocument();
+
+            xmlDoc.Load("config.xml");
+
+            XmlNode root = xmlDoc.SelectSingleNode("config");
+            XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;
+
+            foreach (XmlNode xn in nodeList)
+            {
+                XmlElement xe = (XmlElement)xn; //将子节点类型转换为XmlElement类型 
+
+                if (xe.Name == "Background")
+                {
+                    this.PanRight .BackgroundImage = Image.FromFile(xe.InnerText);
+                }
+                break;
+            }
         }
 
         private void initToolsBox()
@@ -156,14 +175,57 @@ namespace EditorOfBIMS
 
         private void BackgroundButton_Click(object sender, EventArgs e)
         {
+
             DialogResult a =this.mopenFileDialog.ShowDialog();
             if (a == DialogResult.OK)
             {
                 if (this.mopenFileDialog.SafeFileName.EndsWith("jpg"))
                 {
                     PanRight.BackgroundImage = Image.FromFile(this.mopenFileDialog.FileName);
+
+                    bool Is_Exest= !Tools.xmlHelper.CreateXmlDocument("config.xml", "config", "1.0", "utf-8",null);
+
+                    XmlDocument xmlDoc = new XmlDocument();
+
+                    xmlDoc.Load("config.xml");
+
+                    XmlNode root = xmlDoc.SelectSingleNode("config");
+                    XmlNodeList nodeList = xmlDoc.SelectSingleNode("config").ChildNodes;
+
+                    bool Is_Background = false;
+
+                    foreach (XmlNode xn in nodeList)
+                    {
+                        XmlElement xe = (XmlElement)xn; //将子节点类型转换为XmlElement类型 
+
+                        if(xe.Name == "Background")
+                        {
+                            xe.InnerText = this.mopenFileDialog.FileName;
+                            Is_Background = true;
+                        }
+                        break;
+                    }
+
+                    if (!Is_Background)
+                    {
+                        XmlElement xe1 = xmlDoc.CreateElement("Background");
+                        xe1.InnerText = this.mopenFileDialog.FileName;
+                        root.AppendChild(xe1);
+                    }
+
+                    xmlDoc.Save("config.xml");
                 }     
             } 
+        }
+
+        private void DFrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
         }
 
 
