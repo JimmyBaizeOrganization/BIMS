@@ -5,22 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tools;
 
 namespace EditorOfBIMS
 {
-    public class BaseDevice : PictureBox
-    {
-        private string name;
 
-        public string Name1
-        {
-            get { return name; }
-            set { name = value; }
-        }
+    public abstract class BaseDevice : PictureBox
+    {
+
         private Point mouse_offset = new Point();
+
+        public Point Mouse_offset
+        {
+            get { return mouse_offset; }
+            set { mouse_offset = value; }
+        }
         private Panel mPanel;
         private ContextMenuStrip mContextMenuStrip;
         private Form mForm;
+
+        public Form MForm
+        {
+            get { return mForm; }
+            set { mForm = value; }
+        }
 
         public Panel MPanel
         {
@@ -74,7 +82,7 @@ namespace EditorOfBIMS
         {
             if (mForm==null)
             {
-                mForm = new Frm_DED194E_9S1YK2K2();
+                creatForm();
             }
             else 
             {
@@ -87,9 +95,11 @@ namespace EditorOfBIMS
 
             if (((ContextMenuStrip)sender).Items[0] == e.ClickedItem)
             {
+                
+
                 if (mForm==null || mForm.IsDisposed)
                 {
-                    mForm = new Frm_DED194E_9S1YK2K2();
+                    creatForm();
                     mForm.Show();
                 }
                 else
@@ -105,14 +115,37 @@ namespace EditorOfBIMS
             }
            
         }
-       
+        public abstract void creatForm();
+        public abstract void saveToXML(string building,int floor,string path);
     }
 
-    public class ElectricityGauge : BaseDevice
+    public class DED194E_9S1YK2K2 : BaseDevice
     {
-        public ElectricityGauge()
+        private Bean_DED194E_9S1YK2K2 bean;
+
+        public Bean_DED194E_9S1YK2K2 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        public DED194E_9S1YK2K2()
+        {
+            bean = new Bean_DED194E_9S1YK2K2();
+            //bean.MPoint = Mouse_offset;
+            Image = ImageTools.getImage("ElectricityGauge.png");
+            Size = new System.Drawing.Size(100, 100);
+        }
+        public override void creatForm()
+        {
+            MForm = new Frm_DED194E_9S1YK2K2(bean);
+        }
+        public override void saveToXML(string building,int  floor,string path)
         {
 
+            bean.MPoint = Location;
+            bean.BuildingName = building;
+            bean.FloorNum = floor;
+            XMLSerializerHelper.XmlSerialize(bean, path + @"\"+bean.DeviceNum+@".Bean_DED194E_9S1YK2K2.xml");
         }
 
     }

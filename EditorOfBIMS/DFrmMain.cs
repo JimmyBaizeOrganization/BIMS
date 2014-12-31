@@ -12,6 +12,7 @@ using Tools;
 using System.Reflection;
 using System.Collections;
 using System.Xml;
+using System.IO;
 
 
 namespace EditorOfBIMS
@@ -19,12 +20,12 @@ namespace EditorOfBIMS
     public partial class DFrmMain : Form 
     {
 
-        String[][] listItems = { new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
-                               , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge"}
-                               , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
-                               , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
-                               , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
-                               , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }};
+        String[][] listItems = { new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
+                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2"}
+                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
+                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
+                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
+                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }};
         public DFrmMain()
         {
             InitializeComponent();
@@ -127,10 +128,9 @@ namespace EditorOfBIMS
             int index = (int)e.Data.GetData(typeof(Int32));
             ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
             rt.setPropertyInfo("Location", contextMenuPoint);
-            //rt.setPropertyInfo("Name", "Item"+this.PanRight.Controls.Count);
             rt.setPropertyInfo("MPanel", this.PanRight);
-            rt.setPropertyInfo("Image", ImageTools.getImage(listItems[index][1]));
-            rt.setPropertyInfo("Size", new System.Drawing.Size(100, 100));
+            //rt.setPropertyInfo("Image", ImageTools.getImage(listItems[index][1]));
+           // rt.setPropertyInfo("Size", new System.Drawing.Size(100, 100));
             this.PanRight.Controls.Add((Control)rt.MObj);
 
         }
@@ -226,6 +226,74 @@ namespace EditorOfBIMS
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void b_sumbit_Click(object sender, EventArgs e)
+        {
+            if (tb_path.Text == "")
+            {
+                MessageBox.Show("请选择生成路径");
+                return;
+            }
+            if (tb_buildingname.Text == "" )
+            {
+                MessageBox.Show("请输入建筑物名称");               
+                return;
+            }
+            if (tb_floornum.Text == "")
+            {
+                MessageBox.Show("请输入楼层号");
+                return;
+            }
+            int floornum;
+            if(!int.TryParse(tb_floornum.Text,out floornum))
+            {
+                MessageBox.Show("楼层号必须是整数");
+                return;
+            }
+           // bean.BuildingName = tb_buildingname.Text;
+
+            string newPath = tb_path.Text+ tb_buildingname.Text + "_" + tb_floornum.Text;
+            if (!Directory.Exists(newPath))
+            {
+                Directory.CreateDirectory(newPath);
+            }
+            foreach(BaseDevice bd in this.PanRight.Controls)
+            {
+                bd.saveToXML(tb_buildingname.Text, floornum, newPath);
+            }
+        }
+
+        private void bt_selectPath_Click(object sender, EventArgs e)
+        {
+            if (mfolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                tb_path.Text= mfolderBrowserDialog.SelectedPath;
+            }
+        }
+
+        private void tb_Open_Click(object sender, EventArgs e)
+        {
+            mopenFileDialog.Filter = "配置文件(*.xml)|*.xml";
+            mopenFileDialog.Multiselect = true;
+
+            if (mopenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string[] files = mopenFileDialog.FileNames;
+                foreach (string file in files)
+                {
+                    string[] filename = file.Split('.');
+                    string typename = filename[filename.Length - 2];
+                    BaseBean b = (BaseBean)XMLSerializerHelper.XmlDeserialize(ReflectTools.getType("Tools", "Tools", typename)
+                        , file);
+                    ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", b.ClassName);
+                    rt.setPropertyInfo("Bean", b);
+                    rt.setPropertyInfo("Location", b.MPoint);
+                    rt.setPropertyInfo("MPanel", this.PanRight);                  
+                   
+                    this.PanRight.Controls.Add((Control)rt.MObj);
+                }
+            }
         }
 
 

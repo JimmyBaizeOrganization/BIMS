@@ -38,8 +38,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bean.cs" />
     <Compile Include="FileTools.cs" />
     <Compile Include="ReflectTools.cs" />
+    <Compile Include="XMLSerializerHelper.cs" />
     <Compile Include="XMLTools.cs" />
   </ItemGroup>
   <ItemGroup>

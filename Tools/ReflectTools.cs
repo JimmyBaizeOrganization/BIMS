@@ -34,7 +34,10 @@ namespace Tools
 
 
         }
-
+        public static Type getType(string assembly, string NameSpace, string classname)
+        {
+          return   Assembly.Load(assembly).GetType(string.Concat(NameSpace, ".", classname));
+        }
         /// <summary>
         /// 实例对象时需要指定类名
         /// </summary>
