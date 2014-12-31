@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorOfBIMS", "EditorOfBIM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{245CCB94-2921-4CB8-9D35-2588BD4CACEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7026DAD-3AA0-4EDC-83E0-85787F07F27E}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.DebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.DebugTest|Any CPU.Build.0 = Debug|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.WebDebugTest|Any CPU.ActiveCfg = Debug|Any CPU
+		{245CCB94-2921-4CB8-9D35-2588BD4CACEC}.WebDebugTest|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
