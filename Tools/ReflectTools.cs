@@ -19,6 +19,21 @@ namespace Tools
             set { mObj = value; }
         }
 
+        public ReflectTools(string assembly, string NameSpace, string classname,object[] attr)
+        {
+            clstype = Assembly.Load(assembly).GetType(string.Concat(NameSpace, ".", classname));
+            if (clstype == null)
+            {
+                throw new Exception("找不到指定的对象");
+
+            }
+
+            mObj = (object)Activator.CreateInstance(clstype,attr);
+
+            //Type type = ;
+
+
+        }
         public ReflectTools(string assembly, string NameSpace, string classname)
         {
             clstype = Assembly.Load(assembly).GetType(string.Concat(NameSpace, ".", classname));

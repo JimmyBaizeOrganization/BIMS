@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,8 +15,9 @@ namespace Service
 {
     public partial class Frm_Main : Form
     {
-        private HashSet<BaseDevice> devices = new HashSet<BaseDevice>();
-        private HashSet<System.Timers.Timer> timers = new HashSet<System.Timers.Timer>();
+
+        private Hashtable devices = new Hashtable();
+        private Hashtable timers = new Hashtable();
         public Frm_Main()
         {
             InitializeComponent();
@@ -40,37 +42,37 @@ namespace Service
                     string typename = filename[filename.Length - 2];
                     BaseBean b = BeanTools.getBeanFromXML(typename, file);
 
-                    ReflectTools rt = new ReflectTools("Service", "Service", b.ClassName);
-                    rt.setPropertyInfo("Bean", b);
-
-                    if (devices.Contains((BaseDevice)rt.MObj))
+                    ReflectTools rt = new ReflectTools("Service", "Service", b.ClassName,new object[]{b});
+                             
+                    if (devices.Contains(b.getBeanKey()))
                     {
-                        
                         Console.WriteLine("已存在该设备哎");
                         continue;
                     }
-                    if (devices.Add((BaseDevice)rt.MObj))
-                    {
-                        foreach (System.Timers.Timer timer in timers)
-                        {
-                            if (timer.Interval == b.During)
-                            {
-                               // timer.Elapsed += new ElapsedEventHandler();
-                                Console.WriteLine("成功添加一个设备");
-                                break;
-                            }
-                        }
-                        System.Timers.Timer time = new System.Timers.Timer(b.During);
-                        //time.Elapsed += new ElapsedEventHandler();
-                        time.Start();
-                        timers.Add(time);
-                        Console.WriteLine("成功添加一个设备和一个timer");
-                    }
-                    else
-                    {
-                        Console.WriteLine("成功设备失败");
 
+                    if (b.During <= 0)
+                    {
+                        continue;
                     }
+                    BaseDevice bd = (BaseDevice)rt.MObj;
+                    if(timers.ContainsKey(b.During))
+                    {
+                        System.Timers.Timer t = (System.Timers.Timer)timers[b.During];
+                        t.Elapsed += new ElapsedEventHandler(bd.periodWork);
+                        devices.Add(b.getBeanKey(), rt.MObj);
+                        Console.WriteLine("成功添加一个设备");
+                        continue;
+                       
+                    }                    
+                   
+                    System.Timers.Timer time = new System.Timers.Timer(b.During);
+                    time.Elapsed += new ElapsedEventHandler(bd.periodWork);
+                    time.Start();
+
+                    timers.Add(b.During,time);
+                    devices.Add(b.getBeanKey(),rt.MObj);
+                    Console.WriteLine("成功添加一个设备和一个timer");
+                  
                 }
             }
         }

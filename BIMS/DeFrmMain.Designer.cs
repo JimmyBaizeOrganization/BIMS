@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeFrmMain));
-            this.dLFMain = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.dLFMain = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.cLBC_left = new DevExpress.XtraEditors.CheckedListBoxControl();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.mpanel = new System.Windows.Forms.Panel();
             this.mtableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Home = new System.Windows.Forms.PictureBox();
             this.Button_Document = new System.Windows.Forms.PictureBox();
