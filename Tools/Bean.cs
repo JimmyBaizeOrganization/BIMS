@@ -97,6 +97,9 @@ namespace Tools
         {
 
         }
+        public string getBeanKey(){
+            return this.buildingName + this.floorNum + this.deviceNum;
+        }
     }
     public  class Bean_DED194E_9S1YK2K2 : BaseBean
     {
