@@ -73,10 +73,22 @@
     <Compile Include="DeFrmMain.Designer.cs">
       <DependentUpon>DeFrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Device.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Frm_DED194E_9S1YK2K2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_DED194E_9S1YK2K2.Designer.cs">
+      <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DeFrmMain.resx">
       <DependentUpon>DeFrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_DED194E_9S1YK2K2.resx">
+      <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -86,6 +98,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -116,6 +129,30 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %282%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %283%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %284%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %285%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %286%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin %287%29.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DeviceFolder\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
