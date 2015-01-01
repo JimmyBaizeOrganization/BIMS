@@ -6,73 +6,38 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Tools;
 
 namespace Service
 {
 
     class BaseDevice
     {
-        String ip;
-
-        public String Ip
-        {
-            get { return ip; }
-            set { ip = value; }
-        }
-        int port;
-
-        public int Port
-        {
-            get { return port; }
-            set { port = value; }
-        }
-        string buildingName;
-        int floorNum;
-        int deviceNum;
-        string deviceType;
-        int during;
-
-        public int During
-        {
-            get { return during; }
-            set { during = value; }
-        }
-        public BaseDevice(string mip, int mport, int mdeviceNum, string mbuildingName, int mfloorNum, string mdeviceType
-            ,int mduring)
-        {
-            ip = mip;
-            port = mport;
-            deviceNum = mdeviceNum;
-            buildingName = mbuildingName;
-            floorNum = mfloorNum;
-            deviceType = mdeviceType;
-            during = mduring;
-        }
+        
     }
     class DED194E9_9S1YK2K2 : BaseDevice
     {
-        const int dataLenth = 16;//采集数据个数
-        int slaveNum;//从机编号
+        static const  int dataLenth = 16;//采集数据个数       
         float[] data = new float[dataLenth/2];
         Thread task;
-
         byte[] cmd ;
-            
-            
-        public DED194E9_9S1YK2K2(string mip, int mport, int mdeviceNum, string mbuildingName
-            , int mfloorNum, string mdeviceType, int mslaveNum,int mduring)
-            : base(mip, mport, mdeviceNum, mbuildingName, mfloorNum, mdeviceType, mduring)
+
+        private Bean_DED194E_9S1YK2K2 bean;
+
+        public Bean_DED194E_9S1YK2K2 Bean
         {
-            slaveNum = mslaveNum;
-            cmd = CRC.GetCRC16Full(new byte[] { (byte)slaveNum, 0x03, 0x00, 0x0a, 0x00, dataLenth }, true);
-            //开一个线程  读数据 写数据到数据库
-            task = new Thread(ReadDataAndWriteData);
-            task.Start();
+            get { return bean; }
+            set { bean = value; }
+        }
+            
+        public DED194E9_9S1YK2K2()
+        {
+            cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0x00, 0x0a, 0x00, dataLenth }, true);
         }
         void ReadDataAndWriteData()
         {
-            IPAddress ipa = IPAddress.Parse(Ip);//把ip地址字符串转换为IPAddress类型的实例 
-            IPEndPoint ipe = new IPEndPoint(ipa, Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
             using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
                 int recLenth = dataLenth*2+5;
@@ -97,7 +62,7 @@ namespace Service
                             Console.WriteLine(data[i].ToString());
                         }
                     }
-                    Thread.Sleep(During);
+                   // Thread.Sleep(bean.During);
                 }
             }
         }

@@ -123,4 +123,12 @@ namespace Tools
         }
        
     }
+    public class BeanTools{
+        public static BaseBean getBeanFromXML(String beanname,string  filepath)
+        {
+            return (BaseBean)XMLSerializerHelper.XmlDeserialize(ReflectTools.getType("Tools", "Tools", beanname)
+                            , filepath);
+        }
+    }
+    
 }

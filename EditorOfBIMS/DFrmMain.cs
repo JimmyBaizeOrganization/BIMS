@@ -284,8 +284,8 @@ namespace EditorOfBIMS
                 {
                     string[] filename = file.Split('.');
                     string typename = filename[filename.Length - 2];
-                    BaseBean b = (BaseBean)XMLSerializerHelper.XmlDeserialize(ReflectTools.getType("Tools", "Tools", typename)
-                        , file);
+                    BaseBean b = BeanTools.getBeanFromXML(typename, file);
+                                         
                     ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", b.ClassName);
                     rt.setPropertyInfo("Bean", b);
                     rt.setPropertyInfo("Location", b.MPoint);
