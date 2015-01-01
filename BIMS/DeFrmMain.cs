@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using Tools;
 
 namespace BIMS
 {
@@ -52,6 +53,14 @@ namespace BIMS
             Button_Setting .Parent = pictureBox1;
             Button_Sum .Parent = pictureBox1;
 
+            ReflectTools rt = new ReflectTools("BIMS", "BIMS", "DED194E_9S1YK2K2");
+            DED194E_9S1YK2K2 aa = (DED194E_9S1YK2K2)rt.MObj;
+
+            aa.Location = new Point(200, 200);
+            aa.BackColor = Color.Black;
+            aa.Size = new Size(10, 10);
+            this.Controls.Add(aa);
+            aa.Parent = this.Controls.Find("PictureBox0",true)[0];
 
         }
 
@@ -73,6 +82,17 @@ namespace BIMS
         private void Button_Close_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Button_Help_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(this.Size.ToString());
+            Console.WriteLine(this.Location.ToString());
+        }
+
+        private void Button_Home_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

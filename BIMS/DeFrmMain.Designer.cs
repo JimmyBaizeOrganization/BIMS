@@ -28,14 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeFrmMain));
-            this.dLFMain = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.dLFMain = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.cLBC_left = new DevExpress.XtraEditors.CheckedListBoxControl();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.mpanel = new System.Windows.Forms.Panel();
             this.mtableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Home = new System.Windows.Forms.PictureBox();
             this.Button_Document = new System.Windows.Forms.PictureBox();
@@ -97,6 +96,7 @@
             resources.ApplyResources(this.Button_Home, "Button_Home");
             this.Button_Home.Name = "Button_Home";
             this.Button_Home.TabStop = false;
+            this.Button_Home.Click += new System.EventHandler(this.Button_Home_Click);
             // 
             // Button_Document
             // 
@@ -121,6 +121,7 @@
             resources.ApplyResources(this.Button_Help, "Button_Help");
             this.Button_Help.Name = "Button_Help";
             this.Button_Help.TabStop = false;
+            this.Button_Help.Click += new System.EventHandler(this.Button_Help_Click);
             // 
             // Button_Locked
             // 
