@@ -116,6 +116,7 @@ namespace Tools
             slaveNum = 1;
             ClassName = "DED194E_9S1YK2K2";
             During = 5000;
+            DeviceType = "DED194E_9S1YK2K2";
 
         }
         public Bean_DED194E_9S1YK2K2(string mip, int mport, int mdeviceNum, string mbuildingName

@@ -58,7 +58,7 @@ namespace Service
                     if(timers.ContainsKey(b.During))
                     {
                         System.Timers.Timer t = (System.Timers.Timer)timers[b.During];
-                        t.Elapsed += new ElapsedEventHandler(bd.periodWork);
+                      //  t.Elapsed += new ElapsedEventHandler(bd.periodWork);
                         devices.Add(b.getBeanKey(), rt.MObj);
                         Console.WriteLine("成功添加一个设备");
                         continue;
@@ -66,15 +66,45 @@ namespace Service
                     }                    
                    
                     System.Timers.Timer time = new System.Timers.Timer(b.During);
-                    time.Elapsed += new ElapsedEventHandler(bd.periodWork);
+                  //  time.Elapsed += new ElapsedEventHandler(bd.periodWork);
                     time.Start();
 
                     timers.Add(b.During,time);
                     devices.Add(b.getBeanKey(),rt.MObj);
                     Console.WriteLine("成功添加一个设备和一个timer");
                   
+                    
                 }
             }
+
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+     
+
+
+            for (int i=0 ; i<mdataGridView .RowCount ;i++)
+            {
+                if ((string)mdataGridView.Rows[i].Cells[0].Value == textBox_building.Text || !mcheckedListBox.GetItemChecked(0)) 
+                {
+                    if ((string)mdataGridView.Rows[i].Cells[1].Value == textBox_floor.Text || !mcheckedListBox.GetItemChecked(1))
+                    {
+                        if ((string)mdataGridView.Rows[i].Cells[2].Value == textBox_deviceNum.Text || !mcheckedListBox.GetItemChecked(2))
+                        {
+                            if ((string)mdataGridView.Rows[i].Cells[3].Value == textBox_type.Text || !mcheckedListBox.GetItemChecked(3))
+                            {
+                                mdataGridView.Rows.AddCopy(i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < mdataGridView.RowCount; i++)
+            { mdataGridView.Rows.RemoveAt(0); }
+                     
         }
 
        
