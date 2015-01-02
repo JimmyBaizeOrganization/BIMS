@@ -63,9 +63,9 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__1_ {
+        internal static System.Drawing.Bitmap banner_png {
             get {
-                object obj = ResourceManager.GetObject("coin (1)", resourceCulture);
+                object obj = ResourceManager.GetObject("banner.png", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__2_ {
+        internal static System.Drawing.Bitmap button1_ {
             get {
-                object obj = ResourceManager.GetObject("coin (2)", resourceCulture);
+                object obj = ResourceManager.GetObject("button1 ", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__3_ {
+        internal static System.Drawing.Bitmap button1x_ {
             get {
-                object obj = ResourceManager.GetObject("coin (3)", resourceCulture);
+                object obj = ResourceManager.GetObject("button1x ", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__4_ {
+        internal static System.Drawing.Bitmap button1xx_ {
             get {
-                object obj = ResourceManager.GetObject("coin (4)", resourceCulture);
+                object obj = ResourceManager.GetObject("button1xx ", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__5_ {
+        internal static System.Drawing.Bitmap button2_ {
             get {
-                object obj = ResourceManager.GetObject("coin (5)", resourceCulture);
+                object obj = ResourceManager.GetObject("button2 ", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__6_ {
+        internal static System.Drawing.Bitmap button2x_ {
             get {
-                object obj = ResourceManager.GetObject("coin (6)", resourceCulture);
+                object obj = ResourceManager.GetObject("button2x ", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,199 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap coin__7_ {
+        internal static System.Drawing.Bitmap button2xx_ {
             get {
-                object obj = ResourceManager.GetObject("coin (7)", resourceCulture);
+                object obj = ResourceManager.GetObject("button2xx ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button3_ {
+            get {
+                object obj = ResourceManager.GetObject("button3 ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button3x_ {
+            get {
+                object obj = ResourceManager.GetObject("button3x ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button3xx_ {
+            get {
+                object obj = ResourceManager.GetObject("button3xx ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button4_ {
+            get {
+                object obj = ResourceManager.GetObject("button4 ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button4x_ {
+            get {
+                object obj = ResourceManager.GetObject("button4x ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button4xx_ {
+            get {
+                object obj = ResourceManager.GetObject("button4xx ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button5_ {
+            get {
+                object obj = ResourceManager.GetObject("button5 ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button5x_ {
+            get {
+                object obj = ResourceManager.GetObject("button5x ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button5xx_ {
+            get {
+                object obj = ResourceManager.GetObject("button5xx ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button6_ {
+            get {
+                object obj = ResourceManager.GetObject("button6 ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button6x_ {
+            get {
+                object obj = ResourceManager.GetObject("button6x ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button6xx_ {
+            get {
+                object obj = ResourceManager.GetObject("button6xx ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button7_ {
+            get {
+                object obj = ResourceManager.GetObject("button7 ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button7x_ {
+            get {
+                object obj = ResourceManager.GetObject("button7x ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap button7xx_ {
+            get {
+                object obj = ResourceManager.GetObject("button7xx ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap main_ {
+            get {
+                object obj = ResourceManager.GetObject("main ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap mainbg_png {
+            get {
+                object obj = ResourceManager.GetObject("mainbg.png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap user_self_ {
+            get {
+                object obj = ResourceManager.GetObject("user self ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 导航条 {
+            get {
+                object obj = ResourceManager.GetObject("导航条", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
