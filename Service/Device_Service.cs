@@ -12,13 +12,18 @@ using System.Timers;
 namespace Service
 {
 
+    interface IBeanTool
+    {
+         BaseBean getBean();
+    }
     class BaseDevice
     {
         public virtual void periodWork(object o, ElapsedEventArgs e)
         {
         }
+       
     }
-    class DED194E_9S1YK2K2 : BaseDevice
+    class DED194E_9S1YK2K2 : BaseDevice,IBeanTool
     {
          const  int dataLenth = 16;//采集数据个数       
         float[] data = new float[dataLenth/2];
@@ -66,6 +71,10 @@ namespace Service
                     
                 
             }
+        }
+        public BaseBean getBean()
+        {
+            return bean;
         }
   
 

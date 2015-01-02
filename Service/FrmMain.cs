@@ -82,28 +82,76 @@ namespace Service
 
         private void button1_Click(object sender, EventArgs e)
         {
-     
+            mdataGridView.Rows.Clear();
 
-
-            for (int i=0 ; i<mdataGridView .RowCount ;i++)
+            foreach (DictionaryEntry de in devices)
             {
-                if ((string)mdataGridView.Rows[i].Cells[0].Value == textBox_building.Text || !mcheckedListBox.GetItemChecked(0)) 
+                BaseDevice d = (BaseDevice)de.Value;
+                IBeanTool ibean = (IBeanTool)d;
+                BaseBean b = ibean.getBean();
+
+                if (!mcheckedListBox.GetItemChecked(0) || b.BuildingName == textBox_building.Text) 
                 {
-                    if ((string)mdataGridView.Rows[i].Cells[1].Value == textBox_floor.Text || !mcheckedListBox.GetItemChecked(1))
+                    if (!mcheckedListBox.GetItemChecked(1) || b.FloorNum  == int.Parse (textBox_floor .Text))
                     {
-                        if ((string)mdataGridView.Rows[i].Cells[2].Value == textBox_deviceNum.Text || !mcheckedListBox.GetItemChecked(2))
+                        if (!mcheckedListBox.GetItemChecked(2) || b.DeviceNum == int.Parse(textBox_deviceNum.Text))
                         {
-                            if ((string)mdataGridView.Rows[i].Cells[3].Value == textBox_type.Text || !mcheckedListBox.GetItemChecked(3))
+                            if (!mcheckedListBox.GetItemChecked(3) || b.DeviceType  == textBox_type .Text)
                             {
-                                mdataGridView.Rows.AddCopy(i);
+                                mdataGridView.Rows.Add(b.BuildingName, b.FloorNum, b.DeviceNum, b.DeviceType);
                             }
                         }
                     }
                 }
             }
 
-            for (int i = 0; i < mdataGridView.RowCount; i++)
-            { mdataGridView.Rows.RemoveAt(0); }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            mdataGridView.Rows.Clear();
+
+            foreach (DictionaryEntry de in devices)
+            {
+                BaseDevice d = (BaseDevice)de.Value;
+                IBeanTool ibean = (IBeanTool)d;
+                BaseBean b = ibean.getBean();
+                mdataGridView.Rows.Add(b.BuildingName, b.FloorNum, b.DeviceNum, b.DeviceType);
+            } 
+
+            
+            //for (int i = 0; i < mdataGridView.RowCount; i++)
+            //{
+            //    if ( !mcheckedListBox.GetItemChecked(0))
+            //    {
+            //        if ( !mcheckedListBox.GetItemChecked(1))
+            //        {
+            //            if (!mcheckedListBox.GetItemChecked(2))
+            //            {
+            //                if ( !mcheckedListBox.GetItemChecked(3))
+            //                {
+            //                    mdataGridView.Rows.AddCopy(i);
+            //                }
+            //            }
+            //        }
+            //    }
+                //if ((string)mdataGridView.Rows[i].Cells[0].Value == textBox_building.Text || !mcheckedListBox.GetItemChecked(0))
+                //{
+                //    if ((string)mdataGridView.Rows[i].Cells[1].Value == textBox_floor.Text || !mcheckedListBox.GetItemChecked(1))
+                //    {
+                //        if ((string)mdataGridView.Rows[i].Cells[2].Value == textBox_deviceNum.Text || !mcheckedListBox.GetItemChecked(2))
+                //        {
+                //            if ((string)mdataGridView.Rows[i].Cells[3].Value == textBox_type.Text || !mcheckedListBox.GetItemChecked(3))
+                //            {
+                //                mdataGridView.Rows.AddCopy(i);
+                //            }
+                //        }
+                //    }
+                //}
+         
+
+            //for (int i = 0; i < mdataGridView.RowCount; i++)
+            //{ mdataGridView.Rows.RemoveAt(0); }
                      
         }
 

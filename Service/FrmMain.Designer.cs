@@ -128,9 +128,9 @@
             "楼层号",
             "设备号",
             "设备型号"});
-            this.mcheckedListBox.Location = new System.Drawing.Point(112, 115);
+            this.mcheckedListBox.Location = new System.Drawing.Point(56, 69);
             this.mcheckedListBox.Name = "mcheckedListBox";
-            this.mcheckedListBox.Size = new System.Drawing.Size(181, 96);
+            this.mcheckedListBox.Size = new System.Drawing.Size(237, 142);
             this.mcheckedListBox.TabIndex = 2;
             // 
             // textBox_building
@@ -199,9 +199,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(91, 520);
+            this.button1.Location = new System.Drawing.Point(80, 521);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(64, 46);
             this.button1.TabIndex = 5;
             this.button1.Text = "筛选";
             this.button1.UseVisualStyleBackColor = true;
@@ -209,12 +209,13 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(203, 520);
+            this.button2.Location = new System.Drawing.Point(224, 521);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(69, 46);
             this.button2.TabIndex = 5;
-            this.button2.Text = "清除";
+            this.button2.Text = "全部";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Frm_Main
             // 
