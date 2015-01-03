@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace BIMS
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
             pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height+10  );
+            DrawPicture_2();
 
             VScroll_self.Parent = pictureBox3;
             VScroll_self.Location = new Point(2530, 30);
@@ -502,6 +504,86 @@ namespace BIMS
             _SubWindow.AssignHandle(p_ControlHandle);
         }
 
+        #endregion
+
+        /// <summary>
+        /// 导航条
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        #region
+        private void pictureBox5_MouseMove(object sender, MouseEventArgs e)
+        {
+            DrawPicture_1();
+        }
+
+        private void pictureBox5_MouseLeave(object sender, EventArgs e)
+        {
+            DrawPicture_2();
+        }
+
+        private void DrawPicture_1()
+        {
+            Bitmap bit = new Bitmap(218, 1910, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            int iheight = 0;
+
+            int imouse;
+            if ((Cursor.Position.Y - 200) < 0)
+            { imouse = 0; }
+            else
+            { imouse = ((Cursor.Position.Y - 200) / 33) + 3; }
+
+            for (int i = 1; i < 10; i++)
+            {
+                Image iimage;
+                if (i != imouse)
+                { iimage = ImageTools.getImage(@"\导航按钮\导航图标_0" + i + ".png"); }
+                else
+                { iimage = ImageTools.getImage(@"\导航按钮\导航图标x_0" + i + ".png"); }
+
+                Graphics g = Graphics.FromImage(bit);
+
+                g.DrawImage(iimage, 0, iheight);
+                iheight += iimage.Height;
+            }
+            for (int i = 10; i < 40; i++)
+            {
+                Image iimage;
+                if (i != imouse)
+                { iimage = ImageTools.getImage(@"\导航按钮\导航图标_" + i + ".png"); }
+                else
+                { iimage = ImageTools.getImage(@"\导航按钮\导航图标x_" + i + ".png"); }
+
+                Graphics g = Graphics.FromImage(bit);
+
+                g.DrawImage(iimage, 0, iheight);
+                iheight += iimage.Height;
+            }
+
+            pictureBox5.BackgroundImage = bit;
+        }
+
+        private void DrawPicture_2()
+        {
+            Bitmap bit = new Bitmap(218, 1910, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            int iheight = 0;
+
+            for (int i = 1; i < 10; i++)
+            {
+                Image iimage = ImageTools.getImage(@"\导航按钮\导航图标_0" + i + ".png");
+                Graphics g = Graphics.FromImage(bit);
+                g.DrawImage(iimage, 0, iheight);
+                iheight += iimage.Height;
+            }
+            for (int i = 10; i < 40; i++)
+            {
+                Image iimage = ImageTools.getImage(@"\导航按钮\导航图标_" + i + ".png");
+                Graphics g = Graphics.FromImage(bit);
+                g.DrawImage(iimage, 0, iheight);
+                iheight += iimage.Height;
+            }
+            pictureBox5.BackgroundImage = bit;
+        }
         #endregion
 
     }

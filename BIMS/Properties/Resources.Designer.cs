@@ -363,6 +363,16 @@ namespace BIMS.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap 导航图标_02 {
+            get {
+                object obj = ResourceManager.GetObject("导航图标_02", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap 导航条 {
             get {
                 object obj = ResourceManager.GetObject("导航条", resourceCulture);
