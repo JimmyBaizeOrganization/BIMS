@@ -217,6 +217,18 @@
   <ItemGroup>
     <None Include="Resources\导航条.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scroll bar self .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scroll bar main .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scroll bar mainx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moudle.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

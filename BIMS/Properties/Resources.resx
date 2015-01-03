@@ -118,23 +118,44 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="button3xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button3xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="导航条" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\导航条.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scroll bar self " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scroll bar self .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="button1xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button1xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button6 " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button6 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button4xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button4xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button5 " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button5 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="button2x " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button2x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mainbg.png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mainbg.png.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button2 " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button2 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button3 " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button3 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button6xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button6xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button5xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button5xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button3x " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button3x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button6 " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button6 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scroll bar mainx" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scroll bar mainx.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="main " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\main .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="button5x " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button5x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -142,58 +163,49 @@
   <data name="button2xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button2xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button7x " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button7x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="mainbg.png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mainbg.png.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="main " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\main .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="scroll bar main " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scroll bar main .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button2 " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button2 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button4xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button4xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button1 " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button1 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="user self " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user self .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button3xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button3xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button4x " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button4x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button6xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button6xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button5 " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button5 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button1x " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button1x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button6x " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button6x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="button3x " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button3x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button3 " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button3 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="banner.png" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\banner.png.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="button4 " type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\button4 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="button7xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button7xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button4x " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button4x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button6x " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button6x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button4 " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button4 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="button7 " type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button7 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="导航条" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\导航条.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="button5xx " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button5xx .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button1 " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button1 .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button1x " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button1x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button7x " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button7x .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="user self " type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\user self .png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="moudle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\moudle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -47,6 +47,10 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.VScroll_self = new System.Windows.Forms.PictureBox();
+            this.VScroll_main = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.mpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Home)).BeginInit();
@@ -60,6 +64,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VScroll_self)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VScroll_main)).BeginInit();
             this.SuspendLayout();
             // 
             // dLFMain
@@ -74,7 +80,6 @@
             resources.ApplyResources(this.mpanel, "mpanel");
             this.mpanel.Controls.Add(this.mtableLayoutPanel);
             this.mpanel.Name = "mpanel";
-            this.mpanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mpanel_Paint);
             // 
             // mtableLayoutPanel
             // 
@@ -219,12 +224,51 @@
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.TabStop = false;
             // 
+            // VScroll_self
+            // 
+            this.VScroll_self.BackColor = System.Drawing.Color.White;
+            this.VScroll_self.BackgroundImage = global::BIMS.Properties.Resources.scroll_bar_self_;
+            resources.ApplyResources(this.VScroll_self, "VScroll_self");
+            this.VScroll_self.Name = "VScroll_self";
+            this.VScroll_self.TabStop = false;
+            // 
+            // VScroll_main
+            // 
+            this.VScroll_main.BackColor = System.Drawing.Color.White;
+            this.VScroll_main.BackgroundImage = global::BIMS.Properties.Resources.scroll_bar_main_;
+            resources.ApplyResources(this.VScroll_main, "VScroll_main");
+            this.VScroll_main.Name = "VScroll_main";
+            this.VScroll_main.TabStop = false;
+            this.VScroll_main.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VScroll_main_MouseDown);
+            this.VScroll_main.MouseEnter += new System.EventHandler(this.VScroll_main_MouseEnter);
+            this.VScroll_main.MouseLeave += new System.EventHandler(this.VScroll_main_MouseLeave);
+            this.VScroll_main.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VScroll_main_MouseMove);
+            this.VScroll_main.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VScroll_main_MouseUp);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Name = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Name = "label2";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
             // DeFrmMain
             // 
             this.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("DeFrmMain.Appearance.BackColor")));
             this.Appearance.Options.UseBackColor = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.VScroll_main);
+            this.Controls.Add(this.VScroll_self);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.Button_Setting);
@@ -256,7 +300,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VScroll_self)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VScroll_main)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -279,5 +326,9 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.PictureBox VScroll_self;
+        private System.Windows.Forms.PictureBox VScroll_main;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
