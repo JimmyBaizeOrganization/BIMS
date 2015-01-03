@@ -40,11 +40,16 @@
   <ItemGroup>
     <Compile Include="Bean.cs" />
     <Compile Include="FileTools.cs" />
+    <Compile Include="OracleTools.cs" />
     <Compile Include="ReflectTools.cs" />
     <Compile Include="XMLSerializerHelper.cs" />
     <Compile Include="XMLTools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=2.112.1.2, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />

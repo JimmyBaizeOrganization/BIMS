@@ -54,7 +54,7 @@
             // iLBC_Left
             // 
             this.iLBC_Left.Location = new System.Drawing.Point(0, 92);
-            this.iLBC_Left.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iLBC_Left.Margin = new System.Windows.Forms.Padding(4);
             this.iLBC_Left.Name = "iLBC_Left";
             this.iLBC_Left.Size = new System.Drawing.Size(237, 809);
             this.iLBC_Left.TabIndex = 0;
@@ -72,7 +72,7 @@
             this.PanRight.AllowDrop = true;
             this.PanRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.PanRight.Location = new System.Drawing.Point(246, 92);
-            this.PanRight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PanRight.Margin = new System.Windows.Forms.Padding(4);
             this.PanRight.Name = "PanRight";
             this.PanRight.Size = new System.Drawing.Size(1188, 809);
             this.PanRight.TabIndex = 1;
@@ -158,7 +158,7 @@
             // tb_buildingname
             // 
             this.tb_buildingname.Location = new System.Drawing.Point(159, 48);
-            this.tb_buildingname.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tb_buildingname.Margin = new System.Windows.Forms.Padding(4);
             this.tb_buildingname.Name = "tb_buildingname";
             this.tb_buildingname.Size = new System.Drawing.Size(148, 28);
             this.tb_buildingname.TabIndex = 3;
@@ -166,7 +166,7 @@
             // tb_floornum
             // 
             this.tb_floornum.Location = new System.Drawing.Point(513, 51);
-            this.tb_floornum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tb_floornum.Margin = new System.Windows.Forms.Padding(4);
             this.tb_floornum.Name = "tb_floornum";
             this.tb_floornum.Size = new System.Drawing.Size(148, 28);
             this.tb_floornum.TabIndex = 4;
@@ -174,7 +174,7 @@
             // bt_selectPath
             // 
             this.bt_selectPath.Location = new System.Drawing.Point(1284, 48);
-            this.bt_selectPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.bt_selectPath.Margin = new System.Windows.Forms.Padding(4);
             this.bt_selectPath.Name = "bt_selectPath";
             this.bt_selectPath.Size = new System.Drawing.Size(132, 34);
             this.bt_selectPath.TabIndex = 5;
@@ -185,7 +185,7 @@
             // tb_path
             // 
             this.tb_path.Location = new System.Drawing.Point(866, 48);
-            this.tb_path.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tb_path.Margin = new System.Windows.Forms.Padding(4);
             this.tb_path.Name = "tb_path";
             this.tb_path.Size = new System.Drawing.Size(408, 28);
             this.tb_path.TabIndex = 6;
@@ -203,7 +203,7 @@
             this.Controls.Add(this.PanRight);
             this.Controls.Add(this.iLBC_Left);
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DFrmMain";
             this.Text = "DFrmMain";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DFrmMain_FormClosing);

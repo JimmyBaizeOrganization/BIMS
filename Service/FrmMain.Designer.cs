@@ -79,7 +79,7 @@
             this.ip,
             this.port,
             this.during});
-            this.mdataGridView.Location = new System.Drawing.Point(391, 115);
+            this.mdataGridView.Location = new System.Drawing.Point(379, 87);
             this.mdataGridView.Name = "mdataGridView";
             this.mdataGridView.RowTemplate.Height = 30;
             this.mdataGridView.Size = new System.Drawing.Size(799, 521);

@@ -12,6 +12,14 @@ namespace EditorOfBIMS
 
     public abstract class BaseDevice : PictureBox
     {
+        //记录设备号。自动添加设备号
+        static int deviceIndex = 0;
+
+        public static int DeviceIndex
+        {
+            get { return BaseDevice.deviceIndex; }
+            set { BaseDevice.deviceIndex = value; }
+        }
 
         private Point mouse_offset = new Point();
 
@@ -49,6 +57,7 @@ namespace EditorOfBIMS
             this.MouseDoubleClick += new MouseEventHandler(Common_DoubleClick);
             this.mContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(Common_ContextMenuStripClick);
 
+            deviceIndex++;
         }
         private void Common_MouseMove(object sender, MouseEventArgs e)
         {
@@ -134,6 +143,7 @@ namespace EditorOfBIMS
             //bean.MPoint = Mouse_offset;
             Image = ImageTools.getImage("ElectricityGauge.png");
             Size = new System.Drawing.Size(100, 100);
+            bean.DeviceNum = DeviceIndex;
         }
         public override void creatForm()
         {
@@ -141,7 +151,7 @@ namespace EditorOfBIMS
         }
         public override void saveToXML(string building,int  floor,string path)
         {
-
+            
             bean.MPoint = Location;
             bean.BuildingName = building;
             bean.FloorNum = floor;

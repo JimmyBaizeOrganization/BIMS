@@ -33,10 +33,15 @@ namespace EditorOfBIMS
 
         private void DFrmMain_Load(object sender, EventArgs e)
         {
+            //初始化  保存路径默认设置\
+            DirectoryInfo dirinfo = new DirectoryInfo(Environment.CurrentDirectory);
+            tb_path.Text = dirinfo.Parent.Parent.Parent.FullName;
+            // = System.Environment.CurrentDirectory;
             //初始化左边栏
             initToolsBox();
             //初始化右侧图片编辑区域
             initImageEditor();
+            
         }
 
         private void initImageEditor()
@@ -253,7 +258,7 @@ namespace EditorOfBIMS
             }
            // bean.BuildingName = tb_buildingname.Text;
 
-            string newPath = tb_path.Text+ tb_buildingname.Text + "_" + tb_floornum.Text;
+            string newPath = tb_path.Text+ @"\"+ tb_buildingname.Text + "_" + tb_floornum.Text;
             if (!Directory.Exists(newPath))
             {
                 Directory.CreateDirectory(newPath);
@@ -262,10 +267,15 @@ namespace EditorOfBIMS
             {
                 bd.saveToXML(tb_buildingname.Text, floornum, newPath);
             }
+            MessageBox.Show("保存成功 生成路径为" + newPath);
         }
 
         private void bt_selectPath_Click(object sender, EventArgs e)
         {
+            if (tb_path.Text != "")
+            {
+                mfolderBrowserDialog.SelectedPath = tb_path.Text;
+            }
             if (mfolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 tb_path.Text= mfolderBrowserDialog.SelectedPath;

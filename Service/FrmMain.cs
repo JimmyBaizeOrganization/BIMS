@@ -1,16 +1,20 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using Tools;
 
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 namespace Service
 {
     public partial class Frm_Main : Form
@@ -18,6 +22,9 @@ namespace Service
 
         private Hashtable devices = new Hashtable();
         private Hashtable timers = new Hashtable();
+        //创建日志记录组件实例
+        ILog log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public Frm_Main()
         {
             InitializeComponent();
@@ -30,6 +37,8 @@ namespace Service
 
         private void bt_OpenFile_Click(object sender, EventArgs e)
         {
+            DirectoryInfo dirinfo = new DirectoryInfo(Environment.CurrentDirectory);
+            mopenFileDialog.InitialDirectory = dirinfo.Parent.Parent.Parent.FullName;
             mopenFileDialog.Filter = "配置文件(*.xml)|*.xml";
             mopenFileDialog.Multiselect = true;
 
@@ -46,7 +55,7 @@ namespace Service
                              
                     if (devices.Contains(b.getBeanKey()))
                     {
-                        Console.WriteLine("已存在该设备哎");
+                        log.Info("已存在该设备哎");
                         continue;
                     }
 
@@ -58,20 +67,20 @@ namespace Service
                     if(timers.ContainsKey(b.During))
                     {
                         System.Timers.Timer t = (System.Timers.Timer)timers[b.During];
-                      //  t.Elapsed += new ElapsedEventHandler(bd.periodWork);
+                       t.Elapsed += new ElapsedEventHandler(bd.periodWork);
                         devices.Add(b.getBeanKey(), rt.MObj);
-                        Console.WriteLine("成功添加一个设备");
+                        log.Info("成功添加一个设备");                        
                         continue;
                        
                     }                    
                    
                     System.Timers.Timer time = new System.Timers.Timer(b.During);
-                  //  time.Elapsed += new ElapsedEventHandler(bd.periodWork);
+                   time.Elapsed += new ElapsedEventHandler(bd.periodWork);
                     time.Start();
 
                     timers.Add(b.During,time);
                     devices.Add(b.getBeanKey(),rt.MObj);
-                    Console.WriteLine("成功添加一个设备和一个timer");
+                    log.Info("成功添加一个设备和一个timer");  
                   
                     
                 }
