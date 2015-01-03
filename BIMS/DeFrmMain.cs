@@ -28,20 +28,17 @@ namespace BIMS
         {
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
-            pictureBox5.Location = new Point(25,20);
+            pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height+10  );
 
             VScroll_self.Parent = pictureBox3;
-            VScroll_self.Location = new Point(2515, 20);
+            VScroll_self.Location = new Point(2530, 30);
             VScroll_main.Parent = VScroll_self;
             VScroll_main.Location = new Point(0, 0);
             VScroll_main .BringToFront();
+            this.MouseWheel += new MouseEventHandler(Common_Mousewheel);
+            VScroll_main.MouseWheel += new MouseEventHandler(Common_Mousewheel);
+            VScroll_self.MouseWheel += new MouseEventHandler(Common_Mousewheel);
 
-            mtableLayoutPanel.Parent = mpanel;
-            mtableLayoutPanel.Location = new Point(0, 0);
-
-            mtableLayoutPanel.GetType().GetProperty("DoubleBuffered",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(mtableLayoutPanel,
-                true, null);
             mpanel .GetType().GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(mpanel,
                 true, null);
@@ -49,27 +46,26 @@ namespace BIMS
                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(VScroll_main,
                true, null);
 
-            SetScrollBar(mtableLayoutPanel.Handle, 3, 0);
-            //mtableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-
-            //cLBC_left.Dock = DockStyle.Left;
+            SetScrollBar(mpanel.Handle, 3, 0);
 
             mpanel.Parent = pictureBox3;
-            mpanel.Location = new Point(200, 20);
+            mpanel.Location = new Point(mpanel.Location.X, pictureBox5 .Location .Y   );
 
             for (int i = 0; i < 7; i++)
             {
                 Panel pan = new Panel();
                 pan.Name = "Panel" + i.ToString();
                 pan.Size = new Size((int)mpanel.Size.Width /3, (int)mpanel.Size.Height/2);
-                pan.Location = new Point(0, 0);
+                mpanel.Controls.Add(pan);
+                //this.Controls.Add(pan);
+                //pan.Parent = mpanel;
+                pan.Location = new Point((int)mpanel.Size.Width * (i % 3) / 3, (int)mpanel.Size.Height * (i / 3) / 2);
                 //pan.BackColor = Color.White;
                 //pan.BackgroundImage = BIMS.Properties.Resources.moudle;
                 //pan.BackgroundImageLayout = ImageLayout.Stretch;
                 pan.BackColor = Color.Transparent;
                 //pan.BorderStyle = BorderStyle.FixedSingle;
                 pan.AutoScroll = true;
-                mtableLayoutPanel.Controls.Add(pan, (i % 3), (i / 3));
                                
                 PictureBox pic = new PictureBox();
                 pic.Name = "PictureBox" + i.ToString();
@@ -112,8 +108,7 @@ namespace BIMS
             pictureBox3.BackColor = Color.Transparent;
             pictureBox4.BackColor = Color.Transparent;
             pictureBox5.BackColor = Color.Transparent;
-            mtableLayoutPanel.BackColor = Color.Transparent;
-            mpanel.BackColor = Color.Transparent;
+            mpanel.BackColor = Color.FromArgb(236,236,236);
             VScroll_self.BackColor = Color.Transparent;
             VScroll_main.BackColor = Color.Transparent;
         }
@@ -361,44 +356,65 @@ namespace BIMS
             VScroll_main.BackgroundImage = BIMS.Properties.Resources.scroll_bar_main_;
         }
 
-        private void VScroll_main_MouseMove(object sender, MouseEventArgs e)
-        {
-            if(e.Button ==MouseButtons .Left )
-            {
-                VScroll_main.Top += e.Y - mouse_offset.Y ;
-                if (VScroll_main.Top < 0)
-                {
-                    VScroll_main.Top = 0;
-                }
-                if (VScroll_main.Top > VScroll_self.Size.Height - VScroll_main.Size.Height)
-                {
-                    VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height;
-                }
-
-                VScroll_self.SuspendLayout();
-                mtableLayoutPanel.SuspendLayout();
-
-                mtableLayoutPanel.VerticalScroll.Value = (mtableLayoutPanel.VerticalScroll.Maximum - mtableLayoutPanel.VerticalScroll.Minimum - mtableLayoutPanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
-                VScroll_self .Refresh();
-                mtableLayoutPanel.Refresh();
-
-                VScroll_self.ResumeLayout();
-                mtableLayoutPanel.ResumeLayout();
-               
-            }
-        }
-
         private void VScroll_main_MouseDown(object sender, MouseEventArgs e)
         {
             mouse_offset = e.Location;
         }
 
-        private void VScroll_main_MouseUp(object sender, MouseEventArgs e)
+        private void VScroll_main_MouseMove(object sender, MouseEventArgs e)
         {
-          //  VScroll_main.Refresh();
-            
-           
-           // mpanel.Refresh();
+            if(e.Button ==MouseButtons .Left )
+            {
+                if (VScroll_main.Top + e.Y - mouse_offset.Y < 0)
+                { VScroll_main.Top = 0; }
+                else if(VScroll_main.Top + e.Y - mouse_offset.Y > VScroll_self.Size.Height - VScroll_main.Size.Height)
+                { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
+                else
+                { VScroll_main.Top += e.Y - mouse_offset.Y; }
+
+                mpanel.SuspendLayout();
+                mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+                mpanel.ResumeLayout();    
+            }
+        }
+
+        private void Common_Mousewheel(object sender, MouseEventArgs e)
+        {
+            if (VScroll_main.Top - e.Delta / 10 < 0)
+            { VScroll_main.Top = 0; }
+            else if (VScroll_main.Top - e.Delta / 10 > VScroll_self.Size.Height - VScroll_main.Size.Height)
+            { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
+            else
+            { VScroll_main.Top -= e.Delta / 10; }
+            mpanel.SuspendLayout();
+            mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+            mpanel.ResumeLayout(); 
+        }
+
+        protected override bool ProcessDialogKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Up:
+                    if (VScroll_main.Top - 10 < 0)
+                    { VScroll_main.Top = 0; }
+                    else
+                    { VScroll_main.Top -= 10; }
+                    mpanel.SuspendLayout();
+                    mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+                    mpanel.ResumeLayout();
+                    break;
+                case Keys.Down:
+                    if (VScroll_main.Top + 10 > VScroll_self.Size.Height - VScroll_main.Size.Height)
+                    { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
+                    else
+                    { VScroll_main.Top += 10; }
+                    mpanel.SuspendLayout();
+                    mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+                    mpanel.ResumeLayout();
+                    break;
+            }
+            return true;
         }
 
         /// <summary>
@@ -442,25 +458,6 @@ namespace BIMS
         }
 
         #endregion
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < mtableLayoutPanel.Controls.Count ; i++)
-            {
-                mtableLayoutPanel.Controls[i].Width -=10;
-            }
-            label1.Text = mtableLayoutPanel.Controls[0].Size.ToString();
-           
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < mtableLayoutPanel.Controls.Count; i++)
-            {
-                mtableLayoutPanel.Controls[i].Height  -= 10;
-            }
-            label1.Text = mtableLayoutPanel.Controls[0].Size.ToString();
-        }
 
     }
 }

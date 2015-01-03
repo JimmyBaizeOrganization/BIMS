@@ -34,7 +34,6 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mpanel = new System.Windows.Forms.Panel();
-            this.mtableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Home = new System.Windows.Forms.PictureBox();
             this.Button_Maintenance = new System.Windows.Forms.PictureBox();
@@ -49,9 +48,6 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.VScroll_self = new System.Windows.Forms.PictureBox();
             this.VScroll_main = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.mpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Home)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Maintenance)).BeginInit();
@@ -75,17 +71,9 @@
             // 
             // mpanel
             // 
-            this.mpanel.BackColor = System.Drawing.Color.White;
-            this.mpanel.BackgroundImage = global::BIMS.Properties.Resources.main_;
             resources.ApplyResources(this.mpanel, "mpanel");
-            this.mpanel.Controls.Add(this.mtableLayoutPanel);
+            this.mpanel.BackColor = System.Drawing.Color.White;
             this.mpanel.Name = "mpanel";
-            // 
-            // mtableLayoutPanel
-            // 
-            resources.ApplyResources(this.mtableLayoutPanel, "mtableLayoutPanel");
-            this.mtableLayoutPanel.BackColor = System.Drawing.Color.White;
-            this.mtableLayoutPanel.Name = "mtableLayoutPanel";
             // 
             // pictureBox1
             // 
@@ -204,7 +192,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.White;
-            this.pictureBox3.BackgroundImage = global::BIMS.Properties.Resources.mainbg_png;
+            this.pictureBox3.BackgroundImage = global::BIMS.Properties.Resources.background;
             resources.ApplyResources(this.pictureBox3, "pictureBox3");
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.TabStop = false;
@@ -243,21 +231,6 @@
             this.VScroll_main.MouseEnter += new System.EventHandler(this.VScroll_main_MouseEnter);
             this.VScroll_main.MouseLeave += new System.EventHandler(this.VScroll_main_MouseLeave);
             this.VScroll_main.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VScroll_main_MouseMove);
-            this.VScroll_main.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VScroll_main_MouseUp);
-            // 
-            // label1
-            // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Name = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.Name = "label2";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // DeFrmMain
             // 
@@ -265,8 +238,6 @@
             this.Appearance.Options.UseBackColor = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.VScroll_main);
             this.Controls.Add(this.VScroll_self);
             this.Controls.Add(this.pictureBox5);
@@ -283,11 +254,11 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.LookAndFeel.SkinName = "Office 2013";
             this.Name = "DeFrmMain";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.DeFrmMain_Load);
-            this.mpanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Home)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Maintenance)).EndInit();
@@ -303,7 +274,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.VScroll_self)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VScroll_main)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -312,7 +282,6 @@
         private DevExpress.LookAndFeel.DefaultLookAndFeel dLFMain;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel mpanel;
-        private System.Windows.Forms.TableLayoutPanel mtableLayoutPanel;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox Button_Home;
         private System.Windows.Forms.PictureBox Button_Maintenance;
@@ -328,7 +297,5 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox VScroll_self;
         private System.Windows.Forms.PictureBox VScroll_main;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
     }
 }
