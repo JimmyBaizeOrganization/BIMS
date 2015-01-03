@@ -18,7 +18,6 @@ namespace BIMS
     {
 
         private Point mouse_offset;
-        private ArrayList FloorPanel = new ArrayList();
         public DeFrmMain()
         {
             InitializeComponent();
@@ -57,16 +56,10 @@ namespace BIMS
                 pan.Name = "Panel" + i.ToString();
                 pan.Size = new Size((int)mpanel.Size.Width /3, (int)mpanel.Size.Height/2);
                 mpanel.Controls.Add(pan);
-                //this.Controls.Add(pan);
-                //pan.Parent = mpanel;
                 pan.Location = new Point((int)mpanel.Size.Width * (i % 3) / 3, (int)mpanel.Size.Height * (i / 3) / 2);
-                //pan.BackColor = Color.White;
-                //pan.BackgroundImage = BIMS.Properties.Resources.moudle;
-                //pan.BackgroundImageLayout = ImageLayout.Stretch;
                 pan.BackColor = Color.Transparent;
-                //pan.BorderStyle = BorderStyle.FixedSingle;
-                pan.AutoScroll = true;
-                               
+                //pan.AutoScroll = true;
+                          
                 PictureBox pic = new PictureBox();
                 pic.Name = "PictureBox" + i.ToString();
                 pic.Size = new Size((int)mpanel.Size.Width * 1064 / 3494, (int)mpanel.Size.Height * 800 / 1944);
@@ -74,18 +67,18 @@ namespace BIMS
                 pic.BackgroundImage = BIMS.Properties.Resources.moudle;
                 pic.BackgroundImageLayout = ImageLayout.Stretch;
                 pic.BackColor = Color.Transparent;
-                //pic.BorderStyle = BorderStyle.FixedSingle;
                 pic.Parent = pan;
 
-                pan.GetType().GetProperty("DoubleBuffered",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(pan,
-                true, null);
+                pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
 
-                pic.GetType().GetProperty("DoubleBuffered",
-                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(pic,
-                true, null);
+                //pan.GetType().GetProperty("DoubleBuffered",
+                //System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(pan,
+                //true, null);
 
-                FloorPanel.Add(pan);
+                //pic.GetType().GetProperty("DoubleBuffered",
+                //System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(pic,
+                //true, null);
+
             }
 
             Button_Close.Parent = pictureBox1;
@@ -111,8 +104,60 @@ namespace BIMS
             mpanel.BackColor = Color.FromArgb(236,236,236);
             VScroll_self.BackColor = Color.Transparent;
             VScroll_main.BackColor = Color.Transparent;
+
         }
-            
+
+        private void PicDoubleClick(object sender, MouseEventArgs  e) 
+        {
+            PictureBox pic = (PictureBox)sender;
+            //int picindex = mpanel.Controls.IndexOf(pic.Parent);
+
+            mpanel.Controls.Clear();
+
+            Panel bigpan = new Panel();
+            bigpan.Size = new Size((int)mpanel.Size.Width, (int)mpanel.Size.Height);
+            mpanel.Controls.Add(bigpan);
+            bigpan.Location = new Point(0, 0);
+            bigpan.BackColor = Color.Transparent;
+
+            PictureBox bigpic = new PictureBox();
+            bigpic.Size = new Size(mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494, mpanel.Size.Height / 2 + mpanel.Size.Height * 800 / 1944);
+            bigpic.Location = new Point(38, 29);
+            bigpic.BackgroundImage = BIMS.Properties.Resources.moudle;
+            bigpic.BackgroundImageLayout = ImageLayout.Stretch;
+            bigpic.BackColor = Color.Transparent;
+            bigpic.Parent = bigpan;
+
+            bigpic.MouseDoubleClick += new MouseEventHandler(BigPicDoubleClick);
+
+        }
+
+        private void BigPicDoubleClick(object sender, MouseEventArgs e)
+        {
+            mpanel.Controls.Clear();
+
+            for (int i = 0; i < 7; i++)
+            {
+                Panel pan = new Panel();
+                pan.Name = "Panel" + i.ToString();
+                pan.Size = new Size((int)mpanel.Size.Width / 3, (int)mpanel.Size.Height / 2);
+                mpanel.Controls.Add(pan);
+                pan.Location = new Point((int)mpanel.Size.Width * (i % 3) / 3, (int)mpanel.Size.Height * (i / 3) / 2);
+                pan.BackColor = Color.Transparent;
+                //pan.AutoScroll = true;
+
+                PictureBox pic = new PictureBox();
+                pic.Name = "PictureBox" + i.ToString();
+                pic.Size = new Size((int)mpanel.Size.Width * 1064 / 3494, (int)mpanel.Size.Height * 800 / 1944);
+                pic.Location = new Point(38, 29);
+                pic.BackgroundImage = BIMS.Properties.Resources.moudle;
+                pic.BackgroundImageLayout = ImageLayout.Stretch;
+                pic.BackColor = Color.Transparent;
+                pic.Parent = pan;
+
+                pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
+            }
+        }
         /// <summary>
         /// Button_Close  关闭按钮
         /// </summary>
