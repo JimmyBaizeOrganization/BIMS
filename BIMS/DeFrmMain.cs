@@ -18,9 +18,11 @@ namespace BIMS
 {
     public partial class DeFrmMain : DevExpress.XtraEditors.XtraForm
     {
-
         private Point mouse_offset;
         private int fullmode;
+        private int maxfloor;
+        private int floorview;
+        private bool wheelnum=false;
         private Hashtable beans = new Hashtable();
 
         public DeFrmMain()
@@ -31,6 +33,9 @@ namespace BIMS
 
         private void DeFrmMain_Load(object sender, EventArgs e)
         {
+
+            FindFile(FileURL.ResourceDirRoot + @"/../bean/");
+
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
             pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height+10  );
@@ -42,8 +47,6 @@ namespace BIMS
             VScroll_main.Location = new Point(0, 0);
             VScroll_main .BringToFront();
             this.MouseWheel += new MouseEventHandler(Common_Mousewheel);
-            VScroll_main.MouseWheel += new MouseEventHandler(Common_Mousewheel);
-            VScroll_self.MouseWheel += new MouseEventHandler(Common_Mousewheel);
 
             mpanel .GetType().GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(mpanel,
@@ -57,7 +60,7 @@ namespace BIMS
             mpanel.Parent = pictureBox3;
             mpanel.Location = new Point(mpanel.Location.X, pictureBox5 .Location .Y   );
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < maxfloor; i++)
             {
                 Panel pan = new Panel();
                 pan.Name = "Panel" + i.ToString();
@@ -78,14 +81,13 @@ namespace BIMS
 
                 pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
 
-                //pan.GetType().GetProperty("DoubleBuffered",
-                //System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(pan,
-                //true, null);
-
-                //pic.GetType().GetProperty("DoubleBuffered",
-                //System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(pic,
-                //true, null);
-
+                Label labelfloor = new Label();
+                labelfloor.AutoSize = true;
+                labelfloor.Text = ChangeNum(i+1)+"层";
+                labelfloor.ForeColor = Color.FromArgb(0, 96, 170);
+                labelfloor.Font = new Font("微软雅黑", 44, FontStyle.Bold);
+                labelfloor.Location = new Point(pic.Location.X + pic.Size.Width / 2 - labelfloor.Size.Width / 2, pic.Location.Y + pic.Size.Height);
+                pan.Controls.Add(labelfloor);
             }
 
             Button_Close.Parent = pictureBox1;
@@ -104,8 +106,26 @@ namespace BIMS
             VScroll_main.BackColor = Color.Transparent;
 
             fullmode = 0;
-            FindFile(FileURL.ResourceDirRoot+@"/../bean/");
+            floorview = 1;
             getLittleDevice();
+        }
+
+        private string ChangeNum(int n)
+        {
+            string a = "零一二三四五六七八九十";
+            string s="";
+            if (n > 0)
+            {
+                if (n <= 10)
+                {
+                    s = a[n].ToString();
+                }
+                else if (n < 20)
+                {
+                    s = "十" + a[n % 10].ToString();
+                }
+            }
+            return s;
         }
 
         public void FindFile(string dirPath) //参数dirPath为指定的目录 
@@ -126,6 +146,10 @@ namespace BIMS
                     if (!beans.ContainsKey(b.getBeanKey()))
                     {
                         beans.Add(b.getBeanKey(),b);
+                        if (b.FloorNum > maxfloor)
+                        {
+                            maxfloor = b.FloorNum;
+                        }
                     }
                                                     
                 }
@@ -190,7 +214,6 @@ namespace BIMS
         {
             PictureBox pic = (PictureBox)sender;
             fullmode = mpanel.Controls.IndexOf(pic.Parent)+1;
-            label1.Text = fullmode.ToString ();
 
             mpanel.Controls.Clear();
 
@@ -208,6 +231,14 @@ namespace BIMS
             bigpic.BackColor = Color.Transparent;
             bigpic.Parent = bigpan;
 
+            Label labelfloor = new Label();
+            labelfloor.AutoSize = true;
+            labelfloor.Text = ChangeNum(fullmode) + "层";
+            labelfloor.ForeColor = Color.FromArgb(0, 96, 170);
+            labelfloor.Font = new Font("微软雅黑", 50, FontStyle.Bold);
+            labelfloor.Location = new Point(bigpic.Location.X + bigpic.Size.Width / 2 - labelfloor.Size.Width / 2, bigpic.Location.Y + bigpic.Size.Height);
+            bigpan.Controls.Add(labelfloor);
+
             bigpic.MouseDoubleClick += new MouseEventHandler(BigPicDoubleClick);
             getBigDevice();
         }
@@ -216,9 +247,8 @@ namespace BIMS
         {
             mpanel.Controls.Clear();
             fullmode = 0;
-            label1.Text = fullmode.ToString();
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < maxfloor ; i++)
             {
                 Panel pan = new Panel();
                 pan.Name = "Panel" + i.ToString();
@@ -238,7 +268,20 @@ namespace BIMS
                 pic.Parent = pan;
 
                 pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
+
+                Label labelfloor = new Label();
+                labelfloor.AutoSize = true;
+                labelfloor.Text = ChangeNum(i + 1) + "层";
+                labelfloor.ForeColor = Color.FromArgb(0, 96, 170);
+                labelfloor.Font = new Font("微软雅黑", 44, FontStyle.Bold);
+                labelfloor.Location = new Point(pic.Location.X + pic.Size.Width / 2 - labelfloor.Size.Width / 2, pic.Location.Y + pic.Size.Height);
+                pan.Controls.Add(labelfloor);
             }
+
+            mpanel.SuspendLayout();
+            mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+            mpanel.ResumeLayout(); 
+
             getLittleDevice();
         }
         #endregion
@@ -488,37 +531,73 @@ namespace BIMS
 
         private void VScroll_main_MouseDown(object sender, MouseEventArgs e)
         {
-            mouse_offset = e.Location;
+            //mouse_offset = e.Location;
         }
 
         private void VScroll_main_MouseMove(object sender, MouseEventArgs e)
         {
-            if(e.Button ==MouseButtons .Left )
-            {
-                if (VScroll_main.Top + e.Y - mouse_offset.Y < 0)
-                { VScroll_main.Top = 0; }
-                else if(VScroll_main.Top + e.Y - mouse_offset.Y > VScroll_self.Size.Height - VScroll_main.Size.Height)
-                { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
-                else
-                { VScroll_main.Top += e.Y - mouse_offset.Y; }
+            //if(e.Button ==MouseButtons .Left )
+            //{
+            //    if (VScroll_main.Top + e.Y - mouse_offset.Y < 0)
+            //    { VScroll_main.Top = 0; }
+            //    else if(VScroll_main.Top + e.Y - mouse_offset.Y > VScroll_self.Size.Height - VScroll_main.Size.Height)
+            //    { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
+            //    else
+            //    { VScroll_main.Top += e.Y - mouse_offset.Y; }
 
-                mpanel.SuspendLayout();
-                mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
-                mpanel.ResumeLayout();    
-            }
+            //    mpanel.SuspendLayout();
+            //    mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+            //    mpanel.ResumeLayout();    
+            //}
         }
 
         private void Common_Mousewheel(object sender, MouseEventArgs e)
         {
-            if (VScroll_main.Top - e.Delta / 10 < 0)
-            { VScroll_main.Top = 0; }
-            else if (VScroll_main.Top - e.Delta / 10 > VScroll_self.Size.Height - VScroll_main.Size.Height)
-            { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
-            else
-            { VScroll_main.Top -= e.Delta / 10; }
-            mpanel.SuspendLayout();
-            mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
-            mpanel.ResumeLayout(); 
+             if (fullmode == 0)
+             {
+                wheelnum =! wheelnum ;
+             if (wheelnum)
+             {
+                 int max = (maxfloor % 3) == 0 ? maxfloor / 3 - 1 : maxfloor / 3;
+                 if (floorview - e.Delta / 120 < 1)
+                 {
+                     floorview = 1;
+                 }
+                 else if (floorview - e.Delta / 120 > max)
+                 {
+                     floorview = max;
+                 }
+                 else
+                 {
+                     floorview -= e.Delta / 120;
+                 }
+
+                 mpanel.SuspendLayout();
+                 if (e.Delta < 0)
+                 {
+                     mpanel.ScrollControlIntoView(mpanel.Controls[floorview * 3]);
+                     VScroll_main.Top = (VScroll_self.Size.Height - VScroll_main.Size.Height) / (max - 1) * (floorview - 1);
+                 }
+                 else
+                 {
+                     mpanel.ScrollControlIntoView(mpanel.Controls[(floorview - 1) * 3]);
+                     VScroll_main.Top = (VScroll_self.Size.Height - VScroll_main.Size.Height) / (((maxfloor % 3) == 0 ? maxfloor / 3 - 1 : maxfloor / 3) - 1) * (floorview - 1);
+                 }
+
+                 mpanel.ResumeLayout();
+              }
+        }
+            
+            //if (VScroll_main.Top - e.Delta / 10 < 0)
+            //{ VScroll_main.Top = 0; }
+            //else if (VScroll_main.Top - e.Delta / 10 > VScroll_self.Size.Height - VScroll_main.Size.Height)
+            //{ VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
+            //else
+            //{ VScroll_main.Top -= e.Delta / 10; }
+
+            //mpanel.SuspendLayout();
+            //mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
+            //mpanel.ResumeLayout(); 
         }
 
         protected override bool ProcessDialogKey(Keys keyData)
@@ -526,22 +605,31 @@ namespace BIMS
             switch (keyData)
             {
                 case Keys.Up:
-                    if (VScroll_main.Top - 10 < 0)
-                    { VScroll_main.Top = 0; }
-                    else
-                    { VScroll_main.Top -= 10; }
-                    mpanel.SuspendLayout();
-                    mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
-                    mpanel.ResumeLayout();
+                    if (fullmode == 0)
+                    {
+                        if (floorview - 1 >= 1)
+                        {
+                            floorview -= 1;
+                            mpanel.SuspendLayout();
+                            mpanel.ScrollControlIntoView(mpanel.Controls[(floorview - 1) * 3]);
+                            VScroll_main.Top = (VScroll_self.Size.Height - VScroll_main.Size.Height) / (((maxfloor % 3) == 0 ? maxfloor / 3 - 1 : maxfloor / 3) - 1) * (floorview - 1);
+                            mpanel.ResumeLayout();
+                        }
+                    }
                     break;
                 case Keys.Down:
-                    if (VScroll_main.Top + 10 > VScroll_self.Size.Height - VScroll_main.Size.Height)
-                    { VScroll_main.Top = VScroll_self.Size.Height - VScroll_main.Size.Height; }
-                    else
-                    { VScroll_main.Top += 10; }
-                    mpanel.SuspendLayout();
-                    mpanel.VerticalScroll.Value = (mpanel.VerticalScroll.Maximum - mpanel.VerticalScroll.Minimum - mpanel.VerticalScroll.LargeChange + 1) * VScroll_main.Top / (VScroll_self.Size.Height - VScroll_main.Size.Height);
-                    mpanel.ResumeLayout();
+                    if (fullmode == 0)
+                    {
+                        int max = (maxfloor % 3) == 0 ? maxfloor / 3 - 1 : maxfloor / 3;
+                        if (floorview + 1 <= max)
+                        {
+                            floorview += 1;
+                            mpanel.SuspendLayout();
+                            mpanel.ScrollControlIntoView(mpanel.Controls[floorview * 3]);
+                            VScroll_main.Top = (VScroll_self.Size.Height - VScroll_main.Size.Height) / (max - 1) * (floorview - 1);
+                            mpanel.ResumeLayout();
+                        }
+                    }
                     break;
             }
             return true;
