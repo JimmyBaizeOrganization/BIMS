@@ -13,26 +13,7 @@ using System.Collections;
 
 namespace BIMS
 {
-    public static class PublicResource
-    {
-        public static Hashtable timers = new Hashtable();
-        public static void addTimer(double timespace, ElapsedEventHandler handler)
-        {
-            System.Timers.Timer timer;
-            if(!timers.ContainsKey(timespace))
-            {
-                Console.WriteLine("添加一个itmer");
-                 timer = new System.Timers.Timer(timespace);
-                 timer.Start();
-                 timers.Add(timespace, timer);
-            }
-            else
-            {
-                timer = (System.Timers.Timer)timers[(object)timespace];
-            }
-            timer.Elapsed += handler;
-        }
-    }
+
     public abstract  class BaseDevice: PictureBox 
     {
         private Form mform;
@@ -110,7 +91,26 @@ namespace BIMS
 
           public virtual  void newform() { }
     }
-
+    public static class PublicResource
+    {
+        public static Hashtable timers = new Hashtable();
+        public static void addTimer(double timespace, ElapsedEventHandler handler)
+        {
+            System.Timers.Timer timer;
+            if (!timers.ContainsKey(timespace))
+            {
+                Console.WriteLine("添加一个itmer");
+                timer = new System.Timers.Timer(timespace);
+                timer.Start();
+                timers.Add(timespace, timer);
+            }
+            else
+            {
+                timer = (System.Timers.Timer)timers[(object)timespace];
+            }
+            timer.Elapsed += handler;
+        }
+    }
     class DED194E_9S1YK2K2 : BaseDevice
     {
         private Bean_DED194E_9S1YK2K2 bean;
