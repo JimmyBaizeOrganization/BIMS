@@ -12,6 +12,7 @@ using Oracle.DataAccess.Client;
 using System.Data.Common;
 using System.Data;
 
+
 namespace Service
 {
 
@@ -67,6 +68,7 @@ namespace Service
             GUID = bean.getBeanKey();
              ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
              ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            
         }
         public override void periodWork(object o, ElapsedEventArgs e)
         {           
@@ -103,50 +105,48 @@ namespace Service
                 catch
                 {
                     //ＴＣＰIP  链接异常
-                    state = -1;
+                    state = 2;
                 }
                 finally
                 {
+                   
+                    string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
+
+                    //using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    //{
+                    //    string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
+                    //                                                + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
+                    //    OracleCommand cmd = new OracleCommand(scmd, conn);
+                    //    conn.Open();
+                    //    int a  = cmd.ExecuteNonQuery();
+                    //    MessageBox.Show(a.ToString());
+                    //}
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))
                     {
-                        string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
-                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
-                        OracleCommand cmd = new OracleCommand(scmd, conn);
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                    }
-                    //OracleConnection conn = new OracleConnection(connString);
-                    //try {
-                    //    //Console.WriteLine("INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + "', " + state + ",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
-                    //    //                    + "','yyyy-mm-dd hh24:mi:ss')," + data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + ");");
+                        try
+                        {
+                            //Console.WriteLine("INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + "', " + state + ",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
+                            //                    + "','yyyy-mm-dd hh24:mi:ss')," + data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + ");");
+
+                            //if (Conn.State == ConnectionState.Closed)
+                            //{
+                            //    Console.WriteLine("open ");
+
+                            //}
+
+                            // Console.WriteLine(scmd);
+                            OracleCommand cmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            int d = cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+
+                        }
                        
-                    //    //if (Conn.State == ConnectionState.Closed)
-                    //    //{
-                    //    //    Console.WriteLine("open ");
-                           
-                    //    //}
-                          
-                    //       Console.WriteLine(scmd);
-                    //       OracleCommand cmd = new OracleCommand(scmd, conn);
-                    //      conn.Open();
-                    //      int d = cmd.ExecuteNonQuery();
-                    //      Console.WriteLine(d);
-                      
-                    //}
-                    //catch (Exception e2)
-                    //{ 
-                    //    Console.Write("catch  dao  dongxi   ");
-                    //    Console.WriteLine(e2.ToString());
-                    //}
-                    //finally
-                    //{
-                        
-                    //    if (conn.State == ConnectionState.Open)
-                    //    {
-                    //        Console.WriteLine("close ");
-                    //        conn.Close();
-                    //    }
-                    //}
+                    }
+                 
 
 
                }

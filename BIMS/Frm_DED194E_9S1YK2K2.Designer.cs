@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label_A = new System.Windows.Forms.Label();
             this.textBox_A = new System.Windows.Forms.TextBox();
             this.label_V = new System.Windows.Forms.Label();
@@ -44,6 +45,7 @@
             this.textBox_WYinShu = new System.Windows.Forms.TextBox();
             this.label_Ainput = new System.Windows.Forms.Label();
             this.textBox_Ainput = new System.Windows.Forms.TextBox();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label_A
@@ -182,6 +184,11 @@
             this.textBox_Ainput.Size = new System.Drawing.Size(100, 28);
             this.textBox_Ainput.TabIndex = 1;
             // 
+            // timer
+            // 
+            this.timer.Interval = 1000;
+            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
             // Frm_DED194E_9S1YK2K2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -228,5 +235,6 @@
         private System.Windows.Forms.TextBox textBox_WYinShu;
         private System.Windows.Forms.Label label_Ainput;
         private System.Windows.Forms.TextBox textBox_Ainput;
+        private System.Windows.Forms.Timer timer;
     }
 }

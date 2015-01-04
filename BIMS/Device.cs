@@ -57,7 +57,9 @@ namespace BIMS
         }
 
         private void Common_LostFocus(object sender, EventArgs e)
-        { Mform.Hide(); }
+        { 
+            Mform.Dispose();
+        }
         //  private void Common_MouseEnter(object sender, EventArgs e)
         //{
         //    if (Mform == null || Mform.IsDisposed) 
@@ -99,7 +101,7 @@ namespace BIMS
             System.Timers.Timer timer;
             if (!timers.ContainsKey(timespace))
             {
-                Console.WriteLine("添加一个itmer");
+               
                 timer = new System.Timers.Timer(timespace);
                 timer.Start();
                 timers.Add(timespace, timer);
@@ -110,15 +112,18 @@ namespace BIMS
             }
             timer.Elapsed += handler;
         }
+        //public static DataSet  
     }
     class DED194E_9S1YK2K2 : BaseDevice
     {
         private Bean_DED194E_9S1YK2K2 bean;
         private string beanKey;
-        private string scmd;
-        private OracleDataReader mOracleDataReader;
-        private static string imageURL = "ElectricityGauge.png";
 
+        decimal[] dataVaule = new decimal[9];
+        private static string imageURL = "ElectricityGauge.png";
+       // private decimal[] dataVaule = new decimal[9];
+        
+        string scmd;
         public static string ImageURL
         {
             get { return DED194E_9S1YK2K2.imageURL; }
@@ -127,30 +132,47 @@ namespace BIMS
         
         public DED194E_9S1YK2K2(Bean_DED194E_9S1YK2K2 b)
         {
+            
             bean = b;
             beanKey = bean.getBeanKey();
-            scmd = @"select 	VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where DEVICE_GUID='" + beanKey + "' and rownum<2 order by CREAT_TIME desc";
-
-            //System.Timers.Timer timer = new System.Timers.Timer(5000);
-            //timer.Elapsed += new ElapsedEventHandler(this.periodWork);
-            //timer.Start();
+            scmd = @"select * from (select VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
+            periodWork(null, null);
             PublicResource.addTimer(b.During, new ElapsedEventHandler(this.periodWork));
         }
 
         public override  void newform() 
         {
-            Mform = new Frm_DED194E_9S1YK2K2(mOracleDataReader);
+            Mform = new Frm_DED194E_9S1YK2K2(dataVaule,bean.During);
         }
         public void periodWork(object o, ElapsedEventArgs e)
         {
-            Console.WriteLine("23333333");
             using (OracleConnection conn = new OracleConnection(OracleTools.connString))
-            {                
+            {
                 OracleCommand cmd = new OracleCommand(scmd, conn);
                 conn.Open();
-                mOracleDataReader = cmd.ExecuteReader();
-            }
+                OracleDataReader mOracleDataReader = cmd.ExecuteReader();
+               
+                while (mOracleDataReader.Read())
+                {
+                    
+                    
+                    Frm_DED194E_9S1YK2K2 f = (Frm_DED194E_9S1YK2K2)Mform;
+                    
+                    dataVaule[0] = (decimal)mOracleDataReader["VOLTAGE"];
+                    dataVaule[1] = (decimal)mOracleDataReader["I"];
+                    dataVaule[2] = decimal.Parse((string)mOracleDataReader["STATE"]);
+                    dataVaule[3] = (decimal)mOracleDataReader["P"];
+                    dataVaule[4] = (decimal)mOracleDataReader["Q"];
+                    dataVaule[5] = (decimal)mOracleDataReader["S"];
+                    dataVaule[6] = (decimal)mOracleDataReader["FREQ"];
+                    dataVaule[7] = (decimal)mOracleDataReader["PF"];
+                    dataVaule[8] = (decimal)mOracleDataReader["DCVAL"];
+                   
+                }
+            }  
+            
         }
        
     }
+
 }
