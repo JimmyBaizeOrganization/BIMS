@@ -113,6 +113,12 @@ namespace Tools
             proper.SetValue(this.MObj,newvaule);
     
         }
+        public object getPropertyInfo(string propertyname)
+        {
 
+            PropertyInfo proper = clstype.GetProperty(propertyname);
+            return proper.GetValue(this.MObj);
+
+        }
     }
 }

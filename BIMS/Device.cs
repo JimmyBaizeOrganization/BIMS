@@ -15,7 +15,6 @@ namespace BIMS
     public abstract  class BaseDevice: PictureBox 
     {
         private Form mform;
-
         public Form Mform
         {
             get { return mform; }
@@ -97,6 +96,14 @@ namespace BIMS
         private string beanKey;
         private string scmd;
         private OracleDataReader mOracleDataReader;
+        private static string imageURL = "ElectricityGauge.png";
+
+        public static string ImageURL
+        {
+            get { return DED194E_9S1YK2K2.imageURL; }
+            set { DED194E_9S1YK2K2.imageURL = value; }
+        }
+        
         public DED194E_9S1YK2K2(Bean_DED194E_9S1YK2K2 b)
         {
             bean = b;

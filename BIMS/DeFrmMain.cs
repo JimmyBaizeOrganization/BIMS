@@ -21,11 +21,12 @@ namespace BIMS
 
         private Point mouse_offset;
         private int fullmode;
-        private ArrayList bean;
+        private Hashtable beans = new Hashtable();
 
         public DeFrmMain()
         {
             InitializeComponent();
+           
         }
 
         private void DeFrmMain_Load(object sender, EventArgs e)
@@ -104,6 +105,7 @@ namespace BIMS
 
             fullmode = 0;
             FindFile(FileURL.ResourceDirRoot+@"/../bean/");
+            getLittleDevice();
         }
 
         public void FindFile(string dirPath) //参数dirPath为指定的目录 
@@ -121,38 +123,11 @@ namespace BIMS
                     string[] filename = f.ToString().Split('.');
                     string typename = filename[filename.Length - 2];
                     BaseBean b = BeanTools.getBeanFromXML(typename, Dir + f.ToString());
-
-                    //bean.Add(b);
-
-                    if (fullmode!=0)
+                    if (!beans.ContainsKey(b.getBeanKey()))
                     {
-                        if (b.FloorNum == fullmode)
-                        {
-                            ReflectTools rt = new ReflectTools("BIMS", "BIMS", "DED194E_9S1YK2K2");
-                            DED194E_9S1YK2K2 aa = (DED194E_9S1YK2K2)rt.MObj;
-
-                            aa.Location = b.MPoint;
-                            aa.BackColor = Color.Black;
-                            aa.Size = new Size(10, 10);
-                            this.Controls.Add(aa);
-                            aa.Parent = mpanel.Controls[0].Controls[0];
-                        }
-                        else 
-                        { 
-                            continue;
-                        }
+                        beans.Add(b.getBeanKey(),b);
                     }
-                    else 
-                    {
-                        ReflectTools rt = new ReflectTools("BIMS", "BIMS", "DED194E_9S1YK2K2");
-                        DED194E_9S1YK2K2 aa = (DED194E_9S1YK2K2)rt.MObj;
-
-                        aa.Location = b.MPoint;
-                        aa.BackColor = Color.Black;
-                        aa.Size = new Size(10, 10);
-                        this.Controls.Add(aa);
-                        aa.Parent = mpanel.Controls[b.FloorNum - 1].Controls[0];
-                    }                
+                                                    
                 }
             }
             catch (Exception e)
@@ -161,7 +136,18 @@ namespace BIMS
                 return;
             }
         }
+        public void getLittleDevice()
+        {
+            foreach(DictionaryEntry de in beans)
+            {
+                BaseBean b= (BaseBean)de.Value;
+                ReflectTools rt = new ReflectTools("BIMS", "BIMS", b.ClassName, new object[] { b });
+                BaseDevice pic = (BaseDevice)rt.MObj;
+                pic.Image = ImageTools.getImage((string)rt.getPropertyInfo("ImageURL"));
 
+                mpanel.Controls[0].Controls.Add(pic);
+            }
+        }
 
         /// <summary>
         /// 双击显示方式切换
@@ -192,7 +178,7 @@ namespace BIMS
             bigpic.Parent = bigpan;
 
             bigpic.MouseDoubleClick += new MouseEventHandler(BigPicDoubleClick);
-            FindFile(FileURL.ResourceDirRoot + @"/../bean/");
+            //FindFile(FileURL.ResourceDirRoot + @"/../bean/");
 
         }
 
@@ -223,7 +209,7 @@ namespace BIMS
 
                 pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
             }
-            FindFile(FileURL.ResourceDirRoot + @"/../bean/");
+           // FindFile(FileURL.ResourceDirRoot + @"/../bean/");
         }
         #endregion
 
