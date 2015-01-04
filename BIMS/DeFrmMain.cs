@@ -145,7 +145,38 @@ namespace BIMS
                 BaseDevice pic = (BaseDevice)rt.MObj;
                 pic.Image = ImageTools.getImage((string)rt.getPropertyInfo("ImageURL"));
 
-                mpanel.Controls[0].Controls.Add(pic);
+                mpanel.Controls[b.FloorNum -1].Controls[0].Controls .Add(pic);
+                pic.Location = b.MPoint;
+                pic.Size = pic.Image.Size;
+            }
+        }
+
+        public void getBigDevice()
+        {
+            foreach (DictionaryEntry de in beans)
+            {
+                BaseBean b = (BaseBean)de.Value;
+                if (b.FloorNum == fullmode)
+                {
+                    ReflectTools rt = new ReflectTools("BIMS", "BIMS", b.ClassName, new object[] { b });
+                    BaseDevice pic = (BaseDevice)rt.MObj;
+                    Image iimage= ImageTools.getImage((string)rt.getPropertyInfo("ImageURL"));
+
+                    mpanel.Controls[0].Controls[0].Controls.Add(pic);
+                    pic.Location = new Point (b.MPoint.X *(mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494)/(mpanel.Size.Width * 1064 / 3494),
+                                              b.MPoint.Y * (mpanel.Size.Height / 2 + mpanel.Size.Height * 800 / 1944) / (mpanel.Size.Height * 800 / 1944));
+                    pic.Size = new Size(iimage.Size.Width * 2, iimage.Size.Height * 2);
+
+                    Bitmap bitmap = new Bitmap(iimage.Size.Width * 2, iimage.Size.Height * 2);
+                    Graphics g = Graphics.FromImage(bitmap);
+
+                    g.DrawImage(ImageTools.getImage((string)rt.getPropertyInfo("ImageURL")), 0, 0, iimage.Size.Width * 2, iimage.Size.Height * 2);
+
+                    pic.BackgroundImage = bitmap;
+
+                    //mpanel.Size.Width * 1064 / 3494
+                    //mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494
+                }
             }
         }
 
@@ -178,8 +209,7 @@ namespace BIMS
             bigpic.Parent = bigpan;
 
             bigpic.MouseDoubleClick += new MouseEventHandler(BigPicDoubleClick);
-            //FindFile(FileURL.ResourceDirRoot + @"/../bean/");
-
+            getBigDevice();
         }
 
         private void BigPicDoubleClick(object sender, MouseEventArgs e)
@@ -209,7 +239,7 @@ namespace BIMS
 
                 pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
             }
-           // FindFile(FileURL.ResourceDirRoot + @"/../bean/");
+            getLittleDevice();
         }
         #endregion
 
