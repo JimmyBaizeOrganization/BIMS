@@ -48,6 +48,7 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.VScroll_self = new System.Windows.Forms.PictureBox();
             this.VScroll_main = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Home)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Button_Maintenance)).BeginInit();
@@ -234,12 +235,19 @@
             this.VScroll_main.MouseLeave += new System.EventHandler(this.VScroll_main_MouseLeave);
             this.VScroll_main.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VScroll_main_MouseMove);
             // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Name = "label1";
+            // 
             // DeFrmMain
             // 
             this.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("DeFrmMain.Appearance.BackColor")));
             this.Appearance.Options.UseBackColor = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.VScroll_main);
             this.Controls.Add(this.VScroll_self);
             this.Controls.Add(this.pictureBox5);
@@ -276,6 +284,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.VScroll_self)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VScroll_main)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -299,5 +308,6 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox VScroll_self;
         private System.Windows.Forms.PictureBox VScroll_main;
+        private System.Windows.Forms.Label label1;
     }
 }

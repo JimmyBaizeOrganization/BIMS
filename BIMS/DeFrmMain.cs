@@ -12,6 +12,7 @@ using DevExpress.XtraEditors;
 using Tools;
 using System.Runtime.InteropServices;
 using System.Collections;
+using System .IO ;
 
 namespace BIMS
 {
@@ -19,6 +20,9 @@ namespace BIMS
     {
 
         private Point mouse_offset;
+        private int fullmode;
+        private ArrayList bean;
+
         public DeFrmMain()
         {
             InitializeComponent();
@@ -89,16 +93,7 @@ namespace BIMS
             Button_Home .Parent = pictureBox1;
             Button_Locked .Parent = pictureBox1;
             Button_Setting .Parent = pictureBox1;
-            Button_Sum .Parent = pictureBox1;
-
-            //ReflectTools rt = new ReflectTools("BIMS", "BIMS", "DED194E_9S1YK2K2");
-            //DED194E_9S1YK2K2 aa = (DED194E_9S1YK2K2)rt.MObj;
-
-            //aa.Location = new Point(200, 200);
-            //aa.BackColor = Color.Black;
-            //aa.Size = new Size(10, 10);
-            //this.Controls.Add(aa);
-            //aa.Parent = this.Controls.Find("PictureBox0",true)[0];
+            Button_Sum .Parent = pictureBox1;                    
 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox4.BackColor = Color.Transparent;
@@ -107,12 +102,78 @@ namespace BIMS
             VScroll_self.BackColor = Color.Transparent;
             VScroll_main.BackColor = Color.Transparent;
 
+            fullmode = 0;
+            FindFile(FileURL.ResourceDirRoot+@"/../bean/");
         }
 
+        public void FindFile(string dirPath) //参数dirPath为指定的目录 
+        {
+            //在指定目录及子目录下查找文件,在listBox1中列出子目录及文件 
+            DirectoryInfo Dir = new DirectoryInfo(dirPath);
+            try
+            {
+                foreach (DirectoryInfo d in Dir.GetDirectories())//查找子目录 
+                {
+                    FindFile(Dir + d.ToString() + @"\");
+                }
+                foreach (FileInfo f in Dir.GetFiles("*.xml")) //查找文件 
+                {
+                    string[] filename = f.ToString().Split('.');
+                    string typename = filename[filename.Length - 2];
+                    BaseBean b = BeanTools.getBeanFromXML(typename, Dir + f.ToString());
+
+                    //bean.Add(b);
+
+                    if (fullmode!=0)
+                    {
+                        if (b.FloorNum == fullmode)
+                        {
+                            ReflectTools rt = new ReflectTools("BIMS", "BIMS", "DED194E_9S1YK2K2");
+                            DED194E_9S1YK2K2 aa = (DED194E_9S1YK2K2)rt.MObj;
+
+                            aa.Location = b.MPoint;
+                            aa.BackColor = Color.Black;
+                            aa.Size = new Size(10, 10);
+                            this.Controls.Add(aa);
+                            aa.Parent = mpanel.Controls[0].Controls[0];
+                        }
+                        else 
+                        { 
+                            continue;
+                        }
+                    }
+                    else 
+                    {
+                        ReflectTools rt = new ReflectTools("BIMS", "BIMS", "DED194E_9S1YK2K2");
+                        DED194E_9S1YK2K2 aa = (DED194E_9S1YK2K2)rt.MObj;
+
+                        aa.Location = b.MPoint;
+                        aa.BackColor = Color.Black;
+                        aa.Size = new Size(10, 10);
+                        this.Controls.Add(aa);
+                        aa.Parent = mpanel.Controls[b.FloorNum - 1].Controls[0];
+                    }                
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return;
+            }
+        }
+
+
+        /// <summary>
+        /// 双击显示方式切换
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        #region
         private void PicDoubleClick(object sender, MouseEventArgs  e) 
         {
             PictureBox pic = (PictureBox)sender;
-            //int picindex = mpanel.Controls.IndexOf(pic.Parent);
+            fullmode = mpanel.Controls.IndexOf(pic.Parent)+1;
+            label1.Text = fullmode.ToString ();
 
             mpanel.Controls.Clear();
 
@@ -131,12 +192,15 @@ namespace BIMS
             bigpic.Parent = bigpan;
 
             bigpic.MouseDoubleClick += new MouseEventHandler(BigPicDoubleClick);
+            FindFile(FileURL.ResourceDirRoot + @"/../bean/");
 
         }
 
         private void BigPicDoubleClick(object sender, MouseEventArgs e)
         {
             mpanel.Controls.Clear();
+            fullmode = 0;
+            label1.Text = fullmode.ToString();
 
             for (int i = 0; i < 7; i++)
             {
@@ -159,7 +223,10 @@ namespace BIMS
 
                 pic.MouseDoubleClick += new MouseEventHandler(PicDoubleClick);
             }
+            FindFile(FileURL.ResourceDirRoot + @"/../bean/");
         }
+        #endregion
+
         /// <summary>
         /// Button_Close  关闭按钮
         /// </summary>
