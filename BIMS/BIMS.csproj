@@ -131,27 +131,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\coin %281%29.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coin %282%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coin %283%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coin %284%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coin %285%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coin %286%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\coin %287%29.gif" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="DeviceFolder\" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +138,102 @@
       <Project>{d7026dad-3aa0-4edc-83e0-85787f07f27e}</Project>
       <Name>Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button1 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button1x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button1xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button2 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button2x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button2xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button3 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button3x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button3xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button4 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button4x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button4xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button5 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button5x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button5xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button6 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button6x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button6xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button7 .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button7x .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button7xx .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\banner.png.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user self .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mainbg.png.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\main .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\导航条.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scroll bar self .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scroll bar main .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scroll bar mainx.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\moudle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\导航图标_02.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
