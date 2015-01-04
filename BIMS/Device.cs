@@ -9,9 +9,30 @@ using Tools;
 using Oracle.DataAccess.Client;
 using System.Data;
 using System.Timers;
+using System.Collections;
 
 namespace BIMS
 {
+    public static class PublicResource
+    {
+        public static Hashtable timers = new Hashtable();
+        public static void addTimer(double timespace, ElapsedEventHandler handler)
+        {
+            System.Timers.Timer timer;
+            if(!timers.ContainsKey(timespace))
+            {
+                Console.WriteLine("添加一个itmer");
+                 timer = new System.Timers.Timer(timespace);
+                 timer.Start();
+                 timers.Add(timespace, timer);
+            }
+            else
+            {
+                timer = (System.Timers.Timer)timers[(object)timespace];
+            }
+            timer.Elapsed += handler;
+        }
+    }
     public abstract  class BaseDevice: PictureBox 
     {
         private Form mform;
@@ -110,9 +131,10 @@ namespace BIMS
             beanKey = bean.getBeanKey();
             scmd = @"select 	VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where DEVICE_GUID='" + beanKey + "' and rownum<2 order by CREAT_TIME desc";
 
-            System.Timers.Timer timer = new System.Timers.Timer(5000);
-            timer.Elapsed += new ElapsedEventHandler(this.periodWork);
-            timer.Start();
+            //System.Timers.Timer timer = new System.Timers.Timer(5000);
+            //timer.Elapsed += new ElapsedEventHandler(this.periodWork);
+            //timer.Start();
+            PublicResource.addTimer(b.During, new ElapsedEventHandler(this.periodWork));
         }
 
         public override  void newform() 
@@ -121,6 +143,7 @@ namespace BIMS
         }
         public void periodWork(object o, ElapsedEventArgs e)
         {
+            Console.WriteLine("23333333");
             using (OracleConnection conn = new OracleConnection(OracleTools.connString))
             {                
                 OracleCommand cmd = new OracleCommand(scmd, conn);
