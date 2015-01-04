@@ -24,8 +24,7 @@ namespace Service
 
 
 
-       public static string connString = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=server)(PORT=1521))" +
-                                "(CONNECT_DATA=(SID=bims)));user id=jzp;Password=abcd1234;";
+      
        
 
   
@@ -39,6 +38,7 @@ namespace Service
         }
         public virtual void periodWork(object o, ElapsedEventArgs e)
         {
+
         }
        
     }
@@ -107,7 +107,7 @@ namespace Service
                 }
                 finally
                 {
-                    using (OracleConnection conn = new OracleConnection(connString))
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
                     {
                         string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
                                                                     + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
