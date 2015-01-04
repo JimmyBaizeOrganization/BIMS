@@ -18,7 +18,6 @@ namespace BIMS
 {
     public partial class DeFrmMain : DevExpress.XtraEditors.XtraForm
     {
-        private Point mouse_offset;
         private int fullmode;
         private int maxfloor;
         private int floorview;
@@ -38,7 +37,7 @@ namespace BIMS
 
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
-            pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height+10  );
+            pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height  );
             DrawPicture_2();
 
             VScroll_self.Parent = pictureBox3;
@@ -51,9 +50,9 @@ namespace BIMS
             mpanel .GetType().GetProperty("DoubleBuffered",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(mpanel,
                 true, null);
-            VScroll_main .GetType().GetProperty("DoubleBuffered",
-               System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(VScroll_main,
-               true, null);
+            //VScroll_main .GetType().GetProperty("DoubleBuffered",
+            //   System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).SetValue(VScroll_main,
+            //   true, null);
 
             SetScrollBar(mpanel.Handle, 3, 0);
 
@@ -695,14 +694,14 @@ namespace BIMS
 
         private void DrawPicture_1()
         {
-            Bitmap bit = new Bitmap(218, 1910, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap bit = new Bitmap(218, 1945, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int iheight = 0;
 
             int imouse;
-            if ((Cursor.Position.Y - 200) < 0)
+            if ((Cursor.Position.Y - 129) < 0)
             { imouse = 0; }
             else
-            { imouse = ((Cursor.Position.Y - 200) / 33) + 3; }
+            { imouse = (int)((Cursor.Position.Y - 129) / 33.4) + 1; }
 
             for (int i = 1; i < 10; i++)
             {
@@ -736,7 +735,7 @@ namespace BIMS
 
         private void DrawPicture_2()
         {
-            Bitmap bit = new Bitmap(218, 1910, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap bit = new Bitmap(218, 1945, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             int iheight = 0;
 
             for (int i = 1; i < 10; i++)
