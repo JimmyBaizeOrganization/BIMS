@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows .Forms;
 using System.Drawing;
+using Tools;
+using Oracle.DataAccess.Client;
+using System.Data;
+using System.Timers;
 
 namespace BIMS
 {
@@ -88,15 +92,35 @@ namespace BIMS
     }
 
     class DED194E_9S1YK2K2 : BaseDevice
-    { 
-
-        public DED194E_9S1YK2K2()
+    {
+        private Bean_DED194E_9S1YK2K2 bean;
+        private string beanKey;
+        private string scmd;
+        private OracleDataReader mOracleDataReader;
+        public DED194E_9S1YK2K2(Bean_DED194E_9S1YK2K2 b)
         {
+            bean = b;
+            beanKey = bean.getBeanKey();
+            scmd = @"select 	VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where DEVICE_GUID='" + beanKey + "' and rownum<2 order by CREAT_TIME desc";
+
+            System.Timers.Timer timer = new System.Timers.Timer(5000);
+            timer.Elapsed += new ElapsedEventHandler(this.periodWork);
+            timer.Start();
         }
 
         public override  void newform() 
-        { 
-              Mform =new Frm_DED194E_9S1YK2K2() ;
+        {
+            Mform = new Frm_DED194E_9S1YK2K2(mOracleDataReader);
         }
+        public void periodWork(object o, ElapsedEventArgs e)
+        {
+            using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+            {                
+                OracleCommand cmd = new OracleCommand(scmd, conn);
+                conn.Open();
+                mOracleDataReader = cmd.ExecuteReader();
+            }
+        }
+       
     }
 }
