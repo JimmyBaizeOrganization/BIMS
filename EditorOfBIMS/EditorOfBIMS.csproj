@@ -74,6 +74,12 @@
     <Compile Include="Device.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DeviceFrom\Frm_AI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_AI.Designer.cs">
+      <DependentUpon>Frm_AI.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeviceFrom\Frm_C2000MDxA.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DeviceFrom\Frm_AI.resx">
+      <DependentUpon>Frm_AI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DFrmMain.resx">
       <DependentUpon>DFrmMain.cs</DependentUpon>
     </EmbeddedResource>

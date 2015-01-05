@@ -48,9 +48,16 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.treeViewRight = new System.Windows.Forms.TreeView();
+            this.treeViewContext1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeViewContext2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.添加ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.treeViewContext1.SuspendLayout();
+            this.treeViewContext2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dLF_Main
@@ -62,7 +69,7 @@
             // 
             this.PanRight.AllowDrop = true;
             this.PanRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.PanRight.Location = new System.Drawing.Point(233, 90);
+            this.PanRight.Location = new System.Drawing.Point(422, 100);
             this.PanRight.Margin = new System.Windows.Forms.Padding(4);
             this.PanRight.Name = "PanRight";
             this.PanRight.Size = new System.Drawing.Size(1096, 809);
@@ -184,11 +191,12 @@
             // listBox1
             // 
             this.listBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listBox1.Font = new System.Drawing.Font("微软雅黑", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 18;
+            this.listBox1.ItemHeight = 41;
             this.listBox1.Location = new System.Drawing.Point(0, 62);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(226, 1016);
+            this.listBox1.Size = new System.Drawing.Size(322, 1016);
             this.listBox1.TabIndex = 7;
             this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
             // 
@@ -209,11 +217,51 @@
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(100, 31);
             // 
+            // treeViewRight
+            // 
+            this.treeViewRight.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.treeViewRight.Location = new System.Drawing.Point(1623, 100);
+            this.treeViewRight.Name = "treeViewRight";
+            this.treeViewRight.Size = new System.Drawing.Size(421, 809);
+            this.treeViewRight.TabIndex = 8;
+            this.treeViewRight.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewRight_NodeMouseDoubleClick);
+            // 
+            // treeViewContext1
+            // 
+            this.treeViewContext1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.treeViewContext1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.属性ToolStripMenuItem});
+            this.treeViewContext1.Name = "contextMenuStrip1";
+            this.treeViewContext1.Size = new System.Drawing.Size(117, 60);
+            this.treeViewContext1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // 属性ToolStripMenuItem
+            // 
+            this.属性ToolStripMenuItem.Name = "属性ToolStripMenuItem";
+            this.属性ToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
+            this.属性ToolStripMenuItem.Text = "属性";
+            // 
+            // treeViewContext2
+            // 
+            this.treeViewContext2.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.treeViewContext2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.添加ToolStripMenuItem});
+            this.treeViewContext2.Name = "contextMenuStrip1";
+            this.treeViewContext2.Size = new System.Drawing.Size(117, 32);
+            this.treeViewContext2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // 添加ToolStripMenuItem
+            // 
+            this.添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
+            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+            this.添加ToolStripMenuItem.Text = "启用";
+            // 
             // DFrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2263, 1078);
+            this.Controls.Add(this.treeViewRight);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.tb_path);
             this.Controls.Add(this.bt_selectPath);
@@ -234,6 +282,8 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.treeViewContext1.ResumeLayout(false);
+            this.treeViewContext2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -259,6 +309,11 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.TreeView treeViewRight;
+        private System.Windows.Forms.ContextMenuStrip treeViewContext1;
+        private System.Windows.Forms.ToolStripMenuItem 属性ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip treeViewContext2;
+        private System.Windows.Forms.ToolStripMenuItem 添加ToolStripMenuItem;
 
     }
 }

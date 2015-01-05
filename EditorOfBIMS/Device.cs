@@ -132,6 +132,8 @@ namespace EditorOfBIMS
         public abstract void saveToXML(string building,int floor,string path);
     }
 
+   
+
     public class DED194E_9S1YK2K2 : BaseDevice
     {
         private Bean_DED194E_9S1YK2K2 bean;
@@ -163,27 +165,60 @@ namespace EditorOfBIMS
         }
 
     }
-    public class DI : BaseDevice
-    {
-        public DI()
-        {
 
+    public class AI : BaseDevice
+    {
+        private Boolean useing = false;
+
+        public Boolean Useing
+        {
+            get { return useing; }
+            set { useing = value; }
         }
+        private AIBean  bean;
+        private EditorOfBIMS.DeviceFrom.Frm_AI mform;
+
+        public override void creatForm()
+        {
+            MForm = new Frm_AI(bean);
+        }
+        public override void saveToXML(string building, int floor, string path)
+        {
+        }
+
     }
+
     public class C2000MDxA : BaseDevice
     {
+        private TreeView treeView;
+        private AI[] ai  =new AI[8];
+        
+        public TreeView TreeView
+        {
+            get { return treeView; }
+            set { treeView = value; }
+        }
         private Bean_C2000MDxA bean;
         public Bean_C2000MDxA Bean
         {
             get { return bean; }
             set { bean = value; }
         }
-        public C2000MDxA()
+        public C2000MDxA(TreeView t)
         {
             bean = new Bean_C2000MDxA();
-            //Image = ImageTools.getImage("C2000MDxA.jpg", imageSize, imageSize);
-           // Size = new System.Drawing.Size(20, 20);
             bean.DeviceNum = DeviceIndex++;
+
+            treeView = t;
+            TreeNode node = new TreeNode();
+            node.Text = "C2000MDxA___"+bean.DeviceNum ;
+            treeView.Nodes.Add(node);
+            for (int i = 0; i < 8; i++) 
+            {
+                TreeNode node1 = new TreeNode();
+                node1.Text = "AI" + i.ToString();
+                node.Nodes.Add(node1);
+            }          
         }
         public override void creatForm()
         {

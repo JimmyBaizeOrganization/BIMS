@@ -147,6 +147,7 @@ namespace Tools
                             , filepath);
         }
     }
+
     public class InputBaseBean
     {
         public string imagePath;
@@ -156,6 +157,12 @@ namespace Tools
         public Point mpoint;
 
     }
+
+    public class AIBean:InputBaseBean 
+    { 
+    
+    }
+
     public class Bean_C2000MDxA : BaseBean
     {
         int slaveNum;//从机编号
