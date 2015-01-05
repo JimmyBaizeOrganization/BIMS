@@ -1,5 +1,6 @@
 ﻿using EditorOfBIMS.DeviceFrom;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace EditorOfBIMS
             : base()
         {
             this.Size = new Size(imageSize, imageSize);
-            this.Location = new Point(0, 0);
+            this.Location = new Point(100, 100);
             mContextMenuStrip = new ContextMenuStrip();
             mContextMenuStrip.Items.Add("属性" );
             mContextMenuStrip.Items.Add("删除");
@@ -168,36 +169,71 @@ namespace EditorOfBIMS
 
     public class AI : BaseDevice
     {
-        private Boolean useing = false;
 
-        public Boolean Useing
-        {
-            get { return useing; }
-            set { useing = value; }
-        }
-        private AIBean  bean;
-        private EditorOfBIMS.DeviceFrom.Frm_AI mform;
+        public AIBean bean = new AIBean();
+        public TreeNode mTreeNode;
 
         public override void creatForm()
         {
             MForm = new Frm_AI(bean);
+            MForm.FormClosing += new FormClosingEventHandler(this.refreshView);
+            MForm.Text = mTreeNode.Text +"的第"+ bean.inputIndex+"个输入端口";
+        }
+        private void refreshView(object o, FormClosingEventArgs a)
+        {
+            if (bean.useing)
+            {
+                this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
+                this.Visible = true;
+                MPanel.Controls.Add(this);
+                mTreeNode.Nodes[bean.inputIndex].BackColor = Color.Red;
+            }
+            else
+            {
+                this.Visible = false;
+            }
         }
         public override void saveToXML(string building, int floor, string path)
         {
+            bean.mpoint = Location;
+        }
+        public AI(int index, TreeNode tn)
+        {
+            bean.inputIndex = index;
+            mTreeNode = tn;
+            this.Disposed += new EventHandler(this.shutDownMe);
         }
 
-    }
+        private void shutDownMe(object sender, EventArgs e)
+        {
+            mTreeNode.Nodes[bean.inputIndex].BackColor = Color.White;
+        }
 
-    public class C2000MDxA : BaseDevice
+     
+        public void openForm()
+        {
+            if (MForm == null || MForm.IsDisposed) creatForm();
+            MForm.Show();
+        }
+
+        
+    }
+    public interface BoxDevice
+    {
+        void openChild(int index);
+        
+    }
+    public class C2000MDxA : BaseDevice, BoxDevice
     {
         private TreeView treeView;
-        private AI[] ai  =new AI[8];
+        private AI[] ais  =new AI[8];
         
         public TreeView TreeView
         {
             get { return treeView; }
             set { treeView = value; }
         }
+        public TreeNode mTreeNode;
         private Bean_C2000MDxA bean;
         public Bean_C2000MDxA Bean
         {
@@ -208,28 +244,61 @@ namespace EditorOfBIMS
         {
             bean = new Bean_C2000MDxA();
             bean.DeviceNum = DeviceIndex++;
-
+            this.Visible = false;
             treeView = t;
-            TreeNode node = new TreeNode();
-            node.Text = "C2000MDxA___"+bean.DeviceNum ;
-            treeView.Nodes.Add(node);
+            mTreeNode = new TreeNode();
+            mTreeNode.Text = "C2000MDxA(" + bean.DeviceNum+")";
+            this.Name = mTreeNode.Text;
+            treeView.Nodes.Add(mTreeNode);
             for (int i = 0; i < 8; i++) 
             {
                 TreeNode node1 = new TreeNode();
                 node1.Text = "AI" + i.ToString();
-                node.Nodes.Add(node1);
-            }          
+                mTreeNode.Nodes.Add(node1);
+            }        
+           
         }
         public override void creatForm()
         {
             MForm = new Frm_C2000MDxA(bean);
         }
+        public  void openChild(int index)
+        {
+            if (index < 8)
+            {
+                if (ais[index] == null)
+                {
+                    ais[index] = new AI(index, mTreeNode);
+                    ais[index].MPanel = MPanel;
+                }
+                if (ais[index].bean.useing)
+                {
+                    ais[index].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                }
+                else
+                {
+                    ais[index].openForm();
+                }
+                
+            }
+        }
+ 
         public override void saveToXML(string building, int floor, string path)
         {
 
             bean.MPoint = Location;
             bean.BuildingName = building;
             bean.FloorNum = floor;
+            ArrayList bs = new ArrayList();
+            foreach (AI a in ais)
+            {
+                if (a!=null && a.bean.useing)
+                {
+                    bs.Add(a.bean);
+                }
+            }
+            //bean.aiBeans = (AIBean[])bs.ToArray(typeof(AIBean));
+            bean.aiBeans = bs.Cast<AIBean>().ToArray();
             XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName + bean.FloorNum + bean.DeviceNum + @".Bean_C200MDxA.xml");
         }
     }

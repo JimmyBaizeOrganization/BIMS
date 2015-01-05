@@ -128,6 +128,7 @@ namespace EditorOfBIMS
         {
             foreach (PictureBox c in this.PanRight.Controls)
             { c.BorderStyle = BorderStyle.None; }
+            
         }
 
         private void DFrmMain_KeyDown(object sender, KeyEventArgs e)
@@ -284,34 +285,57 @@ namespace EditorOfBIMS
         {
             //Point contextMenuPoint = this.PanRight.PointToClient(Control.MousePosition);   
             int index = listBox1.SelectedIndex;
-                     
+
             switch (listItems[index][3].ToString())
             {
                 case "Left":
                     ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
-                     rt.setPropertyInfo("MPanel", this.PanRight);
+                    rt.setPropertyInfo("MPanel", this.PanRight);
                     this.PanRight.Controls.Add((Control)rt.MObj);
                     break;
                 case "Right":
-                     rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2],new object[]{this.treeViewRight});
-                   
+                    rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2], new object[] { this.treeViewRight });
+                    rt.setPropertyInfo("MPanel", this.PanRight);
+                    this.PanRight.Controls.Add((Control)rt.MObj);
                     break;
             }           
         }
 
         private void treeViewRight_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            Console.WriteLine(treeViewRight.SelectedNode.Level);
-
-            switch (treeViewRight.SelectedNode.Text[0])
+            //Console.WriteLine(treeViewRight.SelectedNode);
+            //Console.WriteLine(treeViewRight.SelectedNode.Index);
+            try
             {
-                case 'A':
-                    Form a = new EditorOfBIMS.DeviceFrom.Frm_AI(null);
-                    a.Show ();
-                    break;
-            
+                Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Parent.Text, false);
+                if (ctls.Length > 0)
+                {
+                    foreach (PictureBox p in this.PanRight.Controls)
+                    {
+                        p.BorderStyle = BorderStyle.None;
+                    }
+                    BoxDevice bd = (BoxDevice)ctls[0];
+                    bd.openChild(treeViewRight.SelectedNode.Index);
+                }
+                else
+                {
+                    MessageBox.Show("奇怪的异常");
+                }
             }
+            catch
+            {
+
+            }
+            //switch (treeViewRight.SelectedNode.Text[0])
+            //{
+            //    case 'A':
+            //        Form a = new EditorOfBIMS.DeviceFrom.Frm_AI(null);
+            //        a.Show ();
+            //        break;
+            
+            //}
         }
+
 
 
     }

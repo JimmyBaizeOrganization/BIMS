@@ -151,21 +151,24 @@ namespace Tools
     public class InputBaseBean
     {
         public string imagePath;
-        public int inputIndex;
-        public string function;
+        public int inputIndex ;
+        public Boolean useing  = false;
         //坐标
         public Point mpoint;
-
+        public string detail;//输入描述
     }
 
     public class AIBean:InputBaseBean 
-    { 
-    
+    {
+        public string function;
+        public string maxVaule;
+        public string mixVaule;
     }
 
     public class Bean_C2000MDxA : BaseBean
     {
         int slaveNum;//从机编号
+        public AIBean[] aiBeans;
         public int SlaveNum
         {
             get { return slaveNum; }

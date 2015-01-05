@@ -232,7 +232,7 @@
             this.treeViewContext1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.属性ToolStripMenuItem});
             this.treeViewContext1.Name = "contextMenuStrip1";
-            this.treeViewContext1.Size = new System.Drawing.Size(117, 60);
+            this.treeViewContext1.Size = new System.Drawing.Size(117, 32);
             this.treeViewContext1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // 属性ToolStripMenuItem
@@ -253,7 +253,7 @@
             // 添加ToolStripMenuItem
             // 
             this.添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
-            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
+            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
             this.添加ToolStripMenuItem.Text = "启用";
             // 
             // DFrmMain

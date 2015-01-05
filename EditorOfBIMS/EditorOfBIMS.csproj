@@ -109,6 +109,9 @@
     <EmbeddedResource Include="DeviceFrom\Frm_AI.resx">
       <DependentUpon>Frm_AI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DeviceFrom\Frm_C2000MDxA.resx">
+      <DependentUpon>Frm_C2000MDxA.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DFrmMain.resx">
       <DependentUpon>DFrmMain.cs</DependentUpon>
     </EmbeddedResource>
