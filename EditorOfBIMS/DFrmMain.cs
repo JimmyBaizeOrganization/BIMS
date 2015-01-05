@@ -20,8 +20,8 @@ namespace EditorOfBIMS
     public partial class DFrmMain : Form 
     {
 
-        String[][] listItems = { new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
-                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2"}
+        String[][] listItems = { new String[3] { "DED194E_9S1YK2K2", "DED194E_9S1YK2K2.png","DED194E_9S1YK2K2" }
+                               , new String[3] { "C2000MDxA", "C2000MDxA.jpg","C2000MDxA"}
                                , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
@@ -92,7 +92,7 @@ namespace EditorOfBIMS
 
 
             String[] itme = listItems[e.Index];
-            Font font = new Font("微软雅黑", 10);
+            Font font = new Font("微软雅黑", 7);
             Brush brush = Brushes.Black;
             Rectangle rec = e.Bounds;
             rec.Width = iLBC_Left.ItemHeight;
@@ -106,16 +106,14 @@ namespace EditorOfBIMS
             e.Handled = true;
         }
 
-        private void iLBC_Left_MouseHover(object sender, EventArgs e)
-        {
-            // iLBC_Left.Invalidate();
-        }
 
         private void iLBC_Left_MouseDown(object sender, MouseEventArgs e)
         {
             //调用DoDragDrop方法
             if (this.iLBC_Left.SelectedItem != null)
             {
+                
+                Console.WriteLine(this.iLBC_Left.SelectedIndex+"");
                 this.iLBC_Left.DoDragDrop(this.iLBC_Left.SelectedIndex, DragDropEffects.Copy);
             }
         }
@@ -127,15 +125,15 @@ namespace EditorOfBIMS
         private void PanRight_DragDrop(object sender, DragEventArgs e)
         {
             //图片的大小
-            int size = 60;
+            //int size = 60;
             Point contextMenuPoint = this.PanRight.PointToClient(Control.MousePosition);
-            Rectangle rect = new Rectangle(contextMenuPoint.X - size / 2, contextMenuPoint.Y - size / 2, size, size);           
+            //Rectangle rect = new Rectangle(contextMenuPoint.X - size / 2, contextMenuPoint.Y - size / 2, size, size);           
             int index = (int)e.Data.GetData(typeof(Int32));
             ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
             rt.setPropertyInfo("Location", contextMenuPoint);
             rt.setPropertyInfo("MPanel", this.PanRight);
             //rt.setPropertyInfo("Image", ImageTools.getImage(listItems[index][1]));
-           // rt.setPropertyInfo("Size", new System.Drawing.Size(100, 100));
+            rt.setPropertyInfo("Size", new System.Drawing.Size(100, 100));
             this.PanRight.Controls.Add((Control)rt.MObj);
 
         }

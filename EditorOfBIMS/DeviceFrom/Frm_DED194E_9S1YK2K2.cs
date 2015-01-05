@@ -30,7 +30,8 @@ namespace EditorOfBIMS
             textBox_Port.Text = bean.Port.ToString();
             textBox_shebeihao.Text = bean.DeviceNum.ToString();
             textBox_time.Text = bean.During.ToString();
-            
+
+            tb_beizhu.DataBindings.Add("Text", bean, "Beizhu");
         }
 
         private void button_Cancle_Click(object sender, EventArgs e)
@@ -48,6 +49,7 @@ namespace EditorOfBIMS
             bean.Port =  int.Parse(textBox_Port.Text);
             bean.DeviceNum = int.Parse(textBox_shebeihao.Text);
             bean.During = int.Parse(textBox_time.Text);
+            bean.Sort = tb_Sort.Text;
             MessageBox.Show("成功保存");
             this.Close();
         }

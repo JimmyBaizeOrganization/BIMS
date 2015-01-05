@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EditorOfBIMS.DeviceFrom;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -58,6 +59,7 @@ namespace EditorOfBIMS
             this.mContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(Common_ContextMenuStripClick);
 
             deviceIndex++;
+            
         }
         private void Common_MouseMove(object sender, MouseEventArgs e)
         {
@@ -141,8 +143,8 @@ namespace EditorOfBIMS
         {
             bean = new Bean_DED194E_9S1YK2K2();
             //bean.MPoint = Mouse_offset;
-            Image = ImageTools.getImage("ElectricityGauge.png");
-            Size = new System.Drawing.Size(100, 100);
+            Image = ImageTools.getImage("DED194E_9S1YK2K2.png");
+          //  Size = new System.Drawing.Size(20, 20);
             bean.DeviceNum = DeviceIndex;
         }
         public override void creatForm()
@@ -155,8 +157,36 @@ namespace EditorOfBIMS
             bean.MPoint = Location;
             bean.BuildingName = building;
             bean.FloorNum = floor;
-            XMLSerializerHelper.XmlSerialize(bean, path + @"\"+bean.DeviceNum+@".Bean_DED194E_9S1YK2K2.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path + @"\"+bean.BuildingName+bean.FloorNum+bean.DeviceNum+@".Bean_DED194E_9S1YK2K2.xml");
         }
 
+    }
+    public class C2000MDxA : BaseDevice
+    {
+        private Bean_C2000MDxA bean;
+        public Bean_C2000MDxA Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        public C2000MDxA()
+        {
+            bean = new Bean_C2000MDxA();
+            Image = ImageTools.getImage("C2000MDxA.jpg");
+           // Size = new System.Drawing.Size(20, 20);
+            bean.DeviceNum = DeviceIndex;
+        }
+        public override void creatForm()
+        {
+            MForm = new Frm_C2000MDxA(bean);
+        }
+        public override void saveToXML(string building, int floor, string path)
+        {
+
+            bean.MPoint = Location;
+            bean.BuildingName = building;
+            bean.FloorNum = floor;
+            XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName + bean.FloorNum + bean.DeviceNum + @".Bean_C200MDxA.xml");
+        }
     }
 }

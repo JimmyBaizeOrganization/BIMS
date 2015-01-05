@@ -60,7 +60,7 @@
             this.iLBC_Left.TabIndex = 0;
             this.iLBC_Left.DrawItem += new DevExpress.XtraEditors.ListBoxDrawItemEventHandler(this.iLBC_Left_DrawItem);
             this.iLBC_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.iLBC_Left_MouseDown);
-            this.iLBC_Left.MouseHover += new System.EventHandler(this.iLBC_Left_MouseHover);
+          
             // 
             // dLF_Main
             // 

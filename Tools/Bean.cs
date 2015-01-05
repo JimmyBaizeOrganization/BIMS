@@ -18,7 +18,13 @@ namespace Tools
         }
         int baud;
         string className;
+        string sort;
 
+        public string Sort
+        {
+            get { return sort; }
+            set { sort = value; }
+        }
         public string ClassName
         {
             get { return className; }
@@ -32,6 +38,13 @@ namespace Tools
         }
 
         int port;
+        private string beizhu;
+
+        public string Beizhu
+        {
+            get { return beizhu; }
+            set { beizhu = value; }
+        }
 
         public int Port
         {
@@ -132,6 +145,23 @@ namespace Tools
         {
             return (BaseBean)XMLSerializerHelper.XmlDeserialize(ReflectTools.getType("Tools", "Tools", beanname)
                             , filepath);
+        }
+    }
+    public class Bean_C2000MDxA : BaseBean
+    {
+        int slaveNum;//从机编号
+        public int SlaveNum
+        {
+            get { return slaveNum; }
+            set { slaveNum = value; }
+        }
+        public  Bean_C2000MDxA()
+        {
+            Baud = 9600;
+            slaveNum = 1;
+            ClassName = "C2000MDxA";
+            During = 5000;
+            DeviceType = "C2000MDxA";
         }
     }
     
