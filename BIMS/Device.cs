@@ -131,8 +131,7 @@ namespace BIMS
         }
         
         public DED194E_9S1YK2K2(Bean_DED194E_9S1YK2K2 b)
-        {
-            
+        {    
             bean = b;
             beanKey = bean.getBeanKey();
             scmd = @"select * from (select VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
