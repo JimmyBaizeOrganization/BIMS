@@ -22,7 +22,7 @@ namespace EditorOfBIMS
 
         String[][] listItems = { new String[3] { "DED194E_9S1YK2K2", "DED194E_9S1YK2K2.png","DED194E_9S1YK2K2" }
                                , new String[3] { "C2000MDxA", "C2000MDxA.jpg","C2000MDxA"}
-                               , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
+                               , new String[3] { "电量仪", "ElectricityGauge.png","ElectricityGauge" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }
                                , new String[3] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2" }};
@@ -69,53 +69,29 @@ namespace EditorOfBIMS
 
         private void initToolsBox()
         {
-            iLBC_Left.ItemHeight = 40;
             for (int i = 0; i < listItems.Length; i++)
             {
-                iLBC_Left.Items.Add(i);
+                listBox1.Items.Add(listItems[i][0]);
 
+              
             }
         }
 
         private void iLBC_Left_DrawItem(object sender, ListBoxDrawItemEventArgs e)
         {
-            Brush myBrush = Brushes.Black;
-            if(e.Index % 2 == 0)
-            {
-                myBrush = new SolidBrush(Color.Azure);
-            }
-            else
-            {
-                myBrush = new SolidBrush(Color.White);
-            }
-            e.Graphics.FillRectangle(myBrush, e.Bounds);
-
-
-            String[] itme = listItems[e.Index];
-            Font font = new Font("微软雅黑", 7);
-            Brush brush = Brushes.Black;
-            Rectangle rec = e.Bounds;
-            rec.Width = iLBC_Left.ItemHeight;
-            rec.Height = iLBC_Left.ItemHeight;
-            e.Graphics.DrawImage(ImageTools.getImage(itme[1]), rec);
-            // PointF pointf = new PointF(iLBC_Left.ItemHeight * 2 + 10, iLBC_Left.ItemHeight / 2);
-            rec.X = iLBC_Left.ItemHeight + 10;
-            rec.Width = iLBC_Left.Size.Width - iLBC_Left.ItemHeight;
-            rec.Y += iLBC_Left.ItemHeight / 3;
-            e.Graphics.DrawString(itme[0], font, brush, rec);
-            e.Handled = true;
+          
         }
 
 
         private void iLBC_Left_MouseDown(object sender, MouseEventArgs e)
         {
-            //调用DoDragDrop方法
-            if (this.iLBC_Left.SelectedItem != null)
-            {
-                
-                Console.WriteLine(this.iLBC_Left.SelectedIndex+"");
-                this.iLBC_Left.DoDragDrop(this.iLBC_Left.SelectedIndex, DragDropEffects.Copy);
-            }
+            ////调用DoDragDrop方法
+            ////iLBC_Left .SelectedIndexChanged += new EventHandler (object sender,EventArgs e);
+            //if (this.iLBC_Left.SelectedItem != null)
+            //{
+            //    Console.WriteLine ( iLBC_Left.Items .Count );
+            //    this.iLBC_Left.DoDragDrop(this.iLBC_Left.SelectedIndex, DragDropEffects.Copy);
+            //}
         }
         private void PanRight_DragEnter(object sender, DragEventArgs e)
         {
@@ -302,6 +278,15 @@ namespace EditorOfBIMS
                     this.PanRight.Controls.Add((Control)rt.MObj);
                 }
             }
+        }
+
+        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Point contextMenuPoint = this.PanRight.PointToClient(Control.MousePosition);   
+            int index = listBox1.SelectedIndex;
+            ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
+            rt.setPropertyInfo("MPanel", this.PanRight);
+            this.PanRight.Controls.Add((Control)rt.MObj);
         }
 
 

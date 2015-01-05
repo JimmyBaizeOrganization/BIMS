@@ -10,9 +10,10 @@ using Tools;
 
 namespace EditorOfBIMS
 {
-
+ 
     public abstract class BaseDevice : PictureBox
     {
+        public static int imageSize = 30;
         //记录设备号。自动添加设备号
         static int deviceIndex = 0;
 
@@ -47,6 +48,8 @@ namespace EditorOfBIMS
         public BaseDevice()
             : base()
         {
+            this.Size = new Size(imageSize, imageSize);
+            this.Location = new Point(0, 0);
             mContextMenuStrip = new ContextMenuStrip();
             mContextMenuStrip.Items.Add("属性" );
             mContextMenuStrip.Items.Add("删除");
@@ -58,8 +61,7 @@ namespace EditorOfBIMS
             this.MouseDoubleClick += new MouseEventHandler(Common_DoubleClick);
             this.mContextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(Common_ContextMenuStripClick);
 
-            deviceIndex++;
-            
+           
         }
         private void Common_MouseMove(object sender, MouseEventArgs e)
         {
@@ -143,9 +145,9 @@ namespace EditorOfBIMS
         {
             bean = new Bean_DED194E_9S1YK2K2();
             //bean.MPoint = Mouse_offset;
-            Image = ImageTools.getImage("DED194E_9S1YK2K2.png");
+            Image = ImageTools.getImage("DED194E_9S1YK2K2.png", imageSize, imageSize);
           //  Size = new System.Drawing.Size(20, 20);
-            bean.DeviceNum = DeviceIndex;
+            bean.DeviceNum = DeviceIndex++;
         }
         public override void creatForm()
         {
@@ -161,6 +163,13 @@ namespace EditorOfBIMS
         }
 
     }
+    public class DI : BaseDevice
+    {
+        public DI()
+        {
+
+        }
+    }
     public class C2000MDxA : BaseDevice
     {
         private Bean_C2000MDxA bean;
@@ -172,9 +181,9 @@ namespace EditorOfBIMS
         public C2000MDxA()
         {
             bean = new Bean_C2000MDxA();
-            Image = ImageTools.getImage("C2000MDxA.jpg");
+            //Image = ImageTools.getImage("C2000MDxA.jpg", imageSize, imageSize);
            // Size = new System.Drawing.Size(20, 20);
-            bean.DeviceNum = DeviceIndex;
+            bean.DeviceNum = DeviceIndex++;
         }
         public override void creatForm()
         {

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DFrmMain));
-            this.iLBC_Left = new DevExpress.XtraEditors.ImageListBoxControl();
             this.dLF_Main = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.PanRight = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -46,21 +45,13 @@
             this.tb_floornum = new System.Windows.Forms.TextBox();
             this.bt_selectPath = new System.Windows.Forms.Button();
             this.tb_path = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).BeginInit();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // iLBC_Left
-            // 
-            this.iLBC_Left.Location = new System.Drawing.Point(0, 92);
-            this.iLBC_Left.Margin = new System.Windows.Forms.Padding(4);
-            this.iLBC_Left.Name = "iLBC_Left";
-            this.iLBC_Left.Size = new System.Drawing.Size(237, 809);
-            this.iLBC_Left.TabIndex = 0;
-            this.iLBC_Left.DrawItem += new DevExpress.XtraEditors.ListBoxDrawItemEventHandler(this.iLBC_Left_DrawItem);
-            this.iLBC_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.iLBC_Left_MouseDown);
-          
             // 
             // dLF_Main
             // 
@@ -71,10 +62,10 @@
             // 
             this.PanRight.AllowDrop = true;
             this.PanRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.PanRight.Location = new System.Drawing.Point(246, 92);
+            this.PanRight.Location = new System.Drawing.Point(233, 90);
             this.PanRight.Margin = new System.Windows.Forms.Padding(4);
             this.PanRight.Name = "PanRight";
-            this.PanRight.Size = new System.Drawing.Size(1188, 809);
+            this.PanRight.Size = new System.Drawing.Size(1096, 809);
             this.PanRight.TabIndex = 1;
             this.PanRight.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanRight_DragDrop);
             this.PanRight.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanRight_DragEnter);
@@ -92,7 +83,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(1434, 31);
+            this.toolStrip1.Size = new System.Drawing.Size(2263, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -157,7 +148,7 @@
             // 
             // tb_buildingname
             // 
-            this.tb_buildingname.Location = new System.Drawing.Point(159, 48);
+            this.tb_buildingname.Location = new System.Drawing.Point(339, 53);
             this.tb_buildingname.Margin = new System.Windows.Forms.Padding(4);
             this.tb_buildingname.Name = "tb_buildingname";
             this.tb_buildingname.Size = new System.Drawing.Size(148, 28);
@@ -165,7 +156,7 @@
             // 
             // tb_floornum
             // 
-            this.tb_floornum.Location = new System.Drawing.Point(513, 51);
+            this.tb_floornum.Location = new System.Drawing.Point(577, 48);
             this.tb_floornum.Margin = new System.Windows.Forms.Padding(4);
             this.tb_floornum.Name = "tb_floornum";
             this.tb_floornum.Size = new System.Drawing.Size(148, 28);
@@ -190,18 +181,47 @@
             this.tb_path.Size = new System.Drawing.Size(408, 28);
             this.tb_path.TabIndex = 6;
             // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 18;
+            this.listBox1.Location = new System.Drawing.Point(0, 62);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(226, 1016);
+            this.listBox1.TabIndex = 7;
+            this.listBox1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDoubleClick);
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox1});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 31);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip2.Size = new System.Drawing.Size(2263, 31);
+            this.toolStrip2.TabIndex = 2;
+            this.toolStrip2.Text = "toolStrip1";
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 31);
+            // 
             // DFrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1434, 899);
+            this.ClientSize = new System.Drawing.Size(2263, 1078);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.tb_path);
             this.Controls.Add(this.bt_selectPath);
             this.Controls.Add(this.tb_floornum);
             this.Controls.Add(this.tb_buildingname);
-            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.PanRight);
-            this.Controls.Add(this.iLBC_Left);
+            this.Controls.Add(this.toolStrip2);
+            this.Controls.Add(this.toolStrip1);
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DFrmMain";
@@ -209,10 +229,11 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DFrmMain_FormClosing);
             this.Load += new System.EventHandler(this.DFrmMain_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DFrmMain_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.iLBC_Left)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -220,7 +241,6 @@
 
         #endregion
 
-        private DevExpress.XtraEditors.ImageListBoxControl iLBC_Left;
         private DevExpress.LookAndFeel.DefaultLookAndFeel dLF_Main;
         private System.Windows.Forms.Panel PanRight;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -236,6 +256,9 @@
         private System.Windows.Forms.Button bt_selectPath;
         private System.Windows.Forms.TextBox tb_path;
         private System.Windows.Forms.ToolStripButton tb_Open;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
 
     }
 }
