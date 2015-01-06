@@ -89,6 +89,12 @@
     <Compile Include="Frm_DED194E_9S1YK2K2.Designer.cs">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Loading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Loading.Designer.cs">
+      <DependentUpon>Frm_Loading.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DeFrmMain.resx">
@@ -96,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_DED194E_9S1YK2K2.resx">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Loading.resx">
+      <DependentUpon>Frm_Loading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -244,6 +253,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\littleM .png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
