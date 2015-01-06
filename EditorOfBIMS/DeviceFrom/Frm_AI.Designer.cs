@@ -42,6 +42,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // checkBox_Run
@@ -90,11 +92,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(212, 69);
+            this.label3.Location = new System.Drawing.Point(185, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 18);
+            this.label3.Size = new System.Drawing.Size(107, 18);
             this.label3.TabIndex = 2;
-            this.label3.Text = "设备类型";
+            this.label3.Text = "传感器类型";
             // 
             // comboBox1
             // 
@@ -165,11 +167,29 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "输入下限";
             // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(157, 251);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(319, 28);
+            this.textBox6.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(59, 262);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(80, 18);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "设备类别";
+            // 
             // Frm_AI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(534, 670);
+            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox4);
@@ -207,5 +227,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label7;
     }
 }

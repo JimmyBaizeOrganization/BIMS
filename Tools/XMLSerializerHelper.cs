@@ -112,7 +112,11 @@ namespace Tools
                     }
                 }
             }
-            catch { o = null; }
+            catch (Exception e2)
+            {
+                Console.WriteLine(e2.ToString());
+                o = null; 
+            }
             return o;
         }
 

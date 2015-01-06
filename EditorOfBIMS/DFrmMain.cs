@@ -29,13 +29,14 @@ namespace EditorOfBIMS
         public DFrmMain()
         {
             InitializeComponent();
+            treeViewRight.ContextMenuStrip = treeViewContext1;
         }
 
         private void DFrmMain_Load(object sender, EventArgs e)
         {
             //初始化  保存路径默认设置\
             DirectoryInfo dirinfo = new DirectoryInfo(Environment.CurrentDirectory);
-            tb_path.Text = dirinfo.Parent.Parent.Parent.FullName;
+            tb_path.Text = dirinfo.Parent.Parent.Parent.Parent.FullName+@"\bean";
             // = System.Environment.CurrentDirectory;
             //初始化左边栏
             initToolsBox();
@@ -271,10 +272,10 @@ namespace EditorOfBIMS
                     string typename = filename[filename.Length - 2];
                     BaseBean b = BeanTools.getBeanFromXML(typename, file);
                                          
-                    ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", b.ClassName);
-                    rt.setPropertyInfo("Bean", b);
+                    ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", b.ClassName,new object[]{new object[]{b,this.PanRight,this.treeViewRight}});
+                    //rt.setPropertyInfo("Bean", b);
                     rt.setPropertyInfo("Location", b.MPoint);
-                    rt.setPropertyInfo("MPanel", this.PanRight);                  
+                  //  rt.setPropertyInfo("MPanel", this.PanRight);                  
                    
                     this.PanRight.Controls.Add((Control)rt.MObj);
                 }
@@ -294,8 +295,8 @@ namespace EditorOfBIMS
                     this.PanRight.Controls.Add((Control)rt.MObj);
                     break;
                 case "Right":
-                    rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2], new object[] { this.treeViewRight });
-                    rt.setPropertyInfo("MPanel", this.PanRight);
+                    rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2], new object[] {this.PanRight, this.treeViewRight });
+                   // rt.setPropertyInfo("MPanel", this.PanRight);
                     this.PanRight.Controls.Add((Control)rt.MObj);
                     break;
             }           
@@ -315,7 +316,7 @@ namespace EditorOfBIMS
                         p.BorderStyle = BorderStyle.None;
                     }
                     BoxDevice bd = (BoxDevice)ctls[0];
-                    bd.openChild(treeViewRight.SelectedNode.Index);
+                    bd.showChild(treeViewRight.SelectedNode.Index);
                 }
                 else
                 {
@@ -326,17 +327,39 @@ namespace EditorOfBIMS
             {
 
             }
-            //switch (treeViewRight.SelectedNode.Text[0])
-            //{
-            //    case 'A':
-            //        Form a = new EditorOfBIMS.DeviceFrom.Frm_AI(null);
-            //        a.Show ();
-            //        break;
-            
-            //}
+       
         }
 
-
+        private void 属性ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Text, false);            
+            if (this.treeViewRight.SelectedNode.Level == 0)
+            {
+                BaseDevice bd =(BaseDevice) ctls[0];
+                bd.showForm();
+            }
+            else if (this.treeViewRight.SelectedNode.Level == 1)
+            {
+                BoxDevice bd = (BoxDevice)ctls[0];
+                bd.showChildAttri(treeViewRight.SelectedNode.Index);
+            }
+           
+        }
+        private void 删除ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Text, false);
+            if (this.treeViewRight.SelectedNode.Level == 0)
+            {
+                ctls[0].Dispose();
+                this.treeViewRight.Nodes.Remove(this.treeViewRight.SelectedNode);
+            }
+            else if (this.treeViewRight.SelectedNode.Level == 1)
+            {
+                BoxDevice bd = (BoxDevice)ctls[0];
+                bd.delectChild(treeViewRight.SelectedNode.Index);
+            }
+        }
+        
 
     }
 }

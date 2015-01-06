@@ -51,13 +51,11 @@
             this.treeViewRight = new System.Windows.Forms.TreeView();
             this.treeViewContext1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeViewContext2 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.添加ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.treeViewContext1.SuspendLayout();
-            this.treeViewContext2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dLF_Main
@@ -230,31 +228,25 @@
             // 
             this.treeViewContext1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.treeViewContext1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.属性ToolStripMenuItem});
+            this.属性ToolStripMenuItem,
+            this.删除ToolStripMenuItem1});
             this.treeViewContext1.Name = "contextMenuStrip1";
-            this.treeViewContext1.Size = new System.Drawing.Size(117, 32);
+            this.treeViewContext1.Size = new System.Drawing.Size(199, 93);
             this.treeViewContext1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
             // 
             // 属性ToolStripMenuItem
             // 
             this.属性ToolStripMenuItem.Name = "属性ToolStripMenuItem";
-            this.属性ToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
+            this.属性ToolStripMenuItem.Size = new System.Drawing.Size(198, 28);
             this.属性ToolStripMenuItem.Text = "属性";
+            this.属性ToolStripMenuItem.Click += new System.EventHandler(this.属性ToolStripMenuItem_Click);
             // 
-            // treeViewContext2
+            // 删除ToolStripMenuItem1
             // 
-            this.treeViewContext2.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.treeViewContext2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.添加ToolStripMenuItem});
-            this.treeViewContext2.Name = "contextMenuStrip1";
-            this.treeViewContext2.Size = new System.Drawing.Size(117, 32);
-            this.treeViewContext2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
-            // 
-            // 添加ToolStripMenuItem
-            // 
-            this.添加ToolStripMenuItem.Name = "添加ToolStripMenuItem";
-            this.添加ToolStripMenuItem.Size = new System.Drawing.Size(116, 28);
-            this.添加ToolStripMenuItem.Text = "启用";
+            this.删除ToolStripMenuItem1.Name = "删除ToolStripMenuItem1";
+            this.删除ToolStripMenuItem1.Size = new System.Drawing.Size(198, 28);
+            this.删除ToolStripMenuItem1.Text = "删除";
+            this.删除ToolStripMenuItem1.Click += new System.EventHandler(this.删除ToolStripMenuItem1_Click);
             // 
             // DFrmMain
             // 
@@ -283,7 +275,6 @@
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.treeViewContext1.ResumeLayout(false);
-            this.treeViewContext2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,8 +303,7 @@
         private System.Windows.Forms.TreeView treeViewRight;
         private System.Windows.Forms.ContextMenuStrip treeViewContext1;
         private System.Windows.Forms.ToolStripMenuItem 属性ToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip treeViewContext2;
-        private System.Windows.Forms.ToolStripMenuItem 添加ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem1;
 
     }
 }

@@ -156,6 +156,7 @@ namespace Tools
         //坐标
         public Point mpoint;
         public string detail;//输入描述
+        public string sort;//输入描述
     }
 
     public class AIBean:InputBaseBean 

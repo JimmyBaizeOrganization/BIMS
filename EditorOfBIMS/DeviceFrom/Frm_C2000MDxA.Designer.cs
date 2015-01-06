@@ -53,6 +53,7 @@
             this.tb_Sort.Name = "tb_Sort";
             this.tb_Sort.Size = new System.Drawing.Size(134, 28);
             this.tb_Sort.TabIndex = 18;
+            this.tb_Sort.Visible = false;
             // 
             // label1
             // 
@@ -62,6 +63,7 @@
             this.label1.Size = new System.Drawing.Size(80, 18);
             this.label1.TabIndex = 17;
             this.label1.Text = "设备类别";
+            this.label1.Visible = false;
             // 
             // textBox_time
             // 

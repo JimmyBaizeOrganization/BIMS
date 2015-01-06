@@ -18,8 +18,15 @@ namespace EditorOfBIMS.DeviceFrom
         {
             InitializeComponent();
             bean = b;
-           // checkBox_Run.DataBindings.Add("Checked", bean, "useing");
+           
             checkBox_Run.Checked = bean.useing;
+
+            textBox2.Text= bean.imagePath ;
+             textBox1.Text=bean.function ;
+              textBox3.Text=bean.detail;
+             textBox5.Text= bean.mixVaule;
+             textBox4.Text =bean.maxVaule;
+             textBox6.Text=bean.sort ;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -40,6 +47,7 @@ namespace EditorOfBIMS.DeviceFrom
                     bean.detail = textBox3.Text;
                     bean.mixVaule = textBox5.Text;
                     bean.maxVaule = textBox4.Text;
+                    bean.sort = textBox6.Text;
                 }
             }
             this.Close();

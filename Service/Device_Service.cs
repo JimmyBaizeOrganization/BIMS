@@ -20,7 +20,7 @@ namespace Service
     {
          BaseBean getBean();
     }
-    class BaseDevice
+    public class BaseDevice
     {
 
 
@@ -192,7 +192,7 @@ namespace Service
         public override void periodWork(object o, ElapsedEventArgs e)
         {
             float[] ai  = new float[8];
-            char[] oi = new char[2];
+            int[] oi = new int[2];
             using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
                 try
@@ -218,8 +218,8 @@ namespace Service
                                 ai[i] = ((65535 - v+1) * 5) * 1000 / 4080000 / 240.0f;
                             }
                         }
-                        oi[0] = (char)buff[20];
-                        oi[1] = (char)buff[22];
+                        oi[0] = (int)buff[20];
+                        oi[1] = (int)buff[22];
                         state = 0;
                     }
                     else
@@ -228,16 +228,17 @@ namespace Service
                         state = 1;
                     }
                 }
-                catch
+                catch(Exception e2)
                 {
+                    Console.WriteLine(e2.ToString());
                     //ＴＣＰIP  链接异常
                     state = 2;
                 }
                 finally
                 {
 
-                    string scmd = @"INSERT INTO C2000MDXA (DEVICE_GUID, STATE,CREAT_TIME,AI0,AI1,AI2,AI3,AI4,AI5,AI6,AI6,AI7,DI0,DI1) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + ai[0] + @"," + ai[1] + "," + ai[2] + "," + ai[3] + "," + ai[4] + "," + ai[5] + "," + ai[6] + "," + ai[7] + "," + oi[0] + "," + "," + oi[1] + "," + @")";
+                    string scmd = @"INSERT INTO C2000MDXA (DEVICE_GUID, STATE,CREAT_TIME,AI0,AI1,AI2,AI3,AI4,AI5,AI6,AI7,DI0,DI1) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + ai[0] + @"," + ai[1] + "," + ai[2] + "," + ai[3] + "," + ai[4] + "," + ai[5] + "," + ai[6] + "," + ai[7] + "," + oi[0]  + "," + oi[1]  + @")";
 
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))
                     {
