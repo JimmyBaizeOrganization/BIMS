@@ -74,6 +74,12 @@
     <Compile Include="Device.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DeviceFrom\Frm_C2000MD82.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_C2000MD82.Designer.cs">
+      <DependentUpon>Frm_C2000MD82.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeviceFrom\Frm_DI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +97,12 @@
     </Compile>
     <Compile Include="DeviceFrom\Frm_C2000MDxA.Designer.cs">
       <DependentUpon>Frm_C2000MDxA.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_DO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_DO.Designer.cs">
+      <DependentUpon>Frm_DO.cs</DependentUpon>
     </Compile>
     <Compile Include="DFrmMain.cs">
       <SubType>Form</SubType>
@@ -112,6 +124,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DeviceFrom\Frm_C2000MD82.resx">
+      <DependentUpon>Frm_C2000MD82.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeviceFrom\Frm_DI.resx">
       <DependentUpon>Frm_DI.cs</DependentUpon>
     </EmbeddedResource>
@@ -120,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeviceFrom\Frm_C2000MDxA.resx">
       <DependentUpon>Frm_C2000MDxA.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeviceFrom\Frm_DO.resx">
+      <DependentUpon>Frm_DO.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DFrmMain.resx">
       <DependentUpon>DFrmMain.cs</DependentUpon>

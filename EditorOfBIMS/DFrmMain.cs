@@ -22,7 +22,7 @@ namespace EditorOfBIMS
 
         String[][] listItems = { new String[4] { "DED194E_9S1YK2K2", "DED194E_9S1YK2K2.png","DED194E_9S1YK2K2","Left" }
                                , new String[4] { "C2000MDxA", "C2000MDxA.jpg","C2000MDxA","Right"}
-                               , new String[4] { "电量仪", "ElectricityGauge.png","ElectricityGauge","" }
+                               , new String[4] { "C2000MD82", "C2000MDxA.png","C2000MD82","Right" }
                                , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2","" }
                                , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2","" }
                                , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2",""}};

@@ -147,21 +147,24 @@ namespace Tools
                             , filepath);
         }
     }
-
-    public class InputBaseBean
+    public class IOBaseBean
     {
         public string imagePath;
-        public int inputIndex ;
-        public Boolean useing  = false;
+        public int ioIndex;
+        public Boolean useing = false;
         //坐标
         public Point mpoint;
         public string detail;//输入描述
         public string sort;//输入描述
     }
+    public class InputBaseBean : IOBaseBean
+    {
+       
+    }
 
     public class AIBean:InputBaseBean 
     {
-        public string imagePath;
+        
         public string function;
         public string maxVaule;
         public string mixVaule;
@@ -172,6 +175,14 @@ namespace Tools
         //public string function;
         public Boolean normalVaule;//正常值
         //public string mixVaule;
+    }
+    public class OutputBaseBean : IOBaseBean
+    {
+    }
+    public class DOBean : OutputBaseBean
+    {
+        public string imageClosePath;//关闭状态下的图片路径
+        public Boolean normalVaule;//正常值
     }
     public class Bean_C2000MDxA : BaseBean
     {
@@ -193,5 +204,24 @@ namespace Tools
             DeviceType = "C2000MDxA";
         }
     }
-    
+    public class Bean_C2000MD82 : BaseBean
+    {
+        int slaveNum;//从机编号
+        public DIBean[] diBeans;
+        public DOBean[] doBeans;
+        //public Boolean VorI;//电压或者电流设备选型
+        public int SlaveNum
+        {
+            get { return slaveNum; }
+            set { slaveNum = value; }
+        }
+        public Bean_C2000MD82()
+        {
+            Baud = 9600;
+            slaveNum = 1;
+            ClassName = "C2000MD82";
+            During = 5000;
+            DeviceType = "C2000MD82";
+        }
+    }   
 }

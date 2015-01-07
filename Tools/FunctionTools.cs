@@ -20,4 +20,10 @@ namespace Tools
         }
 
     }
+    enum BIMSConnectState
+    {
+        OK = 0,
+        ERROR_TCPIP = 1,
+        ERROR_CHECKSUM = 2,
+    }
 }

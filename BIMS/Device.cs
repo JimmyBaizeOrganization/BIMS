@@ -52,9 +52,10 @@ namespace BIMS
         }
         public BaseDevice()
         {
-            this.MouseDown += new MouseEventHandler(Common_MouseDown);
-            //this.MouseEnter += new EventHandler(Common_MouseEnter);
-            //this.MouseLeave += new EventHandler(Common_MouseLeave);
+            //this.MouseDown += new MouseEventHandler(Common_MouseDown);
+           // this.MouseEnter += new EventHandler(Common_MouseEnter);
+            this.MouseLeave += new EventHandler(Common_LostFocus);
+            this.MouseEnter += new EventHandler(Common_MouseDown);
         }
 
         private void Common_MouseDown(object sender, EventArgs e) 
@@ -338,16 +339,16 @@ namespace BIMS
             if (bean.aiBeans != null) { 
                 foreach (AIBean aib in bean.aiBeans)
                 {
-                    ais[aib.inputIndex] = new AI(aib, bean.During, dataVaule);
-                    devices.Add(ais[aib.inputIndex]);
+                    ais[aib.ioIndex] = new AI(aib, bean.During, dataVaule);
+                    devices.Add(ais[aib.ioIndex]);
                 }
             }
             if (bean.diBeans != null)
             { 
                 foreach (DIBean dib in bean.diBeans)
                 {
-                    dis[dib.inputIndex-8] = new DI(dib);
-                    devices.Add(dis[dib.inputIndex - 8]);
+                    dis[dib.ioIndex-8] = new DI(dib);
+                    devices.Add(dis[dib.ioIndex - 8]);
                 }
             }
 
@@ -386,8 +387,8 @@ namespace BIMS
                     {
                         if (aib.useing)
                         {
-                            dataVaule[aib.inputIndex] = FunctionTools.calculateByString(mCalHandler(dataVaule[0]), aib.function);
-                            ais[aib.inputIndex].changeImageState(0 == dataVaule[10]);
+                            dataVaule[aib.ioIndex] = FunctionTools.calculateByString(mCalHandler(dataVaule[0]), aib.function);
+                            ais[aib.ioIndex].changeImageState(0 == dataVaule[10]);
                         }
                         
                     }
@@ -399,8 +400,8 @@ namespace BIMS
                         if (dib.useing)
                         {
 
-                            dis[dib.inputIndex - 8].changeInputState((int)dataVaule[dib.inputIndex]);
-                            dis[dib.inputIndex-8].changeImageState(0 == dataVaule[10]);
+                            dis[dib.ioIndex - 8].changeInputState((int)dataVaule[dib.ioIndex]);
+                            dis[dib.ioIndex-8].changeImageState(0 == dataVaule[10]);
                         }
                     }
                 }

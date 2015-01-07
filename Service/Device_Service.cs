@@ -94,18 +94,18 @@ namespace Service
                             data[i] = BitConverter.ToSingle(bf, 0);
                             //Console.WriteLine(data[i].ToString());
                         }
-                        state = 0;
+                        state = BIMSConnectState.OK;
                     }
                     else
                     {
                         ///校验异常
-                        state = 1;
+                        state = BIMSConnectState.ERROR_CHECKSUM;
                     }
                 }
                 catch
                 {
                     //ＴＣＰIP  链接异常
-                    state = 2;
+                    state = BIMSConnectState.ERROR_TCPIP;
                 }
                 finally
                 {
@@ -220,19 +220,19 @@ namespace Service
                         }
                         oi[0] = (int)buff[20];
                         oi[1] = (int)buff[22];
-                        state = 0;
+                        state = BIMSConnectState.OK;
                     }
                     else
                     {
                         ///校验异常
-                        state = 1;
+                        state = BIMSConnectState.ERROR_CHECKSUM;
                     }
                 }
                 catch(Exception e2)
                 {
                     Console.WriteLine(e2.ToString());
                     //ＴＣＰIP  链接异常
-                    state = 2;
+                    state = BIMSConnectState.ERROR_TCPIP;
                 }
                 finally
                 {
@@ -263,4 +263,97 @@ namespace Service
 
         }
     }
+    public class C2000MD82 : BaseDevice, IBeanTool
+    {
+        static byte dataLenth = 8;//采集数据个数 
+        static int recLenth = dataLenth * 2 + 5;
+        byte[] cmd;
+        private int state;
+        private Bean_C2000MD82 bean;
+
+        public Bean_C2000MD82 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        IPEndPoint ipe;
+        IPAddress ipa;
+
+        private string GUID;
+        public C2000MD82(Bean_C2000MD82 b)
+        {
+            bean = b;
+            cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0x01, 0x04, 0x00, dataLenth }, true);
+            GUID = bean.getBeanKey();
+            ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+        }
+        public BaseBean getBean()
+        {
+            return bean;
+        }
+        public override void periodWork(object o, ElapsedEventArgs e)
+        {
+            
+            int[] di = new int[8];
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[recLenth];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        int start = 4;
+                        for (int i = 0; i < (buff[2] / 2) - 2; i++, start += 2)
+                        {
+                            di[i] = buff[start];
+                        }
+                       
+                        state = BIMSConnectState.OK;
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = BIMSConnectState.ERROR_CHECKSUM;
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = BIMSConnectState.ERROR_TCPIP;
+                }
+                finally
+                {
+
+                    string scmd = @"INSERT INTO C2000MD82 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + di[0] + @"," + di[1] + "," + di[2] + "," + di[3] + "," + di[4] + "," + di[5] + "," + di[6] + "," + di[7] + @")";
+
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    {
+                        try
+                        {
+
+                            OracleCommand cmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+
+                        }
+
+                    }
+
+
+
+                }
+            }
+
+        }
+    }
+   
 }

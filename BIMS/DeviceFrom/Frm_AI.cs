@@ -29,7 +29,7 @@ namespace BIMS.DeviceFrom
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.label1.Text = string.Format(bean.detail, data[bean.inputIndex]);
+            this.label1.Text = string.Format(bean.detail, data[bean.ioIndex]);
         }
     }
 }

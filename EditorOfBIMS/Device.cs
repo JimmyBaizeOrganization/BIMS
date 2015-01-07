@@ -188,7 +188,7 @@ namespace EditorOfBIMS
         {
             MForm = new Frm_AI(bean);
             MForm.FormClosing += new FormClosingEventHandler(this.refreshView);
-            MForm.Text = mTreeNode.Text +"的第"+ bean.inputIndex+"个输入端口";
+            MForm.Text = mTreeNode.Text + "-->" + mTreeNode.Nodes[bean.ioIndex].Text;
         }
         private void refreshView(object o, FormClosingEventArgs a)
         {
@@ -197,7 +197,7 @@ namespace EditorOfBIMS
                 this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
                 this.Visible = true;
                 MPanel.Controls.Add(this);
-                mTreeNode.Nodes[bean.inputIndex].BackColor = Color.Red;
+                mTreeNode.Nodes[bean.ioIndex].BackColor = Color.Red;
             }
             else
             {
@@ -217,7 +217,7 @@ namespace EditorOfBIMS
             :this(tn)
         {
             bean = new AIBean();
-            bean.inputIndex = index;
+            bean.ioIndex = index;
             
         }
         public AI(AIBean b, TreeNode tn,Panel p)
@@ -231,7 +231,7 @@ namespace EditorOfBIMS
 
         private void shutDownMe(object sender, EventArgs e)
         {
-            mTreeNode.Nodes[bean.inputIndex].BackColor = Color.White;
+            mTreeNode.Nodes[bean.ioIndex].BackColor = Color.White;
         }
 
      
@@ -253,7 +253,8 @@ namespace EditorOfBIMS
         {
             MForm = new Frm_DI(bean);
             MForm.FormClosing += new FormClosingEventHandler(this.refreshView);
-            MForm.Text = mTreeNode.Text + "的第" + bean.inputIndex + "个数字量输入端口";
+           // MForm.Text = mTreeNode.Text + "的第" + bean.ioIndex + "个数字量输入端口";
+            MForm.Text = mTreeNode.Text + "-->"+ mTreeNode.Nodes[bean.ioIndex].Text;
         }
         private void refreshView(object o, FormClosingEventArgs a)
         {
@@ -262,7 +263,7 @@ namespace EditorOfBIMS
                 this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
                 this.Visible = true;
                 MPanel.Controls.Add(this);
-                mTreeNode.Nodes[bean.inputIndex].BackColor = Color.Red;
+                mTreeNode.Nodes[bean.ioIndex].BackColor = Color.Red;
             }
             else
             {
@@ -282,7 +283,7 @@ namespace EditorOfBIMS
             : this(tn)
         {
             bean = new DIBean();
-            bean.inputIndex = index;
+            bean.ioIndex = index;
 
         }
         public DI(DIBean b, TreeNode tn, Panel p)
@@ -296,7 +297,72 @@ namespace EditorOfBIMS
 
         private void shutDownMe(object sender, EventArgs e)
         {
-            mTreeNode.Nodes[bean.inputIndex].BackColor = Color.White;
+            mTreeNode.Nodes[bean.ioIndex].BackColor = Color.White;
+        }
+
+
+        public void openForm()
+        {
+            if (MForm == null || MForm.IsDisposed) creatForm();
+            MForm.Show();
+        }
+
+
+    }
+    public class DO : BaseDevice
+    {
+
+        public DOBean bean;
+        public TreeNode mTreeNode;
+
+        public override void creatForm()
+        {
+            MForm = new Frm_DO(bean);
+            MForm.FormClosing += new FormClosingEventHandler(this.refreshView);
+            MForm.Text = mTreeNode.Text + "-->" + mTreeNode.Nodes[bean.ioIndex].Text;
+        }
+        private void refreshView(object o, FormClosingEventArgs a)
+        {
+            if (bean.useing)
+            {
+                this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
+                this.Visible = true;
+                MPanel.Controls.Add(this);
+                mTreeNode.Nodes[bean.ioIndex].BackColor = Color.Red;
+            }
+            else
+            {
+                this.Visible = false;
+            }
+        }
+        public override void saveToXML(string building, int floor, string path)
+        {
+            //bean.mpoint = Location;
+        }
+        public DO(TreeNode tn)
+        {
+            mTreeNode = tn;
+            this.Disposed += new EventHandler(this.shutDownMe);
+        }
+        public DO(int index, TreeNode tn)
+            : this(tn)
+        {
+            bean = new DOBean();
+            bean.ioIndex = index;
+
+        }
+        public DO(DOBean b, TreeNode tn, Panel p)
+            : this(tn)
+        {
+            bean = b;
+            this.MPanel = p;
+            this.Location = bean.mpoint;
+            refreshView(null, null);
+        }
+
+        private void shutDownMe(object sender, EventArgs e)
+        {
+            mTreeNode.Nodes[bean.ioIndex].BackColor = Color.White;
         }
 
 
@@ -375,23 +441,27 @@ namespace EditorOfBIMS
             mTreeNode.Nodes.Add(node3);
             if (os[0] != null)
             {
-                if (bean.aiBeans != null)
-                {
-                    foreach (AIBean aib in bean.aiBeans)
+                    if (bean.aiBeans != null)
                     {
-                        if (aib.useing)
+                        foreach (AIBean aib in bean.aiBeans)
                         {
-                            ais[aib.inputIndex] = new AI(aib, mTreeNode, MPanel);
+                            if (aib.useing)
+                            {
+                                ais[aib.ioIndex] = new AI(aib, mTreeNode, MPanel);
+                            }
                         }
                     }
-                    foreach (DIBean dib in bean.diBeans)
+                    if (bean.diBeans != null) 
                     {
-                        if (dib.useing)
+                        foreach (DIBean dib in bean.diBeans)
                         {
-                            dis[dib.inputIndex-8] = new DI(dib, mTreeNode, MPanel);
+                            if (dib.useing)
+                            {
+                                dis[dib.ioIndex-8] = new DI(dib, mTreeNode, MPanel);
+                            }
                         }
                     }
-                }
+               
             }
         }
         public override void creatForm()
@@ -505,6 +575,201 @@ namespace EditorOfBIMS
             }
             bean.diBeans = ds.Cast<DIBean>().ToArray();
             XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName +"."+ bean.FloorNum +"."+ bean.DeviceNum + @".Bean_C2000MDxA.xml");
+        }
+    }
+    public class C2000MD82 : BaseDevice, BoxDevice
+    {
+        private TreeView treeView;
+        
+        private DI[] dis = new DI[8];
+        private DO[] dos = new DO[2];
+        public TreeView TreeView
+        {
+            get { return treeView; }
+            set { treeView = value; }
+        }
+        public TreeNode mTreeNode;
+        private Bean_C2000MD82 bean;
+        public Bean_C2000MD82 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        public C2000MD82()
+        {
+
+        }
+        public C2000MD82(Panel p, TreeView t)
+            : this(new object[] { null, p, t })
+        {
+        }
+        public C2000MD82(object[] os)
+        {
+            MPanel = (Panel)os[1];
+            treeView = (TreeView)os[2];
+            this.Visible = false;
+
+            if (os[0] == null)
+            {
+                bean = new Bean_C2000MD82();
+            }
+            else
+            {
+                bean = (Bean_C2000MD82)os[0];
+            }
+
+            bean.DeviceNum = DeviceIndex++;
+            mTreeNode = new TreeNode();
+            mTreeNode.Text = "C2000MD82(" + bean.DeviceNum + ")";
+            this.Name = mTreeNode.Text;
+            treeView.Nodes.Add(mTreeNode);
+            for (int i = 0; i < 8; i++)
+            {
+                TreeNode node1 = new TreeNode();
+                node1.Text = "DI" + i.ToString();
+                mTreeNode.Nodes.Add(node1);
+            }
+            TreeNode node2 = new TreeNode();
+            node2.Text = "Do0";
+            mTreeNode.Nodes.Add(node2);
+            TreeNode node3 = new TreeNode();
+            node3.Text = "Do1";
+            mTreeNode.Nodes.Add(node3);
+            if (os[0] != null)
+            {
+                if (bean.diBeans != null)
+                {
+                    foreach (DIBean dib in bean.diBeans)
+                    {
+                        if (dib.useing)
+                        {
+                            dis[dib.ioIndex] = new DI(dib, mTreeNode, MPanel);
+                        }
+                    }
+                }
+                if (bean.doBeans != null)
+                { 
+                    foreach (DOBean dob in bean.doBeans)
+                    {
+                        if (dob.useing)
+                        {
+                            dos[dob.ioIndex - 8] = new DO(dob, mTreeNode, MPanel);
+                        }
+                    }
+                }
+            }
+        }
+        public override void creatForm()
+        {
+            MForm = new Frm_C2000MD82(bean);
+        }
+
+        public void showChild(int index)
+        {
+            if (index < 8)
+            {
+                if (dis[index] == null)
+                {
+                    dis[index] = new DI(index, mTreeNode);
+                    dis[index].MPanel = MPanel;
+                }
+                if (dis[index].bean.useing)
+                {
+                    dis[index].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                }
+                else
+                {
+                    dis[index].openForm();
+                }
+            }
+            else if (index >= 8 && index < 10)
+            {
+                if (dos[index - 8] == null)
+                {
+                    dos[index - 8] = new DO(index, mTreeNode);
+                    dos[index - 8].MPanel = MPanel;
+                }
+                if (dos[index - 8].bean.useing)
+                {
+                    dos[index - 8].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                }
+                else
+                {
+                    dos[index - 8].openForm();
+                }
+            }
+        }
+        public void showChildAttri(int index)
+        {
+
+            if (index < 8)
+            {
+                if (dis[index] == null)
+                {
+                    dis[index] = new DI(index, mTreeNode);
+                    dis[index].MPanel = MPanel;
+                }
+                dis[index].openForm();
+            }
+            else if (index >= 8 && index < 10)
+            {
+                if (dos[index - 8] == null)
+                {
+                    dos[index - 8] = new DO(index, mTreeNode);
+                    dos[index - 8].MPanel = MPanel;
+                }
+
+                dos[index - 8].openForm();
+
+            }
+        }
+        public void delectChild(int index)
+        {
+            mTreeNode.Nodes[index].BackColor = Color.White;
+            if (index < 8)
+            {
+                if (dis[index] != null)
+                {
+                    dis[index].bean.useing = false;
+                }
+
+            }
+            else if (index >= 8 && index < 10)
+            {
+                if (dos[index - 8] == null)
+                {
+                    dos[index - 8].bean.useing = false;
+                }
+
+            }
+        }
+        public override void saveToXML(string building, int floor, string path)
+        {
+
+            bean.MPoint = Location;
+            bean.BuildingName = building;
+            bean.FloorNum = floor;
+            ArrayList ds = new ArrayList();
+            foreach (DI a in dis)
+            {
+                if (a != null && a.bean.useing)
+                {
+                    a.bean.mpoint = a.Location;
+                    ds.Add(a.bean);
+                }
+            }
+            bean.diBeans = ds.Cast<DIBean>().ToArray();
+            ArrayList dos = new ArrayList();
+            foreach (DO d in dos)
+            {
+                if (d != null && d.bean.useing)
+                {
+                    d.bean.mpoint = d.Location;
+                    dos.Add(d.bean);
+                }
+            }
+            bean.doBeans = dos.Cast<DOBean>().ToArray();
+            XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000MDxA.xml");
         }
     }
 }

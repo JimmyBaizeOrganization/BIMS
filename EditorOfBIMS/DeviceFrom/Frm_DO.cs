@@ -11,50 +11,49 @@ using Tools;
 
 namespace EditorOfBIMS.DeviceFrom
 {
-    public partial class Frm_DI : Form
+    public partial class Frm_DO : Form
     {
-        DIBean bean;
-        public Frm_DI(DIBean b)
+        private DOBean bean;
+        public Frm_DO(DOBean b)
         {
             InitializeComponent();
             bean = b;
-           
+
             checkBox_Run.Checked = bean.useing;
 
-            textBox2.Text= bean.imagePath ;
-            
-              textBox3.Text=bean.detail;
-            
-             textBox6.Text=bean.sort ;
-             textBox1.Text = bean.imageClosePath;
+            textBox2.Text = bean.imagePath;
 
-             if (bean.normalVaule)
-             {
-                  radioButton1.Checked = true;
-                  radioButton2.Checked = false;
-             }
-             else
-             {
-                 radioButton2.Checked = true;
-                 radioButton1.Checked = false;
-             }           
+            textBox3.Text = bean.detail;
+
+            textBox6.Text = bean.sort;
+            textBox1.Text = bean.imageClosePath;
+
+            if (bean.normalVaule)
+            {
+                radioButton1.Checked = true;
+                radioButton2.Checked = false;
+            }
+            else
+            {
+                radioButton2.Checked = true;
+                radioButton1.Checked = false;
+            }  
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             bean.useing = checkBox_Run.Checked;
             if (bean.useing)
             {
-                if (textBox2.Text == "" || textBox1.Text == "" || textBox3.Text == "" || textBox6.Text == "" )
+                if (textBox2.Text == "" || textBox1.Text == "" || textBox3.Text == "" || textBox6.Text == "")
                 {
                     MessageBox.Show("如果启用该设备，则必须填入图片，数据描述");
-                    
+
                 }
                 else
                 {
                     bean.imagePath = textBox2.Text;
-                  
+
                     bean.detail = textBox3.Text;
                     bean.imageClosePath = textBox1.Text;
                     bean.sort = textBox6.Text;
@@ -69,12 +68,13 @@ namespace EditorOfBIMS.DeviceFrom
             switch (this.comboBox1.SelectedIndex)
             {
                 case 0:
-                    textBox2.Text = "lighton.png";                   
+                    textBox2.Text = "on.png";
                     textBox3.Text = "开关";
-                    textBox1.Text = "lightoff.png";
+                    textBox1.Text = "off.png";
                     textBox6.Text = "电灯状态:";
                     break;
             }
         }
+
     }
 }
