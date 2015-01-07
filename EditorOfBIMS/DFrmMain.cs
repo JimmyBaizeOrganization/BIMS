@@ -332,14 +332,16 @@ namespace EditorOfBIMS
 
         private void 属性ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Text, false);            
+                       
             if (this.treeViewRight.SelectedNode.Level == 0)
             {
+                Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Text, false); 
                 BaseDevice bd =(BaseDevice) ctls[0];
                 bd.showForm();
             }
             else if (this.treeViewRight.SelectedNode.Level == 1)
             {
+                Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Parent.Text, false); 
                 BoxDevice bd = (BoxDevice)ctls[0];
                 bd.showChildAttri(treeViewRight.SelectedNode.Index);
             }

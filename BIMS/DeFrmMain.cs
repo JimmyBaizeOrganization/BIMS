@@ -165,12 +165,12 @@ namespace BIMS
             {
                 BaseBean b= (BaseBean)de.Value;
                 ReflectTools rt = new ReflectTools("BIMS", "BIMS", b.ClassName, new object[] { b });
-                BaseDevice pic = (BaseDevice)rt.MObj;
-                pic.Image = ImageTools.getImage((string)rt.getPropertyInfo("ImageURL"));
-
-                mpanel.Controls[b.FloorNum -1].Controls[0].Controls .Add(pic);
-                pic.Location = b.MPoint;
-                pic.Size = pic.Image.Size;
+                InterfaceDevice dev = (InterfaceDevice)rt.MObj;
+                BaseDevice[] devices = dev.getAllDevice();
+                foreach (BaseDevice pic in devices)
+                {                  
+                    mpanel.Controls[b.FloorNum - 1].Controls[0].Controls.Add(pic);                  
+                }               
             }
         }
 

@@ -11,10 +11,10 @@ using Tools;
 
 namespace EditorOfBIMS.DeviceFrom
 {
-    public partial class Frm_AI : Form
+    public partial class Frm_DI : Form
     {
-        AIBean bean;
-        public Frm_AI(AIBean b)
+        DIBean bean;
+        public Frm_DI(DIBean b)
         {
             InitializeComponent();
             bean = b;
@@ -22,11 +22,22 @@ namespace EditorOfBIMS.DeviceFrom
             checkBox_Run.Checked = bean.useing;
 
             textBox2.Text= bean.imagePath ;
-             textBox1.Text=bean.function ;
+            
               textBox3.Text=bean.detail;
-             textBox5.Text= bean.mixVaule;
-             textBox4.Text =bean.maxVaule;
+            
              textBox6.Text=bean.sort ;
+             textBox1.Text = bean.imageClosePath;
+
+             if (bean.normalVaule)
+             {
+                  radioButton1.Checked = true;
+                  radioButton2.Checked = false;
+             }
+             else
+             {
+                 radioButton2.Checked = true;
+                 radioButton1.Checked = false;
+             }           
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,19 +46,19 @@ namespace EditorOfBIMS.DeviceFrom
             bean.useing = checkBox_Run.Checked;
             if (bean.useing)
             {
-                if (textBox2.Text == "" || textBox1.Text == "" || textBox3.Text == "")
+                if (textBox2.Text == "" || textBox1.Text == "" || textBox3.Text == "" || textBox6.Text == "" )
                 {
-                    MessageBox.Show("如果启用该设备，则必须填入图片,公式，数据描述");
-                   
+                    MessageBox.Show("如果启用该设备，则必须填入图片，数据描述");
+                    
                 }
                 else
                 {
                     bean.imagePath = textBox2.Text;
-                    bean.function = textBox1.Text;
+                  
                     bean.detail = textBox3.Text;
-                    bean.mixVaule = textBox5.Text;
-                    bean.maxVaule = textBox4.Text;
+                    bean.imageClosePath = textBox1.Text;
                     bean.sort = textBox6.Text;
+                    bean.normalVaule = radioButton1.Checked;
                 }
             }
             this.Close();
@@ -58,9 +69,10 @@ namespace EditorOfBIMS.DeviceFrom
             switch (this.comboBox1.SelectedIndex)
             {
                 case 0:
-                    textBox2.Text = "wenduji.png";
-                    textBox1.Text = @"25*({0:0.00000000000000}-1)";
-                    textBox3.Text = "温度:{0:0.00000}摄氏度";
+                    textBox2.Text = "on.png";                   
+                    textBox3.Text = "开关";
+                    textBox1.Text = "off.png";
+                    textBox6.Text = "电灯状态:";
                     break;
             }
         }

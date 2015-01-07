@@ -225,6 +225,7 @@ namespace EditorOfBIMS
         {
             bean = b;
             this.MPanel = p;
+            this.Location = bean.mpoint;
             refreshView(null, null);
         }
 
@@ -242,6 +243,71 @@ namespace EditorOfBIMS
 
         
     }
+    public class DI : BaseDevice
+    {
+
+        public DIBean bean;
+        public TreeNode mTreeNode;
+
+        public override void creatForm()
+        {
+            MForm = new Frm_DI(bean);
+            MForm.FormClosing += new FormClosingEventHandler(this.refreshView);
+            MForm.Text = mTreeNode.Text + "的第" + bean.inputIndex + "个数字量输入端口";
+        }
+        private void refreshView(object o, FormClosingEventArgs a)
+        {
+            if (bean.useing)
+            {
+                this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
+                this.Visible = true;
+                MPanel.Controls.Add(this);
+                mTreeNode.Nodes[bean.inputIndex].BackColor = Color.Red;
+            }
+            else
+            {
+                this.Visible = false;
+            }
+        }
+        public override void saveToXML(string building, int floor, string path)
+        {
+            //bean.mpoint = Location;
+        }
+        public DI(TreeNode tn)
+        {
+            mTreeNode = tn;
+            this.Disposed += new EventHandler(this.shutDownMe);
+        }
+        public DI(int index, TreeNode tn)
+            : this(tn)
+        {
+            bean = new DIBean();
+            bean.inputIndex = index;
+
+        }
+        public DI(DIBean b, TreeNode tn, Panel p)
+            : this(tn)
+        {
+            bean = b;
+            this.MPanel = p;
+            this.Location = bean.mpoint;
+            refreshView(null, null);
+        }
+
+        private void shutDownMe(object sender, EventArgs e)
+        {
+            mTreeNode.Nodes[bean.inputIndex].BackColor = Color.White;
+        }
+
+
+        public void openForm()
+        {
+            if (MForm == null || MForm.IsDisposed) creatForm();
+            MForm.Show();
+        }
+
+
+    }
     public interface BoxDevice
     {
         void showChildAttri(int index);
@@ -254,7 +320,7 @@ namespace EditorOfBIMS
     {
         private TreeView treeView;
         private AI[] ais  =new AI[8];
-        
+        private DI[] dis = new DI[2];
         public TreeView TreeView
         {
             get { return treeView; }
@@ -301,7 +367,12 @@ namespace EditorOfBIMS
                 node1.Text = "AI" + i.ToString();
                 mTreeNode.Nodes.Add(node1);
             }
-
+            TreeNode node2 = new TreeNode();
+            node2.Text = "DI0" ;
+            mTreeNode.Nodes.Add(node2);
+            TreeNode node3 = new TreeNode();
+            node3.Text = "DI1" ;
+            mTreeNode.Nodes.Add(node3);
             if (os[0] != null)
             {
                 if (bean.aiBeans != null)
@@ -311,6 +382,13 @@ namespace EditorOfBIMS
                         if (aib.useing)
                         {
                             ais[aib.inputIndex] = new AI(aib, mTreeNode, MPanel);
+                        }
+                    }
+                    foreach (DIBean dib in bean.diBeans)
+                    {
+                        if (dib.useing)
+                        {
+                            dis[dib.inputIndex-8] = new DI(dib, mTreeNode, MPanel);
                         }
                     }
                 }
@@ -339,6 +417,22 @@ namespace EditorOfBIMS
                     ais[index].openForm();
                 }               
             }
+            else if (index >=8 && index <10)
+            {
+                if (dis[index-8] == null)
+                {
+                    dis[index - 8] = new DI(index, mTreeNode);
+                    dis[index - 8].MPanel = MPanel;
+                }
+                if (dis[index - 8].bean.useing)
+                {
+                    dis[index - 8].BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                }
+                else
+                {
+                    dis[index - 8].openForm();
+                }   
+            }
         }
         public void showChildAttri(int index)
         {
@@ -352,6 +446,17 @@ namespace EditorOfBIMS
                 }              
                     ais[index].openForm();
             }
+            else if (index >= 8 && index < 10)
+            {
+                if (dis[index - 8] == null)
+                {
+                    dis[index - 8] = new DI(index, mTreeNode);
+                    dis[index - 8].MPanel = MPanel;
+                }
+                
+                    dis[index - 8].openForm();
+                
+            }
         }
         public void delectChild(int index)
         {
@@ -363,6 +468,14 @@ namespace EditorOfBIMS
                     ais[index].bean.useing = false;
                 }
                
+            }
+            else if (index >= 8 && index < 10)
+            {
+                if (dis[index - 8] == null)
+                {
+                    dis[index - 8].bean.useing = false;
+                }
+                
             }
         }
         public override void saveToXML(string building, int floor, string path)
@@ -379,9 +492,18 @@ namespace EditorOfBIMS
                     a.bean.mpoint = a.Location;
                     bs.Add(a.bean);
                 }
-            }
-            //bean.aiBeans = (AIBean[])bs.ToArray(typeof(AIBean));
+            }            
             bean.aiBeans = bs.Cast<AIBean>().ToArray();
+            ArrayList ds = new ArrayList();
+            foreach (DI d in dis)
+            {
+                if (d != null && d.bean.useing)
+                {
+                    d.bean.mpoint = d.Location;
+                    ds.Add(d.bean);
+                }
+            }
+            bean.diBeans = ds.Cast<DIBean>().ToArray();
             XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName +"."+ bean.FloorNum +"."+ bean.DeviceNum + @".Bean_C2000MDxA.xml");
         }
     }

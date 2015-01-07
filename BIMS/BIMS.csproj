@@ -83,10 +83,22 @@
     <Compile Include="Device.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Frm_DED194E_9S1YK2K2.cs">
+    <Compile Include="DeviceFrom\Frm_DI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Frm_DED194E_9S1YK2K2.Designer.cs">
+    <Compile Include="DeviceFrom\Frm_DI.Designer.cs">
+      <DependentUpon>Frm_DI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_AI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_AI.Designer.cs">
+      <DependentUpon>Frm_AI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_DED194E_9S1YK2K2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_DED194E_9S1YK2K2.Designer.cs">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_Loading.cs">
@@ -100,7 +112,13 @@
     <EmbeddedResource Include="DeFrmMain.resx">
       <DependentUpon>DeFrmMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Frm_DED194E_9S1YK2K2.resx">
+    <EmbeddedResource Include="DeviceFrom\Frm_DI.resx">
+      <DependentUpon>Frm_DI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeviceFrom\Frm_AI.resx">
+      <DependentUpon>Frm_AI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeviceFrom\Frm_DED194E_9S1YK2K2.resx">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Loading.resx">
@@ -146,9 +164,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DeviceFolder\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{d7026dad-3aa0-4edc-83e0-85787f07f27e}</Project>

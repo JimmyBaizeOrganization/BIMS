@@ -161,15 +161,24 @@ namespace Tools
 
     public class AIBean:InputBaseBean 
     {
+        public string imagePath;
         public string function;
         public string maxVaule;
         public string mixVaule;
     }
-
+    public class DIBean : InputBaseBean
+    {
+        public string imageClosePath;//关闭状态下的图片路径
+        //public string function;
+        public Boolean normalVaule;//正常值
+        //public string mixVaule;
+    }
     public class Bean_C2000MDxA : BaseBean
     {
         int slaveNum;//从机编号
         public AIBean[] aiBeans;
+        public DIBean[] diBeans;
+        public Boolean VorI;//电压或者电流设备选型
         public int SlaveNum
         {
             get { return slaveNum; }

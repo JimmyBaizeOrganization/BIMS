@@ -45,11 +45,13 @@
             this.tb_beizhu = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button_Save = new System.Windows.Forms.Button();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // tb_Sort
             // 
-            this.tb_Sort.Location = new System.Drawing.Point(464, 58);
+            this.tb_Sort.Location = new System.Drawing.Point(470, 137);
             this.tb_Sort.Name = "tb_Sort";
             this.tb_Sort.Size = new System.Drawing.Size(134, 28);
             this.tb_Sort.TabIndex = 18;
@@ -58,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(357, 63);
+            this.label1.Location = new System.Drawing.Point(363, 142);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 18);
             this.label1.TabIndex = 17;
@@ -67,14 +69,14 @@
             // 
             // textBox_time
             // 
-            this.textBox_time.Location = new System.Drawing.Point(464, 267);
+            this.textBox_time.Location = new System.Drawing.Point(470, 346);
             this.textBox_time.Name = "textBox_time";
             this.textBox_time.Size = new System.Drawing.Size(134, 28);
             this.textBox_time.TabIndex = 11;
             // 
             // textBox_Port
             // 
-            this.textBox_Port.Location = new System.Drawing.Point(164, 201);
+            this.textBox_Port.Location = new System.Drawing.Point(170, 280);
             this.textBox_Port.Name = "textBox_Port";
             this.textBox_Port.Size = new System.Drawing.Size(134, 28);
             this.textBox_Port.TabIndex = 12;
@@ -82,7 +84,7 @@
             // label_time
             // 
             this.label_time.AutoSize = true;
-            this.label_time.Location = new System.Drawing.Point(357, 271);
+            this.label_time.Location = new System.Drawing.Point(363, 350);
             this.label_time.Name = "label_time";
             this.label_time.Size = new System.Drawing.Size(116, 18);
             this.label_time.TabIndex = 5;
@@ -91,7 +93,7 @@
             // label_Port
             // 
             this.label_Port.AutoSize = true;
-            this.label_Port.Location = new System.Drawing.Point(57, 205);
+            this.label_Port.Location = new System.Drawing.Point(63, 284);
             this.label_Port.Name = "label_Port";
             this.label_Port.Size = new System.Drawing.Size(44, 18);
             this.label_Port.TabIndex = 6;
@@ -99,14 +101,14 @@
             // 
             // textBox_bound
             // 
-            this.textBox_bound.Location = new System.Drawing.Point(164, 271);
+            this.textBox_bound.Location = new System.Drawing.Point(170, 350);
             this.textBox_bound.Name = "textBox_bound";
             this.textBox_bound.Size = new System.Drawing.Size(134, 28);
             this.textBox_bound.TabIndex = 13;
             // 
             // textBox_IP
             // 
-            this.textBox_IP.Location = new System.Drawing.Point(164, 129);
+            this.textBox_IP.Location = new System.Drawing.Point(170, 208);
             this.textBox_IP.Name = "textBox_IP";
             this.textBox_IP.Size = new System.Drawing.Size(134, 28);
             this.textBox_IP.TabIndex = 14;
@@ -114,7 +116,7 @@
             // label_bound
             // 
             this.label_bound.AutoSize = true;
-            this.label_bound.Location = new System.Drawing.Point(57, 275);
+            this.label_bound.Location = new System.Drawing.Point(63, 354);
             this.label_bound.Name = "label_bound";
             this.label_bound.Size = new System.Drawing.Size(62, 18);
             this.label_bound.TabIndex = 7;
@@ -123,7 +125,7 @@
             // Label_IP
             // 
             this.Label_IP.AutoSize = true;
-            this.Label_IP.Location = new System.Drawing.Point(57, 135);
+            this.Label_IP.Location = new System.Drawing.Point(63, 214);
             this.Label_IP.Name = "Label_IP";
             this.Label_IP.Size = new System.Drawing.Size(44, 18);
             this.Label_IP.TabIndex = 8;
@@ -131,7 +133,7 @@
             // 
             // textBox_address
             // 
-            this.textBox_address.Location = new System.Drawing.Point(464, 201);
+            this.textBox_address.Location = new System.Drawing.Point(470, 280);
             this.textBox_address.Name = "textBox_address";
             this.textBox_address.Size = new System.Drawing.Size(134, 28);
             this.textBox_address.TabIndex = 15;
@@ -139,7 +141,7 @@
             // label_address
             // 
             this.label_address.AutoSize = true;
-            this.label_address.Location = new System.Drawing.Point(357, 203);
+            this.label_address.Location = new System.Drawing.Point(363, 282);
             this.label_address.Name = "label_address";
             this.label_address.Size = new System.Drawing.Size(80, 18);
             this.label_address.TabIndex = 9;
@@ -147,7 +149,7 @@
             // 
             // textBox_shebeihao
             // 
-            this.textBox_shebeihao.Location = new System.Drawing.Point(164, 58);
+            this.textBox_shebeihao.Location = new System.Drawing.Point(170, 137);
             this.textBox_shebeihao.Name = "textBox_shebeihao";
             this.textBox_shebeihao.Size = new System.Drawing.Size(134, 28);
             this.textBox_shebeihao.TabIndex = 16;
@@ -155,7 +157,7 @@
             // label_shebeihao
             // 
             this.label_shebeihao.AutoSize = true;
-            this.label_shebeihao.Location = new System.Drawing.Point(57, 63);
+            this.label_shebeihao.Location = new System.Drawing.Point(63, 142);
             this.label_shebeihao.Name = "label_shebeihao";
             this.label_shebeihao.Size = new System.Drawing.Size(62, 18);
             this.label_shebeihao.TabIndex = 10;
@@ -188,11 +190,35 @@
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(123, 40);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(168, 22);
+            this.radioButton1.TabIndex = 22;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "电压型C2000MDVA";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(386, 40);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(168, 22);
+            this.radioButton2.TabIndex = 23;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "电流型C2000MDIA";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // Frm_C2000MDxA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(737, 807);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.button_Save);
             this.Controls.Add(this.tb_beizhu);
             this.Controls.Add(this.label2);
@@ -236,5 +262,7 @@
         private System.Windows.Forms.TextBox tb_beizhu;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button_Save;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }

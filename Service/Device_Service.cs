@@ -191,7 +191,7 @@ namespace Service
         }
         public override void periodWork(object o, ElapsedEventArgs e)
         {
-            float[] ai  = new float[8];
+            int[] ai = new int[8];
             int[] oi = new int[2];
             using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
@@ -208,15 +208,15 @@ namespace Service
                         {                            
                             byte h = buff[start];
                             byte l = buff[start + 1];
-                            int v = h << 8 + l;
-                            if (v < 0x8000)
-                            {
-                                ai[i] = ((v * 5) * 1000.0f / 4080000.0f) / 240.0f;
-                            }
-                            else
-                            {
-                                ai[i] = ((65535 - v+1) * 5) * 1000 / 4080000 / 240.0f;
-                            }
+                            ai[i] = h << 8 + l;
+                            //if (v < 0x8000)
+                            //{
+                            //    ai[i] = ((v * 5) * 1000.0f / 4080000.0f) / 240.0f;
+                            //}
+                            //else
+                            //{
+                            //    ai[i] = ((65535 - v+1) * 5) * 1000 / 4080000 / 240.0f;
+                            //}
                         }
                         oi[0] = (int)buff[20];
                         oi[1] = (int)buff[22];

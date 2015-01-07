@@ -28,6 +28,16 @@ namespace EditorOfBIMS.DeviceFrom
             textBox_time.Text = bean.During.ToString();
             tb_Sort.Text = bean.Sort;
             tb_beizhu.Text = bean.Beizhu;
+            if (bean.VorI)
+            {
+                radioButton1.Checked = true;
+                radioButton2.Checked = false;
+            }
+            else
+            {
+                radioButton2.Checked = true;
+                radioButton1.Checked = false;
+            }
         }
 
         private void button_Save_Click(object sender, EventArgs e)
@@ -41,6 +51,14 @@ namespace EditorOfBIMS.DeviceFrom
             bean.Sort = tb_Sort.Text;
             bean.Beizhu = tb_beizhu.Text;
             //MessageBox.Show("成功保存");
+            if (radioButton1.Checked)
+            {
+                bean.VorI = true;
+            }
+            if (radioButton2.Checked)
+            {
+                bean.VorI = false;
+            }
             this.Close();
         }
     }
