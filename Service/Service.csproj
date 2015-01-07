@@ -61,7 +61,6 @@
     <Reference Include="UIAutomationClient" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CRC.cs" />
     <Compile Include="Device_Service.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>

@@ -83,6 +83,12 @@
     <Compile Include="Device.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DeviceFrom\Frm_DO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_DO.Designer.cs">
+      <DependentUpon>Frm_DO.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeviceFrom\Frm_DI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DeFrmMain.resx">
       <DependentUpon>DeFrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeviceFrom\Frm_DO.resx">
+      <DependentUpon>Frm_DO.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeviceFrom\Frm_DI.resx">
       <DependentUpon>Frm_DI.cs</DependentUpon>

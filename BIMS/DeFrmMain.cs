@@ -181,21 +181,28 @@ namespace BIMS
                 BaseBean b = (BaseBean)de.Value;
                 if (b.FloorNum == fullmode)
                 {
+                    
                     ReflectTools rt = new ReflectTools("BIMS", "BIMS", b.ClassName, new object[] { b });
-                    BaseDevice pic = (BaseDevice)rt.MObj;
-                    Image iimage= ImageTools.getImage((string)rt.getPropertyInfo("ImageURL"));
+                    InterfaceDevice dev = (InterfaceDevice)rt.MObj;
+                    BaseDevice[] devices = dev.getAllDevice();
+                    foreach (BaseDevice pic in devices)
+                    {
+                        //pic.Location = new Point(b.MPoint.X * (mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494) / (mpanel.Size.Width * 1064 / 3494),
+                        //                     b.MPoint.Y * (mpanel.Size.Height / 2 + mpanel.Size.Height * 800 / 1944) / (mpanel.Size.Height * 800 / 1944));
+                        //pic.Size = new Size(pic.Size.Width * 2, pic.Size.Height * 2);
 
-                    mpanel.Controls[0].Controls[0].Controls.Add(pic);
-                    pic.Location = new Point (b.MPoint.X *(mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494)/(mpanel.Size.Width * 1064 / 3494),
-                                              b.MPoint.Y * (mpanel.Size.Height / 2 + mpanel.Size.Height * 800 / 1944) / (mpanel.Size.Height * 800 / 1944));
-                    pic.Size = new Size(iimage.Size.Width * 2, iimage.Size.Height * 2);
+                        mpanel.Controls[0].Controls[0].Controls.Add(pic);
+                    }  
+        
+                   
+                   
 
-                    Bitmap bitmap = new Bitmap(iimage.Size.Width * 2, iimage.Size.Height * 2);
-                    Graphics g = Graphics.FromImage(bitmap);
+                    //Bitmap bitmap = new Bitmap(iimage.Size.Width * 2, iimage.Size.Height * 2);
+                    //Graphics g = Graphics.FromImage(bitmap);
 
-                    g.DrawImage(ImageTools.getImage((string)rt.getPropertyInfo("ImageURL")), 0, 0, iimage.Size.Width * 2, iimage.Size.Height * 2);
+                    //g.DrawImage(ImageTools.getImage((string)rt.getPropertyInfo("ImageURL")), 0, 0, iimage.Size.Width * 2, iimage.Size.Height * 2);
 
-                    pic.BackgroundImage = bitmap;
+                    //pic.BackgroundImage = bitmap;
 
                     //mpanel.Size.Width * 1064 / 3494
                     //mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494

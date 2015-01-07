@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bean.cs" />
+    <Compile Include="CRC.cs" />
     <Compile Include="FileTools.cs" />
     <Compile Include="FunctionTools.cs" />
     <Compile Include="MessageCat.cs" />

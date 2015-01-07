@@ -140,6 +140,25 @@ namespace Tools
         }
        
     }
+    public class Bean_DED194E_9S1YK4K4 : BaseBean
+    {
+        int slaveNum;//从机编号
+
+        public int SlaveNum
+        {
+            get { return slaveNum; }
+            set { slaveNum = value; }
+        }
+        public Bean_DED194E_9S1YK4K4()
+        {
+            Baud = 9600;
+            slaveNum = 1;
+            ClassName = "DED194E_9S1YK4K4";
+            During = 5000;
+            DeviceType = "DED194E_9S1YK4K4";
+
+        }
+    }
     public class BeanTools{
         public static BaseBean getBeanFromXML(String beanname,string  filepath)
         {
@@ -223,5 +242,9 @@ namespace Tools
             During = 5000;
             DeviceType = "C2000MD82";
         }
-    }   
+    }
+    public class Bean_C2000M281 : Bean_C2000MD82
+    {
+
+    }
 }

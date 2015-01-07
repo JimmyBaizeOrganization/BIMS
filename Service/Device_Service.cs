@@ -49,7 +49,7 @@ namespace Service
         float[] data = new float[dataLenth/2];
         
         byte[] cmd ;
-        private int state;
+        private BIMSConnectState state;
         private Bean_DED194E_9S1YK2K2 bean;
         IPEndPoint ipe;
         IPAddress ipa;
@@ -108,47 +108,21 @@ namespace Service
                     state = BIMSConnectState.ERROR_TCPIP;
                 }
                 finally
-                {
-                   
+                {                
                     string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                                                                     + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
-
-                    //using (OracleConnection conn = new OracleConnection(OracleTools.connString))
-                    //{
-                    //    string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
-                    //                                                + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
-                    //    OracleCommand cmd = new OracleCommand(scmd, conn);
-                    //    conn.Open();
-                    //    int a  = cmd.ExecuteNonQuery();
-                    //    MessageBox.Show(a.ToString());
-                    //}
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))
                     {
                         try
-                        {
-                            //Console.WriteLine("INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + "', " + state + ",TO_DATE('" + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
-                            //                    + "','yyyy-mm-dd hh24:mi:ss')," + data[0] + "," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + ");");
-
-                            //if (Conn.State == ConnectionState.Closed)
-                            //{
-                            //    Console.WriteLine("open ");
-
-                            //}
-
-                            // Console.WriteLine(scmd);
+                        {                        
                             OracleCommand cmd = new OracleCommand(scmd, conn);
                             conn.Open();
                             int d = cmd.ExecuteNonQuery();
                         }
                         catch (Exception e2)
                         {
-
-                        }
-                       
-                    }
-                 
-
-
+                        }                      
+                    }                 
                }
             }
            
@@ -157,8 +131,95 @@ namespace Service
         {
             return bean;
         }
-  
+    }
+    //TODO  未完成
+    class DED194E_9S1YK4K4 : BaseDevice, IBeanTool
+    {
+        
+        float[] data = new float[3];
 
+        byte[] cmd;
+        private BIMSConnectState state;
+        private Bean_DED194E_9S1YK4K4 bean;
+        IPEndPoint ipe;
+        IPAddress ipa;
+
+        private string GUID;
+        public Bean_DED194E_9S1YK4K4 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+
+        public DED194E_9S1YK4K4(Bean_DED194E_9S1YK4K4 b)
+        {
+            bean = b;
+            cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0x00, 9, 0x00, 6 }, true);
+            GUID = bean.getBeanKey();
+            ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+
+        }
+        public override void periodWork(object o, ElapsedEventArgs e)
+        {
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {                   
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[17];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        int start = buff[2] + 2;
+                        for (int i = 0; i < buff[2] / 4; i++, start -= 4)
+                        {
+                            byte[] bf = new byte[4];
+                            bf[0] = buff[start];
+                            bf[1] = buff[start - 1];
+                            bf[2] = buff[start - 2];
+                            bf[3] = buff[start - 3];
+                            data[i] = BitConverter.ToSingle(bf, 0);
+                            //Console.WriteLine(data[i].ToString());
+                        }
+                        state = BIMSConnectState.OK;
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = BIMSConnectState.ERROR_CHECKSUM;
+                    }
+                }
+                catch
+                {
+                    //ＴＣＰIP  链接异常
+                    state = BIMSConnectState.ERROR_TCPIP;
+                }
+                finally
+                {
+                    string scmd = @"INSERT INTO DED194E_9S1YK4K4 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    {
+                        try
+                        {
+                            OracleCommand cmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            int d = cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+                        }
+                    }
+                }
+            }
+
+        }
+        public BaseBean getBean()
+        {
+            return bean;
+        }
     }
     public class C2000MDxA : BaseDevice, IBeanTool
     {
@@ -268,7 +329,7 @@ namespace Service
         static byte dataLenth = 8;//采集数据个数 
         static int recLenth = dataLenth * 2 + 5;
         byte[] cmd;
-        private int state;
+        private BIMSConnectState state;
         private Bean_C2000MD82 bean;
 
         public Bean_C2000MD82 Bean
@@ -355,5 +416,96 @@ namespace Service
 
         }
     }
-   
+    public class C2000M281 : BaseDevice, IBeanTool
+    {
+        static byte dataLenth = 8;//采集数据个数 
+        static int recLenth = dataLenth * 2 + 5;
+        byte[] cmd;
+        private BIMSConnectState state;
+        private Bean_C2000M281 bean;
+
+        public Bean_C2000M281 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        IPEndPoint ipe;
+        IPAddress ipa;
+
+        private string GUID;
+        public C2000M281(Bean_C2000M281 b)
+        {
+            bean = b;
+            cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0, 27, 0x00, dataLenth }, true);
+            GUID = bean.getBeanKey();
+            ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+        }
+        public BaseBean getBean()
+        {
+            return bean;
+        }
+        public override void periodWork(object o, ElapsedEventArgs e)
+        {
+
+            int[] di = new int[8];
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[recLenth];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        int start = 4;
+                        for (int i = 0; i < (buff[2] / 2) - 2; i++, start += 2)
+                        {
+                            di[i] = buff[start];
+                        }
+
+                        state = BIMSConnectState.OK;
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = BIMSConnectState.ERROR_CHECKSUM;
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = BIMSConnectState.ERROR_TCPIP;
+                }
+                finally
+                {
+
+                    string scmd = @"INSERT INTO C2000MD82 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + di[0] + @"," + di[1] + "," + di[2] + "," + di[3] + "," + di[4] + "," + di[5] + "," + di[6] + "," + di[7] + @")";
+
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    {
+                        try
+                        {
+
+                            OracleCommand cmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+
+                        }
+
+                    }
+
+
+
+                }
+            }
+
+        }
+    }
 }

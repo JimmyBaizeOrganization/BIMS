@@ -11,19 +11,21 @@ using System.Data;
 using System.Timers;
 using System.Collections;
 using BIMS.DeviceFrom;
+using System.Net.Sockets;
+using System.Net;
 
 namespace BIMS
 {
-    public class StateRegister
+    public class StateRegister<T>
     {
-        private int oldState;
-        public StateRegister(int initState)
+        public T oldState;
+        public StateRegister(T initState)
         {
             oldState = initState;
         }
-        public bool checkVaule(int newState)
+        public bool checkVaule(T newState)
         {
-            if (oldState == newState)
+            if (oldState.Equals(newState))
             {
                 return false;
             }
@@ -43,18 +45,18 @@ namespace BIMS
             get { return mform; }
             set { mform = value; }
         }
-        public StateRegister connectState = new StateRegister(0);
-        public void checkConnectState(int newState){
-            if(connectState.checkVaule(newState))
-            {
-                changeImageState(newState == 0);
-            }
-        }
+        public StateRegister<bool> connectState = new StateRegister<bool>(false);
+        //public void checkConnectState(int newState){
+        //    if(connectState.checkVaule(newState))
+        //    {
+        //        changeImageState(newState == 0);
+        //    }
+        //}
         public BaseDevice()
         {
             //this.MouseDown += new MouseEventHandler(Common_MouseDown);
            // this.MouseEnter += new EventHandler(Common_MouseEnter);
-            this.MouseLeave += new EventHandler(Common_LostFocus);
+            
             this.MouseEnter += new EventHandler(Common_MouseDown);
         }
 
@@ -91,7 +93,9 @@ namespace BIMS
              Mform.Dispose();
            
         }
-          public virtual  void newform() { }
+          public virtual  void newform() {
+              
+          }
           public virtual void changeImageState(bool state) { }
     }
     public static class PublicResource
@@ -156,13 +160,16 @@ namespace BIMS
         }
         public override void changeImageState(bool state)
         {
-            if (state)
+            if (connectState.checkVaule(state))
             {
-                this.Image = ImageTools.getImage(ImageURL, imageSize, imageSize);
-            }
-            else
-            {
-                this.Image = ImageTools.MakeGrayscale(ImageURL, imageSize, imageSize);
+                if (state)
+                {
+                    this.Image = ImageTools.getImage(ImageURL, imageSize, imageSize);
+                }
+                else
+                {
+                    this.Image = ImageTools.MakeGrayscale(ImageURL, imageSize, imageSize);
+                }
             }
         }
         public void periodWork(object o, ElapsedEventArgs e)
@@ -217,13 +224,16 @@ namespace BIMS
         }
         public override void changeImageState(bool state)
         {
-            if (state)
+            if (connectState.checkVaule(state))
             {
-                this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
-            }
-            else
-            {
-                this.Image = ImageTools.MakeGrayscale(bean.imagePath, imageSize, imageSize);
+                if (state)
+                {
+                    this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
+                }
+                else
+                {
+                    this.Image = ImageTools.MakeGrayscale(bean.imagePath, imageSize, imageSize);
+                }
             }
         }
     }
@@ -232,7 +242,8 @@ namespace BIMS
         public DIBean bean;
         
       
-        public StateRegister vauleState ;
+        public StateRegister<int> vauleState ;
+        
         public string imagePath;
         public override void newform()
         {
@@ -245,11 +256,11 @@ namespace BIMS
             this.Location = bean.mpoint;
             if(bean.normalVaule)
             {
-                vauleState = new StateRegister(1);
+                vauleState = new StateRegister<int>(1);
                 imagePath = bean.imagePath;
             }
             else{
-                 vauleState = new StateRegister(0);
+                vauleState = new StateRegister<int>(0);
                  imagePath = bean.imageClosePath;
             }
             this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
@@ -257,13 +268,16 @@ namespace BIMS
         }
         public override void changeImageState(bool state)
         {
-            if (state)
+            if (connectState.checkVaule(state))
             {
-                this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
-            }
-            else
-            {
-                this.Image = ImageTools.MakeGrayscale(imagePath, imageSize, imageSize);
+                if (state)
+                {
+                    this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
+                }
+                else
+                {
+                    this.Image = ImageTools.MakeGrayscale(imagePath, imageSize, imageSize);
+                }
             }
         }
         public void changeInputState(int newVaule)
@@ -279,6 +293,101 @@ namespace BIMS
                     imagePath = bean.imagePath;
                 }
             }
+        }
+    }
+    /// <summary>
+    /// 控制DO输出，去执行TCPIP连接，返回值是改变之后的值，如果控制失败，则报警，返回值为原来的值
+    /// </summary>
+    /// <param name="newVaule"></param>
+    /// <returns></returns>
+    public class DOFunDelegates
+    {
+        public delegate Tools.BIMSConnectState DOControlDelegate(byte newVaule, byte index);
+        public delegate byte DOGetVauleDelegate(byte index);
+        public DOControlDelegate mDOControlDelegate;
+        public DOGetVauleDelegate mDOGetVauleDelegate;
+        public DOFunDelegates( DOControlDelegate doc)
+        {
+            this.mDOControlDelegate = doc;
+        }
+        public DOFunDelegates(DOControlDelegate doc,DOGetVauleDelegate dgd)
+        {
+            this.mDOControlDelegate = doc;
+            this.mDOGetVauleDelegate = dgd;
+        }
+    }
+    
+    public class DO : BaseDevice
+    {
+        public DOBean bean;
+        
+        public string imagePath;
+        private DOFunDelegates mDOFunDelegates ;
+        private byte nowVaule;
+        
+        public override void newform()
+        {
+            Mform = new Frm_DO(bean, mDOFunDelegates, nowVaule);
+           
+        }
+
+       
+        public DO(DOBean b,DOFunDelegates dofd)
+        {
+            bean = b;
+            mDOFunDelegates = dofd;
+            this.Location = bean.mpoint;
+            changeOutputState(null,null);
+            
+            this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
+            this.Size = Image.Size;
+            Mform = new Frm_DO(bean, mDOFunDelegates, nowVaule);
+           // Mform.LostFocus += new EventHandler(this.changeOutputState);
+            Mform.Disposed += new EventHandler(this.changeOutputState);
+           // Mform.FormClosed += new FormClosedEventHandler(this.changeOutputState);
+              //  new EventHandler(this.changeOutputState);
+          //  Mform.FormClosed
+        }
+        public override void changeImageState(bool state)
+        {
+            if (connectState.checkVaule(state))
+            {
+                if (state)
+                {
+                    this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
+                }
+                else
+                {
+                    this.Image = ImageTools.MakeGrayscale(imagePath, imageSize, imageSize);
+                }
+            }
+        }
+        public void changeOutputState(object sender, EventArgs e)
+        {
+            nowVaule = mDOFunDelegates.mDOGetVauleDelegate((byte)bean.ioIndex);
+
+            if (nowVaule == 0)
+            {
+                imagePath = bean.imageClosePath;
+            }
+            else if (nowVaule == 1)
+            {
+                imagePath = bean.imagePath;
+            }
+            else
+            {
+                connectState.oldState = false;
+                imagePath = bean.imagePath;
+            }
+            if (connectState.oldState)
+            {
+                this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
+            }
+            else
+            {
+                this.Image = ImageTools.MakeGrayscale(imagePath, imageSize, imageSize);
+            }
+            
         }
     }
     public class C2000MDxA: InterfaceDevice
@@ -410,5 +519,388 @@ namespace BIMS
 
         }
     }
+    public class C2000MD82 : InterfaceDevice
+    {
+        public Bean_C2000MD82 bean;
+        private string beanKey;
+        private string scmd;
+        Int16[] dataVaule = new Int16[9];           
+        public DI[] dis = new DI[8];
+        public DO[] dos = new DO[2];
+        
+        
+        public C2000MD82(Bean_C2000MD82 b)
+        {
+            bean = b;
+            beanKey = bean.getBeanKey();
+            scmd = @"select * from (select STATE,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7 from C2000MD82 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
+        }
+        private byte getDOVaule(byte index)
+        {
+            byte state = 0;
+            index -= 8;
+            byte[] cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0x01, index , 0x00, 1 }, true);
+            IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.ReceiveTimeout = 5000;
+                    c.SendTimeout = 5000;
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[7];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        state = buff[4];
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = 6;
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = 7;
+                }
+                finally
+                {
+                    
+                }
+            }
+            return state;
+            
+        }
+        private Tools.BIMSConnectState controlDO(byte newVaule, byte index)
+        {
+            BIMSConnectState state = BIMSConnectState.OK;
+            index -= 8;
+            byte[] cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x10, 0x01, index, 0x00, 1, 2, 0, newVaule }, true);
+            IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[8];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        //无法从返回包中直接获得数据,用校验来做判断即可
+                        state = BIMSConnectState.OK;
+                        
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = BIMSConnectState.ERROR_CHECKSUM;
+                       
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = BIMSConnectState.ERROR_TCPIP;
+                }
+                finally
+                {
+                    string scmd = @"INSERT INTO DO_RECORD (DEVICE_GUID, STATE,CREAT_TIME,IO_INDEX,NEW_VAULE) values ('" + beanKey + @"'," + (int)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                  + @"','yyyy-mm-dd hh24:mi:ss')," + index + @"," + newVaule + @")";
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    {
+                        try
+                        {
 
+                            OracleCommand ocmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            ocmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+                            state = BIMSConnectState.ERROR_DATABASE;
+                            //MessageBox.Show("数据库连接异常");
+                        }
+
+                    }
+                }
+            }
+            return state;
+
+        }
+        public BaseDevice[] getAllDevice()
+        {
+            ArrayList devices = new ArrayList();
+            if (bean.diBeans != null)
+            {
+                foreach (DIBean dib in bean.diBeans)
+                {
+                    dis[dib.ioIndex] = new DI(dib);
+                    devices.Add(dis[dib.ioIndex]);
+                }
+            }
+            if (bean.doBeans != null)
+            {
+                foreach (DOBean dob in bean.doBeans)
+                {                  
+                    dos[dob.ioIndex-8] = new DO(dob,new DOFunDelegates(this.controlDO,this.getDOVaule));
+                    devices.Add(dos[dob.ioIndex-8]);
+                }
+            }
+            periodWork(null, null);
+            PublicResource.addTimer(bean.During, new ElapsedEventHandler(this.periodWork));
+
+            return (BaseDevice[])devices.Cast<BaseDevice>().ToArray();
+        }
+        public void periodWork(object o, ElapsedEventArgs e)
+        {
+            using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+            {
+                OracleCommand cmd = new OracleCommand(scmd, conn);
+                conn.Open();
+                OracleDataReader mOracleDataReader = cmd.ExecuteReader();
+
+                while (mOracleDataReader.Read())
+                {
+
+                    dataVaule[0] = (Int16)mOracleDataReader["DI0"];
+                    dataVaule[1] = (Int16)mOracleDataReader["DI1"];
+                    dataVaule[2] = (Int16)mOracleDataReader["DI2"];
+                    dataVaule[3] = (Int16)mOracleDataReader["DI3"];
+                    dataVaule[4] = (Int16)mOracleDataReader["DI4"];
+                    dataVaule[5] = (Int16)mOracleDataReader["DI5"];
+                    dataVaule[6] = (Int16)mOracleDataReader["DI6"];
+                    dataVaule[7] = (Int16)mOracleDataReader["DI7"];
+                    dataVaule[8] = (Int16)int.Parse((String)mOracleDataReader["STATE"]);
+                    //dataVaule[9] = Int16.Parse((Int16)mOracleDataReader["DI1"]);
+                    //dataVaule[10] = Int16.Parse((Int16)mOracleDataReader["STATE"]);
+
+
+                }
+                if (bean.diBeans != null)
+                {
+                    foreach (DIBean dib in bean.diBeans)
+                    {
+                        if (dib.useing)
+                        {
+
+                            dis[dib.ioIndex].changeInputState((int)dataVaule[dib.ioIndex]);
+                            dis[dib.ioIndex].changeImageState(0 == dataVaule[8]);
+                        }
+                    }
+                }
+                if (bean.doBeans != null)
+                {
+                    foreach (DOBean dob in bean.doBeans)
+                    {
+                        if (dob.useing)
+                        {                            
+                            dos[dob.ioIndex-8].changeImageState(0 == dataVaule[8]);
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
+    public class C2000M281 : InterfaceDevice
+    {
+        public Bean_C2000M281 bean;
+        private string beanKey;
+        private string scmd;
+        Int16[] dataVaule = new Int16[9];
+        public DI[] dis = new DI[8];
+        public DO[] dos = new DO[1];
+
+
+        public C2000M281(Bean_C2000M281 b)
+        {
+            bean = b;
+            beanKey = bean.getBeanKey();
+            scmd = @"select * from (select STATE,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7 from C2000MD82 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
+        }
+        private byte getDOVaule(byte index)
+        {
+            byte state = 0;
+            
+            byte[] cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0, 25, 0x00, 1 }, true);
+            IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.ReceiveTimeout = 5000;
+                    c.SendTimeout = 5000;
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[7];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        state = buff[4];
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = 6;
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = 7;
+                }
+                finally
+                {
+
+                }
+            }
+            return state;
+
+        }
+        private Tools.BIMSConnectState controlDO(byte newVaule, byte index)
+        {
+            BIMSConnectState state = BIMSConnectState.OK;
+           
+            byte[] cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x10, 0, 25, 0x00, 1, 2, 0, newVaule }, true);
+            IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.Connect(ipe);
+                    c.Send(cmd);//发送信息            
+                    byte[] buff = new byte[8];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (CRC.isDataRight(buff))
+                    {
+                        //无法从返回包中直接获得数据,用校验来做判断即可
+                        state = BIMSConnectState.OK;
+
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = BIMSConnectState.ERROR_CHECKSUM;
+
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = BIMSConnectState.ERROR_TCPIP;
+                }
+                finally
+                {
+                    string scmd = @"INSERT INTO DO_RECORD (DEVICE_GUID, STATE,CREAT_TIME,IO_INDEX,NEW_VAULE) values ('" + beanKey + @"'," + (int)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                  + @"','yyyy-mm-dd hh24:mi:ss')," + index + @"," + newVaule + @")";
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    {
+                        try
+                        {
+
+                            OracleCommand ocmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            ocmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+                            state = BIMSConnectState.ERROR_DATABASE;
+                            //MessageBox.Show("数据库连接异常");
+                        }
+
+                    }
+                }
+            }
+            return state;
+
+        }
+        public BaseDevice[] getAllDevice()
+        {
+            ArrayList devices = new ArrayList();
+            if (bean.diBeans != null)
+            {
+                foreach (DIBean dib in bean.diBeans)
+                {
+                    dis[dib.ioIndex] = new DI(dib);
+                    devices.Add(dis[dib.ioIndex]);
+                }
+            }
+            if (bean.doBeans != null)
+            {
+                foreach (DOBean dob in bean.doBeans)
+                {
+                    dos[dob.ioIndex - 8] = new DO(dob, new DOFunDelegates(this.controlDO, this.getDOVaule));
+                    devices.Add(dos[dob.ioIndex - 8]);
+                }
+            }
+            periodWork(null, null);
+            PublicResource.addTimer(bean.During, new ElapsedEventHandler(this.periodWork));
+
+            return (BaseDevice[])devices.Cast<BaseDevice>().ToArray();
+        }
+        public void periodWork(object o, ElapsedEventArgs e)
+        {
+            using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+            {
+                OracleCommand cmd = new OracleCommand(scmd, conn);
+                conn.Open();
+                OracleDataReader mOracleDataReader = cmd.ExecuteReader();
+
+                while (mOracleDataReader.Read())
+                {
+
+                    dataVaule[0] = (Int16)mOracleDataReader["DI0"];
+                    dataVaule[1] = (Int16)mOracleDataReader["DI1"];
+                    dataVaule[2] = (Int16)mOracleDataReader["DI2"];
+                    dataVaule[3] = (Int16)mOracleDataReader["DI3"];
+                    dataVaule[4] = (Int16)mOracleDataReader["DI4"];
+                    dataVaule[5] = (Int16)mOracleDataReader["DI5"];
+                    dataVaule[6] = (Int16)mOracleDataReader["DI6"];
+                    dataVaule[7] = (Int16)mOracleDataReader["DI7"];
+                    dataVaule[8] = (Int16)int.Parse((String)mOracleDataReader["STATE"]);
+                    //dataVaule[9] = Int16.Parse((Int16)mOracleDataReader["DI1"]);
+                    //dataVaule[10] = Int16.Parse((Int16)mOracleDataReader["STATE"]);
+
+
+                }
+                if (bean.diBeans != null)
+                {
+                    foreach (DIBean dib in bean.diBeans)
+                    {
+                        if (dib.useing)
+                        {
+
+                            dis[dib.ioIndex].changeInputState((int)dataVaule[dib.ioIndex]);
+                            dis[dib.ioIndex].changeImageState(0 == dataVaule[8]);
+                        }
+                    }
+                }
+                if (bean.doBeans != null)
+                {
+                    foreach (DOBean dob in bean.doBeans)
+                    {
+                        if (dob.useing)
+                        {
+                            dos[dob.ioIndex - 8].changeImageState(0 == dataVaule[8]);
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
 }

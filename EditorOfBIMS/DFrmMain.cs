@@ -20,11 +20,11 @@ namespace EditorOfBIMS
     public partial class DFrmMain : Form 
     {
 
-        String[][] listItems = { new String[4] { "DED194E_9S1YK2K2", "DED194E_9S1YK2K2.png","DED194E_9S1YK2K2","Left" }
+        String[][] listItems = { new String[4] { "电量仪", "DED194E_9S1YK2K2.png","DED194E_9S1YK2K2","Left" }
+                               , new String[4] { "三相电量仪", "DED194E_9S1YK4K4.png","DED194E_9S1YK4K4","Left" }
                                , new String[4] { "C2000MDxA", "C2000MDxA.jpg","C2000MDxA","Right"}
                                , new String[4] { "C2000MD82", "C2000MDxA.png","C2000MD82","Right" }
-                               , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2","" }
-                               , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2","" }
+                               , new String[4] { "C2000M281", "ElectricityGauge.png","C2000M281","Right" }
                                , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2",""}};
         public DFrmMain()
         {
@@ -349,16 +349,29 @@ namespace EditorOfBIMS
         }
         private void 删除ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Control[] ctls = this.PanRight.Controls.Find(treeViewRight.SelectedNode.Text, false);
+            string searchtext = "";
             if (this.treeViewRight.SelectedNode.Level == 0)
             {
-                ctls[0].Dispose();
-                this.treeViewRight.Nodes.Remove(this.treeViewRight.SelectedNode);
+                searchtext = treeViewRight.SelectedNode.Text;
             }
             else if (this.treeViewRight.SelectedNode.Level == 1)
             {
-                BoxDevice bd = (BoxDevice)ctls[0];
-                bd.delectChild(treeViewRight.SelectedNode.Index);
+                searchtext = treeViewRight.SelectedNode.Parent.Text;
+            }
+            Control[] ctls = this.PanRight.Controls.Find(searchtext, false);
+            if (ctls.Length > 0)
+            {
+                if (this.treeViewRight.SelectedNode.Level == 0)
+                {
+                    BoxDevice bd = (BoxDevice)ctls[0];
+                    bd.delectMe();
+                    this.treeViewRight.Nodes.Remove(this.treeViewRight.SelectedNode);
+                }
+                else if (this.treeViewRight.SelectedNode.Level == 1)
+                {
+                    BoxDevice bd = (BoxDevice)ctls[0];
+                    bd.delectChild(treeViewRight.SelectedNode.Index);
+                }
             }
         }
         
