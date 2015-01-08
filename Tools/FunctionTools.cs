@@ -32,7 +32,32 @@ namespace Tools
             }
             return en.ToString();
         }
-     
+        public static string bool2string(bool b)
+        {
+            if (b)
+            {
+                return "0";
+            }
+            else
+            {
+                return "1";
+            }
+        }
+        public static bool string2bool(string s)
+        {
+            if ("0".Equals(s))
+            {
+                return false;
+            }
+            else if ("1".Equals(s))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public enum BIMSConnectState

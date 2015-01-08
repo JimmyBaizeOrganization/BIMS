@@ -38,7 +38,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Bean.cs" />
+    <Compile Include="CHCNetSDK.cs" />
     <Compile Include="CRC.cs" />
     <Compile Include="FileTools.cs" />
     <Compile Include="FunctionTools.cs" />

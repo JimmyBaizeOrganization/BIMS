@@ -174,7 +174,7 @@ namespace Tools
         //坐标
         public Point mpoint;
         public string detail;//输入描述
-        public string sort;//输入描述
+        public string sort;//
     }
     public class InputBaseBean : IOBaseBean
     {
@@ -245,6 +245,48 @@ namespace Tools
     }
     public class Bean_C2000M281 : Bean_C2000MD82
     {
-
+        public Bean_C2000M281(){
+            Port = 502;
+        }
+        
+    }
+    public class Bean_C2000MH08:BaseBean
+    {
+        public int slaveNum;//从机编号
+        public string[] detail = new string[8];
+        public string[] normalVaule = new string[8];
+        public Bean_C2000MH08()
+        {
+            this.Sort = "电";
+            Baud = 9600;
+            slaveNum = 1;
+            ClassName = "C2000MH08";
+            During = 5000;
+            DeviceType = "C2000MH08";
+        }
+        
+    }
+    public class CameraBaseBean:BaseBean
+    {
+        public CameraBaseBean()
+        {
+            During = 0;
+        }
+    }
+    public class DigitalCameraBean:CameraBaseBean
+    {
+      
+        public string username = "admin";
+        public string password = "12345";
+        public string channel = "1";
+    }
+    public class Bean_HIKVISION : DigitalCameraBean
+    {
+        public Bean_HIKVISION()
+        {
+            Ip = "192.168.100.210";
+            Port = 8000;
+            ClassName = "HIKVISION";
+        }
     }
 }

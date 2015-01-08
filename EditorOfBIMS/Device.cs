@@ -133,7 +133,7 @@ namespace EditorOfBIMS
            
         }
         public abstract void creatForm();
-        public abstract void saveToXML(string building,int floor,string path);
+        public abstract void saveToXML(string building,int floor,string[] path);
     }
 
    
@@ -167,13 +167,14 @@ namespace EditorOfBIMS
         {
             MForm = new Frm_DED194E_9S1YK2K2(bean);
         }
-        public override void saveToXML(string building,int  floor,string path)
+        public override void saveToXML(string building,int  floor,string[] path)
         {
             
             bean.MPoint = Location;
             bean.BuildingName = building;
             bean.FloorNum = floor;
-            XMLSerializerHelper.XmlSerialize(bean, path + @"\"+bean.BuildingName+"."+bean.FloorNum+bean.DeviceNum+@".Bean_DED194E_9S1YK2K2.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\"+bean.BuildingName+"."+bean.FloorNum+bean.DeviceNum+@".Bean_DED194E_9S1YK2K2.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[1] + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_DED194E_9S1YK2K2.xml");
         }
 
     }
@@ -206,13 +207,14 @@ namespace EditorOfBIMS
         {
             MForm = new Frm_DED194E_9S1YK4K4(bean);
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
 
             bean.MPoint = Location;
             bean.BuildingName = building;
             bean.FloorNum = floor;
-            XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_DED194E_9S1YK4K4.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_DED194E_9S1YK4K4.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[1] + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_DED194E_9S1YK4K4.xml");
         }
 
     }
@@ -242,7 +244,7 @@ namespace EditorOfBIMS
                 this.Visible = false;
             }
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
             //bean.mpoint = Location;
         }
@@ -308,7 +310,7 @@ namespace EditorOfBIMS
                 this.Visible = false;
             }
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
             //bean.mpoint = Location;
         }
@@ -373,7 +375,7 @@ namespace EditorOfBIMS
                 this.Visible = false;
             }
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
             //bean.mpoint = Location;
         }
@@ -610,7 +612,7 @@ namespace EditorOfBIMS
             }
             this.Dispose();
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
 
             bean.MPoint = Location;
@@ -636,7 +638,8 @@ namespace EditorOfBIMS
                 }
             }
             bean.diBeans = ds.Cast<DIBean>().ToArray();
-            XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName +"."+ bean.FloorNum +"."+ bean.DeviceNum + @".Bean_C2000MDxA.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\" + bean.BuildingName +"."+ bean.FloorNum +"."+ bean.DeviceNum + @".Bean_C2000MDxA.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[1] + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000MDxA.xml");
         }
     }
     public class C2000MD82 : BaseDevice, BoxDevice
@@ -828,7 +831,7 @@ namespace EditorOfBIMS
             }
             this.Dispose();
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
 
             bean.MPoint = Location;
@@ -854,7 +857,8 @@ namespace EditorOfBIMS
                 }
             }
             bean.doBeans = ds2.Cast<DOBean>().ToArray();
-            XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000MD82.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000MD82.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[1] + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000MD82.xml");
         }
     }
     public class C2000M281 : BaseDevice, BoxDevice
@@ -1044,7 +1048,7 @@ namespace EditorOfBIMS
             }
             this.Dispose();
         }
-        public override void saveToXML(string building, int floor, string path)
+        public override void saveToXML(string building, int floor, string[] path)
         {
 
             bean.MPoint = Location;
@@ -1070,7 +1074,77 @@ namespace EditorOfBIMS
                 }
             }
             bean.doBeans = ds2.Cast<DOBean>().ToArray();
-            XMLSerializerHelper.XmlSerialize(bean, path + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000M281.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000M281.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[1] + @"\" + bean.BuildingName + "." + bean.FloorNum + "." + bean.DeviceNum + @".Bean_C2000M281.xml");
+        }
+    }
+    public class C2000MH08 : BaseDevice
+    {
+        private Bean_C2000MH08 bean;
+
+        public Bean_C2000MH08 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        public C2000MH08()
+        {
+            bean = new Bean_C2000MH08();
+            //bean.MPoint = Mouse_offset;
+            Image = ImageTools.getImage("C2000MH08.png", imageSize, imageSize);
+            //  Size = new System.Drawing.Size(20, 20);
+            bean.DeviceNum = DeviceIndex++;
+        }
+        public C2000MH08(object[] o)
+        {
+            bean = (Bean_C2000MH08)o[0];
+            MPanel = (Panel)o[1];
+            Image = ImageTools.getImage("C2000MH08.png", imageSize, imageSize);
+            //  Size = new System.Drawing.Size(20, 20);
+            bean.DeviceNum = DeviceIndex++;
+        }
+        public override void creatForm()
+        {
+            MForm = new Frm_C2000MH08(bean);
+        }
+        public override void saveToXML(string building, int floor, string[] path)
+        {
+
+            bean.MPoint = Location;
+            bean.BuildingName = building;
+            bean.FloorNum = floor;
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_C2000MH08.xml");
+            XMLSerializerHelper.XmlSerialize(bean, path[1] + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_C2000MH08.xml");
+        }
+
+    }
+    public class HIKVISION:BaseDevice
+    {
+        private Bean_HIKVISION bean;
+        public HIKVISION()
+        {
+            bean = new Bean_HIKVISION();
+            Image = ImageTools.getImage("HIKVSION.png", imageSize, imageSize);
+            bean.DeviceNum = DeviceIndex++;
+        }
+        public HIKVISION(object[] o)
+        {
+            bean = (Bean_HIKVISION)o[0];
+            MPanel = (Panel)o[1];
+            Image = ImageTools.getImage("HIKVSION.png", imageSize, imageSize);
+            bean.DeviceNum = DeviceIndex++;
+        }
+        public override void creatForm()
+        {
+            MForm = new Frm_HIKVISION(bean);
+        }
+        public override void saveToXML(string building, int floor, string[] path)
+        {
+
+            bean.MPoint = Location;
+            bean.BuildingName = building;
+            bean.FloorNum = floor;
+            XMLSerializerHelper.XmlSerialize(bean, path[0] + @"\" + bean.BuildingName + "." + bean.FloorNum + bean.DeviceNum + @".Bean_HIKVISION.xml");
         }
     }
 }

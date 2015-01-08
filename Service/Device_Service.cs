@@ -109,7 +109,7 @@ namespace Service
                 }
                 finally
                 {                
-                    string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    string scmd = @"INSERT INTO DED194E_9S1YK2K2 (DEVICE_GUID, STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I) values ('" + GUID + @"'," + (int)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                                                                     + @"','yyyy-mm-dd hh24:mi:ss')," + data[0] + @"," + data[1] + "," + data[2] + "," + data[3] + "," + data[4] + "," + data[5] + "," + data[6] + "," + data[7] + @")";
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))
                     {
@@ -226,7 +226,7 @@ namespace Service
         static byte dataLenth = 10;//采集数据个数 
         static int recLenth = dataLenth * 2 + 5;
         byte[] cmd;
-        private int state;
+        private BIMSConnectState state;
         private Bean_C2000MDxA bean;
 
         public Bean_C2000MDxA Bean
@@ -298,7 +298,7 @@ namespace Service
                 finally
                 {
 
-                    string scmd = @"INSERT INTO C2000MDXA (DEVICE_GUID, STATE,CREAT_TIME,AI0,AI1,AI2,AI3,AI4,AI5,AI6,AI7,DI0,DI1) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    string scmd = @"INSERT INTO C2000MDXA (DEVICE_GUID, STATE,CREAT_TIME,AI0,AI1,AI2,AI3,AI4,AI5,AI6,AI7,DI0,DI1) values ('" + GUID + @"'," + (int)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                                                                     + @"','yyyy-mm-dd hh24:mi:ss')," + ai[0] + @"," + ai[1] + "," + ai[2] + "," + ai[3] + "," + ai[4] + "," + ai[5] + "," + ai[6] + "," + ai[7] + "," + oi[0]  + "," + oi[1]  + @")";
 
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))
@@ -390,7 +390,7 @@ namespace Service
                 finally
                 {
 
-                    string scmd = @"INSERT INTO C2000MD82 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    string scmd = @"INSERT INTO C2000MD82 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + (int)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                                                                     + @"','yyyy-mm-dd hh24:mi:ss')," + di[0] + @"," + di[1] + "," + di[2] + "," + di[3] + "," + di[4] + "," + di[5] + "," + di[6] + "," + di[7] + @")";
 
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))
@@ -418,9 +418,9 @@ namespace Service
     }
     public class C2000M281 : BaseDevice, IBeanTool
     {
-        static byte dataLenth = 8;//采集数据个数 
-        static int recLenth = dataLenth * 2 + 5;
-        byte[] cmd;
+        
+        
+        
         private BIMSConnectState state;
         private Bean_C2000M281 bean;
 
@@ -436,7 +436,104 @@ namespace Service
         public C2000M281(Bean_C2000M281 b)
         {
             bean = b;
-            cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0, 27, 0x00, dataLenth }, true);
+            
+            GUID = bean.getBeanKey();
+            ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
+            ipe = new IPEndPoint(ipa, 502);//C2000M281的端口号为固定的
+        }
+        public BaseBean getBean()
+        {
+            return bean;
+        }
+        public override void periodWork(object o, ElapsedEventArgs e)
+        {
+
+            int[] di = new int[8];
+            Random ran = new Random();
+            Int16 RandKey = (Int16)ran.Next(0, 0x8fff);
+            byte keyH = (byte)((RandKey & 0xff00) >> 8);
+            byte keyL = (byte)((RandKey & 0x00ff) );
+            byte[]  cmdoo = new byte[] { keyH, keyL, 0, 0, 0, 6, 1, 3, 0, 0x1b, 0, 8 };
+            using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                try
+                {
+                    c.Connect(ipe);
+                    c.Send(cmdoo);//发送信息            
+                    byte[] buff = new byte[25];
+                    c.Receive(buff);//从服务器端接受返回信息                                        
+                    if (buff[0] == keyH && buff[1]==keyL)
+                    {
+                        int start = 10;
+                        for (int i = 0; i < 8; i++, start += 2)
+                        {
+                            di[i] = buff[start];
+                        }
+
+                        state = BIMSConnectState.OK;
+                    }
+                    else
+                    {
+                        ///校验异常
+                        state = BIMSConnectState.ERROR_CHECKSUM;
+                    }
+                }
+                catch (Exception e2)
+                {
+                    Console.WriteLine(e2.ToString());
+                    //ＴＣＰIP  链接异常
+                    state = BIMSConnectState.ERROR_TCPIP;
+                }
+                finally
+                {
+
+                    string scmd = @"INSERT INTO C2000MD82 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + (int)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                                                                    + @"','yyyy-mm-dd hh24:mi:ss')," + di[0] + @"," + di[1] + "," + di[2] + "," + di[3] + "," + di[4] + "," + di[5] + "," + di[6] + "," + di[7] + @")";
+
+                    using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+                    {
+                        try
+                        {
+
+                            OracleCommand cmd = new OracleCommand(scmd, conn);
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception e2)
+                        {
+
+                        }
+
+                    }
+
+
+
+                }
+            }
+
+        }
+    }
+    public class C2000MH08 : BaseDevice, IBeanTool
+    {
+        static byte dataLenth = 8;//采集数据个数 
+        static int recLenth = dataLenth * 2 + 5;
+        byte[] cmd;
+        private BIMSConnectState state;
+        private Bean_C2000MH08 bean;
+
+        public Bean_C2000MH08 Bean
+        {
+            get { return bean; }
+            set { bean = value; }
+        }
+        IPEndPoint ipe;
+        IPAddress ipa;
+
+        private string GUID;
+        public C2000MH08(Bean_C2000MH08 b)
+        {
+            bean = b;
+            cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.slaveNum, 0x03, 07, 00, 0x00, dataLenth }, true);
             GUID = bean.getBeanKey();
             ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
             ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
@@ -460,7 +557,7 @@ namespace Service
                     if (CRC.isDataRight(buff))
                     {
                         int start = 4;
-                        for (int i = 0; i < (buff[2] / 2) - 2; i++, start += 2)
+                        for (int i = 0; i < (buff[2] / 2) ; i++, start += 2)
                         {
                             di[i] = buff[start];
                         }
@@ -482,7 +579,7 @@ namespace Service
                 finally
                 {
 
-                    string scmd = @"INSERT INTO C2000MD82 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    string scmd = @"INSERT INTO C2000MH08 (DEVICE_GUID, STATE,CREAT_TIME,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7) values ('" + GUID + @"'," + (byte)state + @",TO_DATE('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                                                                     + @"','yyyy-mm-dd hh24:mi:ss')," + di[0] + @"," + di[1] + "," + di[2] + "," + di[3] + "," + di[4] + "," + di[5] + "," + di[6] + "," + di[7] + @")";
 
                     using (OracleConnection conn = new OracleConnection(OracleTools.connString))

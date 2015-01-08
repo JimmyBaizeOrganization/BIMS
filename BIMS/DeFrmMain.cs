@@ -33,7 +33,7 @@ namespace BIMS
         private void DeFrmMain_Load(object sender, EventArgs e)
         {
 
-            FindFile(FileURL.ResourceDirRoot + @"/../bean/");
+            FindFile(FileURL.ResourceDirRoot + @"/../bean/Client/");
 
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
@@ -166,8 +166,8 @@ namespace BIMS
                 BaseBean b= (BaseBean)de.Value;
                 ReflectTools rt = new ReflectTools("BIMS", "BIMS", b.ClassName, new object[] { b });
                 InterfaceDevice dev = (InterfaceDevice)rt.MObj;
-                BaseDevice[] devices = dev.getAllDevice();
-                foreach (BaseDevice pic in devices)
+                Control[] devices = dev.getAllDevice();
+                foreach (Control pic in devices)
                 {                  
                     mpanel.Controls[b.FloorNum - 1].Controls[0].Controls.Add(pic);                  
                 }               
@@ -184,8 +184,8 @@ namespace BIMS
                     
                     ReflectTools rt = new ReflectTools("BIMS", "BIMS", b.ClassName, new object[] { b });
                     InterfaceDevice dev = (InterfaceDevice)rt.MObj;
-                    BaseDevice[] devices = dev.getAllDevice();
-                    foreach (BaseDevice pic in devices)
+                    Control[] devices = dev.getAllDevice();
+                    foreach (Control pic in devices)
                     {
                         //pic.Location = new Point(b.MPoint.X * (mpanel.Size.Width * 2 / 3 + mpanel.Size.Width * 1064 / 3494) / (mpanel.Size.Width * 1064 / 3494),
                         //                     b.MPoint.Y * (mpanel.Size.Height / 2 + mpanel.Size.Height * 800 / 1944) / (mpanel.Size.Height * 800 / 1944));

@@ -67,22 +67,23 @@
             // 
             // textBox_time
             // 
-            this.textBox_time.Location = new System.Drawing.Point(470, 346);
+            this.textBox_time.Location = new System.Drawing.Point(470, 277);
             this.textBox_time.Name = "textBox_time";
             this.textBox_time.Size = new System.Drawing.Size(134, 28);
             this.textBox_time.TabIndex = 11;
             // 
             // textBox_Port
             // 
-            this.textBox_Port.Location = new System.Drawing.Point(170, 280);
+            this.textBox_Port.Location = new System.Drawing.Point(170, 42);
             this.textBox_Port.Name = "textBox_Port";
             this.textBox_Port.Size = new System.Drawing.Size(134, 28);
             this.textBox_Port.TabIndex = 12;
+            this.textBox_Port.Visible = false;
             // 
             // label_time
             // 
             this.label_time.AutoSize = true;
-            this.label_time.Location = new System.Drawing.Point(363, 350);
+            this.label_time.Location = new System.Drawing.Point(363, 281);
             this.label_time.Name = "label_time";
             this.label_time.Size = new System.Drawing.Size(116, 18);
             this.label_time.TabIndex = 5;
@@ -91,15 +92,16 @@
             // label_Port
             // 
             this.label_Port.AutoSize = true;
-            this.label_Port.Location = new System.Drawing.Point(63, 284);
+            this.label_Port.Location = new System.Drawing.Point(63, 46);
             this.label_Port.Name = "label_Port";
             this.label_Port.Size = new System.Drawing.Size(44, 18);
             this.label_Port.TabIndex = 6;
             this.label_Port.Text = "端口";
+            this.label_Port.Visible = false;
             // 
             // textBox_bound
             // 
-            this.textBox_bound.Location = new System.Drawing.Point(170, 350);
+            this.textBox_bound.Location = new System.Drawing.Point(170, 279);
             this.textBox_bound.Name = "textBox_bound";
             this.textBox_bound.Size = new System.Drawing.Size(134, 28);
             this.textBox_bound.TabIndex = 13;
@@ -114,7 +116,7 @@
             // label_bound
             // 
             this.label_bound.AutoSize = true;
-            this.label_bound.Location = new System.Drawing.Point(63, 354);
+            this.label_bound.Location = new System.Drawing.Point(63, 283);
             this.label_bound.Name = "label_bound";
             this.label_bound.Size = new System.Drawing.Size(62, 18);
             this.label_bound.TabIndex = 7;
@@ -131,19 +133,21 @@
             // 
             // textBox_address
             // 
-            this.textBox_address.Location = new System.Drawing.Point(470, 280);
+            this.textBox_address.Location = new System.Drawing.Point(464, 43);
             this.textBox_address.Name = "textBox_address";
             this.textBox_address.Size = new System.Drawing.Size(134, 28);
             this.textBox_address.TabIndex = 15;
+            this.textBox_address.Visible = false;
             // 
             // label_address
             // 
             this.label_address.AutoSize = true;
-            this.label_address.Location = new System.Drawing.Point(363, 282);
+            this.label_address.Location = new System.Drawing.Point(357, 45);
             this.label_address.Name = "label_address";
             this.label_address.Size = new System.Drawing.Size(80, 18);
             this.label_address.TabIndex = 9;
             this.label_address.Text = "从机地址";
+            this.label_address.Visible = false;
             // 
             // textBox_shebeihao
             // 
@@ -188,7 +192,7 @@
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
-            // Frm_C2000MD82
+            // Frm_C2000M281
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -210,7 +214,7 @@
             this.Controls.Add(this.label_address);
             this.Controls.Add(this.textBox_shebeihao);
             this.Controls.Add(this.label_shebeihao);
-            this.Name = "Frm_C2000MD82";
+            this.Name = "Frm_C2000M281";
             this.Text = "C2000MD82";
             this.ResumeLayout(false);
             this.PerformLayout();

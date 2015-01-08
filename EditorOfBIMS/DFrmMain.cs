@@ -25,7 +25,10 @@ namespace EditorOfBIMS
                                , new String[4] { "C2000MDxA", "C2000MDxA.jpg","C2000MDxA","Right"}
                                , new String[4] { "C2000MD82", "C2000MDxA.png","C2000MD82","Right" }
                                , new String[4] { "C2000M281", "ElectricityGauge.png","C2000M281","Right" }
-                               , new String[4] { "电量仪", "ElectricityGauge.png","DED194E_9S1YK2K2",""}};
+                               , new String[4] { "C2000MH08(交流电开关量)", "C2000MH08.jpg","C2000MH08","Left"}
+                               , new String[4] { "HIKVISION(海康威视数字摄像头)", "HIKVISION.jpg","HIKVISION","Left"}
+
+};
         public DFrmMain()
         {
             InitializeComponent();
@@ -234,10 +237,16 @@ namespace EditorOfBIMS
             }
            // bean.BuildingName = tb_buildingname.Text;
 
-            string newPath = tb_path.Text+ @"\"+ tb_buildingname.Text + "_" + tb_floornum.Text;
-            if (!Directory.Exists(newPath))
+            string []  newPath  = new string[2];
+            newPath [0]= tb_path.Text + @"\Client\" + tb_buildingname.Text + "_" + tb_floornum.Text;
+            if (!Directory.Exists(newPath[0]))
             {
-                Directory.CreateDirectory(newPath);
+                Directory.CreateDirectory(newPath[0]);
+            }
+            newPath[1] = tb_path.Text + @"\Service\" + tb_buildingname.Text + "_" + tb_floornum.Text;
+             if (!Directory.Exists(newPath[1]))
+            {
+                Directory.CreateDirectory(newPath[1]);
             }
             foreach(BaseDevice bd in this.PanRight.Controls)
             {

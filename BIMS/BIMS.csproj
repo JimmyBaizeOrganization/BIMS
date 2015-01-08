@@ -28,7 +28,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -74,6 +74,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Ctrl_C2000MH08.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Ctrl_C2000MH08.designer.cs">
+      <DependentUpon>Ctrl_C2000MH08.cs</DependentUpon>
+    </Compile>
     <Compile Include="DeFrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,12 @@
     <Compile Include="DeviceFrom\Frm_DED194E_9S1YK2K2.Designer.cs">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
     </Compile>
+    <Compile Include="DeviceFrom\Frm_HIKVISION.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceFrom\Frm_HIKVISION.Designer.cs">
+      <DependentUpon>Frm_HIKVISION.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_Loading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +127,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\Ctrl_C2000MH08.resx">
+      <DependentUpon>Ctrl_C2000MH08.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeFrmMain.resx">
       <DependentUpon>DeFrmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeviceFrom\Frm_DED194E_9S1YK2K2.resx">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeviceFrom\Frm_HIKVISION.resx">
+      <DependentUpon>Frm_HIKVISION.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_Loading.resx">
       <DependentUpon>Frm_Loading.cs</DependentUpon>
@@ -277,7 +295,7 @@
     <None Include="Resources\导航图标_02.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <WCFMetadata Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\littleM .png" />

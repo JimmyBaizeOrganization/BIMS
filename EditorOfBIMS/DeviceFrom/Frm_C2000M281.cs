@@ -36,7 +36,7 @@ namespace EditorOfBIMS.DeviceFrom
             bean.SlaveNum = int.Parse(textBox_address.Text);
             bean.Baud = int.Parse(textBox_bound.Text);
             bean.Ip = textBox_IP.Text;
-            bean.Port = int.Parse(textBox_Port.Text);
+           // bean.Port = int.Parse(textBox_Port.Text);
             bean.DeviceNum = int.Parse(textBox_shebeihao.Text);
             bean.During = int.Parse(textBox_time.Text);
             bean.Sort = tb_Sort.Text;

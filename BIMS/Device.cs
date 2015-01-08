@@ -10,6 +10,7 @@ using Oracle.DataAccess.Client;
 using System.Data;
 using System.Timers;
 using System.Collections;
+
 using BIMS.DeviceFrom;
 using System.Net.Sockets;
 using System.Net;
@@ -45,7 +46,7 @@ namespace BIMS
             get { return mform; }
             set { mform = value; }
         }
-        public StateRegister<bool> connectState = new StateRegister<bool>(false);
+        public StateRegister<bool> connectState = new StateRegister<bool>(true);
         //public void checkConnectState(int newState){
         //    if(connectState.checkVaule(newState))
         //    {
@@ -121,7 +122,7 @@ namespace BIMS
     }
     public interface InterfaceDevice
     {
-        BaseDevice[] getAllDevice();
+        Control[] getAllDevice();
     }
     class DED194E_9S1YK2K2 : BaseDevice, InterfaceDevice
     {
@@ -147,7 +148,7 @@ namespace BIMS
             periodWork(null, null);
             PublicResource.addTimer(b.During, new ElapsedEventHandler(this.periodWork));
         }
-        public BaseDevice[] getAllDevice()
+        public Control[] getAllDevice()
         {
             this.Image = ImageTools.getImage(ImageURL, imageSize, imageSize);
             this.Size = new Size(imageSize,imageSize);
@@ -442,7 +443,7 @@ namespace BIMS
            
            
         }
-        public BaseDevice[] getAllDevice()
+        public Control[] getAllDevice()
         {
             ArrayList devices = new ArrayList();
             if (bean.aiBeans != null) { 
@@ -635,7 +636,7 @@ namespace BIMS
             return state;
 
         }
-        public BaseDevice[] getAllDevice()
+        public Control[] getAllDevice()
         {
             ArrayList devices = new ArrayList();
             if (bean.diBeans != null)
@@ -730,8 +731,11 @@ namespace BIMS
         private byte getDOVaule(byte index)
         {
             byte state = 0;
-            
-            byte[] cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x03, 0, 25, 0x00, 1 }, true);
+            Random ran = new Random();
+            Int16 RandKey = (Int16)ran.Next( 0x8fff,0xffff);
+            byte keyH = (byte)((RandKey & 0xff00) >> 8);
+            byte keyL = (byte)((RandKey & 0x00ff));
+            byte[] cmdoo = new byte[] { keyH, keyL, 0, 0, 0, 6, 1, 3, 0, 25, 0, 1 };
             IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
             IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
             using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
@@ -741,12 +745,12 @@ namespace BIMS
                     c.ReceiveTimeout = 5000;
                     c.SendTimeout = 5000;
                     c.Connect(ipe);
-                    c.Send(cmd);//发送信息            
-                    byte[] buff = new byte[7];
+                    c.Send(cmdoo);//发送信息            
+                    byte[] buff = new byte[11];
                     c.Receive(buff);//从服务器端接受返回信息                                        
-                    if (CRC.isDataRight(buff))
+                    if (buff[0] == keyH && buff[1] == keyL)
                     {
-                        state = buff[4];
+                        state = buff[10];
                     }
                     else
                     {
@@ -771,8 +775,13 @@ namespace BIMS
         private Tools.BIMSConnectState controlDO(byte newVaule, byte index)
         {
             BIMSConnectState state = BIMSConnectState.OK;
-           
-            byte[] cmd = CRC.GetCRC16Full(new byte[] { (byte)bean.SlaveNum, 0x10, 0, 25, 0x00, 1, 2, 0, newVaule }, true);
+
+            Random ran = new Random();
+            Int16 RandKey = (Int16)ran.Next(0x8fff, 0xffff);
+            byte keyH = (byte)((RandKey & 0xff00) >> 8);
+            byte keyL = (byte)((RandKey & 0x00ff));
+            byte[] cmdoo = new byte[] { keyH, keyL, 0, 0, 0, 0x0f, 1, 0x10, 0, 0x19, 0, 1, 2, 0, newVaule };
+
             IPAddress ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
             IPEndPoint ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
             using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
@@ -780,10 +789,10 @@ namespace BIMS
                 try
                 {
                     c.Connect(ipe);
-                    c.Send(cmd);//发送信息            
+                    c.Send(cmdoo);//发送信息            
                     byte[] buff = new byte[8];
                     c.Receive(buff);//从服务器端接受返回信息                                        
-                    if (CRC.isDataRight(buff))
+                    if (buff[0] == keyH && buff[1] == keyL)
                     {
                         //无法从返回包中直接获得数据,用校验来做判断即可
                         state = BIMSConnectState.OK;
@@ -827,7 +836,7 @@ namespace BIMS
             return state;
 
         }
-        public BaseDevice[] getAllDevice()
+        public Control[] getAllDevice()
         {
             ArrayList devices = new ArrayList();
             if (bean.diBeans != null)
@@ -901,6 +910,89 @@ namespace BIMS
 
             }
 
+        }
+    }
+    public class C2000MH08 : InterfaceDevice
+    {
+        public Bean_C2000MH08 bean;
+        private string beanKey;
+        private string scmd;
+        string[] dataVaule = new string[9];
+        private Ctrl_C2000MH08 mCtrl_C2000MH08;
+        public StateRegister<bool> connectState = new StateRegister<bool>(true);
+        public C2000MH08(Bean_C2000MH08 b)
+        {
+            bean = b;
+            beanKey = bean.getBeanKey();
+            mCtrl_C2000MH08 = new Ctrl_C2000MH08(bean.detail);
+            mCtrl_C2000MH08.Location = bean.MPoint;
+           
+            scmd = @"select * from (select STATE,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7 from C2000MH08 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
+        }
+        public Control[] getAllDevice()
+        {          
+            periodWork(null, null);
+            PublicResource.addTimer(bean.During, new ElapsedEventHandler(this.periodWork));
+            return new Control[]{mCtrl_C2000MH08};
+        }
+        public void periodWork(object o, ElapsedEventArgs e)
+        {
+            using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+            {
+                OracleCommand cmd = new OracleCommand(scmd, conn);
+                conn.Open();
+                OracleDataReader mOracleDataReader = cmd.ExecuteReader();
+
+                while (mOracleDataReader.Read())
+                {
+                    dataVaule[0] = (string)mOracleDataReader["DI0"];
+                    dataVaule[1] = (string)mOracleDataReader["DI1"];
+                    dataVaule[2] = (string)mOracleDataReader["DI2"];
+                    dataVaule[3] = (string)mOracleDataReader["DI3"];
+                    dataVaule[4] = (string)mOracleDataReader["DI4"];
+                    dataVaule[5] = (string)mOracleDataReader["DI5"];
+                    dataVaule[6] = (string)mOracleDataReader["DI6"];
+                    dataVaule[7] = (string)mOracleDataReader["DI7"];
+                    dataVaule[8] = (string)mOracleDataReader["STATE"];                   
+                }
+                if (connectState.checkVaule("0".Equals(dataVaule[8])))
+                {
+                    if (connectState.oldState)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                if (connectState.oldState)
+                {
+                    mCtrl_C2000MH08.changeVaule(dataVaule);
+                }
+            }
+
+        }
+    }
+    public class HIKVISION : BaseDevice, InterfaceDevice
+    {
+        private Bean_HIKVISION bean;
+        private static string imageURL = "HIKVSION.png";
+        public override void newform()
+        {
+            Mform = new Frm_HIKVISION(bean);
+        }
+        public HIKVISION(Bean_HIKVISION b)
+        {
+            bean = b;
+
+        }
+        public Control[] getAllDevice()
+        {
+            this.Image = ImageTools.getImage(imageURL, imageSize, imageSize);
+            this.Size = new Size(imageSize, imageSize);
+            this.Location = bean.MPoint;
+            return new BaseDevice[] { this };
         }
     }
 }
