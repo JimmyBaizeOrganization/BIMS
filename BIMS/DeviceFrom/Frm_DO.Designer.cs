@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.toggleSwitch1 = new DevExpress.XtraEditors.ToggleSwitch();
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).BeginInit();
+           
+           
             this.SuspendLayout();
             // 
             // label1
@@ -41,16 +41,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 31);
             this.label1.TabIndex = 0;
-            // 
-            // toggleSwitch1
-            // 
-            this.toggleSwitch1.Location = new System.Drawing.Point(204, 69);
-            this.toggleSwitch1.Name = "toggleSwitch1";
-            this.toggleSwitch1.Properties.OffText = "Off";
-            this.toggleSwitch1.Properties.OnText = "On";
-            this.toggleSwitch1.Size = new System.Drawing.Size(95, 32);
-            this.toggleSwitch1.TabIndex = 1;
-            this.toggleSwitch1.Toggled += new System.EventHandler(this.toggleSwitch1_Toggled);
+     
             // 
             // Frm_DO
             // 
@@ -58,7 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(526, 174);
             this.ControlBox = false;
-            this.Controls.Add(this.toggleSwitch1);
+        
             this.Controls.Add(this.label1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -66,7 +57,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Frm_AI";
-            ((System.ComponentModel.ISupportInitialize)(this.toggleSwitch1.Properties)).EndInit();
+       
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -75,6 +66,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private DevExpress.XtraEditors.ToggleSwitch toggleSwitch1;
+       
     }
 }

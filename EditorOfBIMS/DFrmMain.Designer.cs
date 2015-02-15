@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DFrmMain));
-            this.dLF_Main = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+           
             this.PanRight = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tb_Open = new System.Windows.Forms.ToolStripButton();
@@ -57,11 +57,7 @@
             this.toolStrip2.SuspendLayout();
             this.treeViewContext1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dLF_Main
-            // 
-            this.dLF_Main.LookAndFeel.SkinName = "Visual Studio 2013 Light";
-            this.dLF_Main.LookAndFeel.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.False;
+      
             // 
             // PanRight
             // 
@@ -282,7 +278,7 @@
 
         #endregion
 
-        private DevExpress.LookAndFeel.DefaultLookAndFeel dLF_Main;
+     
         private System.Windows.Forms.Panel PanRight;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;

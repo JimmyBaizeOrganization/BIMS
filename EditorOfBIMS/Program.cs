@@ -1,4 +1,4 @@
-﻿using DevExpress.Skins;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +17,6 @@ namespace EditorOfBIMS
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //使用统一的窗口皮肤
-            SkinManager.EnableFormSkins();
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("zh-CN");
             Application.Run(new DFrmMain());
         }
     }

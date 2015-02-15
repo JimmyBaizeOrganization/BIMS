@@ -7,7 +7,7 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
+
 using Tools;
 using System.Reflection;
 using System.Collections;
@@ -81,10 +81,7 @@ namespace EditorOfBIMS
             }
         }
 
-        private void iLBC_Left_DrawItem(object sender, ListBoxDrawItemEventArgs e)
-        {
-          
-        }
+
 
 
         private void iLBC_Left_MouseDown(object sender, MouseEventArgs e)

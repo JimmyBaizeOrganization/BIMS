@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeFrmMain));
-            this.dLFMain = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+           
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mpanel = new System.Windows.Forms.Panel();
@@ -63,11 +63,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.VScroll_self)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VScroll_main)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dLFMain
-            // 
-            this.dLFMain.LookAndFeel.SkinName = "Visual Studio 2013 Light";
-            this.dLFMain.LookAndFeel.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.False;
+           
             // 
             // mpanel
             // 
@@ -236,8 +232,7 @@
             // 
             // DeFrmMain
             // 
-            this.Appearance.BackColor = ((System.Drawing.Color)(resources.GetObject("DeFrmMain.Appearance.BackColor")));
-            this.Appearance.Options.UseBackColor = true;
+         
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.Controls.Add(this.VScroll_main);
@@ -257,7 +252,7 @@
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.LookAndFeel.SkinName = "Office 2013";
+        
             this.Name = "DeFrmMain";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.DeFrmMain_Load);
@@ -281,7 +276,7 @@
 
         #endregion
 
-        private DevExpress.LookAndFeel.DefaultLookAndFeel dLFMain;
+       
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel mpanel;
         private System.Windows.Forms.PictureBox pictureBox1;

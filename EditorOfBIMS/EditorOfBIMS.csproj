@@ -51,14 +51,6 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Data.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraBars.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraLayout.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraWizard.v14.1, Version=14.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -134,12 +126,6 @@
     <Compile Include="DFrmMain.Designer.cs">
       <DependentUpon>DFrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="DXFrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DXFrmMain.Designer.cs">
-      <DependentUpon>DXFrmMain.cs</DependentUpon>
-    </Compile>
     <Compile Include="DeviceFrom\Frm_DED194E_9S1YK2K2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,9 +163,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DFrmMain.resx">
       <DependentUpon>DFrmMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DXFrmMain.resx">
-      <DependentUpon>DXFrmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeviceFrom\Frm_DED194E_9S1YK2K2.resx">
       <DependentUpon>Frm_DED194E_9S1YK2K2.cs</DependentUpon>

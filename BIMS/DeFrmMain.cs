@@ -8,7 +8,7 @@ using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
+
 using Tools;
 using System.Runtime.InteropServices;
 using System.Collections;
@@ -16,7 +16,7 @@ using System .IO ;
 
 namespace BIMS
 {
-    public partial class DeFrmMain : DevExpress.XtraEditors.XtraForm
+    public partial class DeFrmMain : Form
     {
         private int fullmode;
         private int maxfloor;

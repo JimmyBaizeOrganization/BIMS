@@ -25,11 +25,11 @@ namespace BIMS.DeviceFrom
             bean = b;
             if (nowVaule == 0)
             {
-                toggleSwitch1.IsOn = false;
+               // toggleSwitch1.IsOn = false;
             }
             else if (nowVaule == 1)
             {
-                toggleSwitch1.IsOn = true;
+               // toggleSwitch1.IsOn = true;
             }
            
         }
@@ -37,21 +37,21 @@ namespace BIMS.DeviceFrom
         private void toggleSwitch1_Toggled(object sender, EventArgs e)
         {
             byte newVaule;
-            if (this.toggleSwitch1.IsOn)
-            {
-                newVaule = 1;
-            }
-            else
-            {
-                newVaule = 0;
-            }
+            //if (this.toggleSwitch1.IsOn)
+            //{
+            //    newVaule = 1;
+            //}
+            //else
+            //{
+            //    newVaule = 0;
+            //}
 
-            BIMSConnectState state = mDOFunDelegates.mDOControlDelegate(newVaule, (byte)bean.ioIndex);
-            if (state != BIMSConnectState.OK)
-            {
-                MessageBox.Show(FunctionTools.GetEnumDes(state));
+            //BIMSConnectState state = mDOFunDelegates.mDOControlDelegate(newVaule, (byte)bean.ioIndex);
+            //if (state != BIMSConnectState.OK)
+            //{
+            //    MessageBox.Show(FunctionTools.GetEnumDes(state));
                
-            }
+            //}
         }
 
      
