@@ -33,9 +33,7 @@ namespace BIMS
 
         private void DeFrmMain_Load(object sender, EventArgs e)
         {
-           BaseWin bb =  new BaseWin();
-           mpanel.Controls.Add(bb);
-            
+
             FindFile(FileURL.ResourceDirRoot + @"/../bean/Client/");
                        
             pictureBox4.Parent = pictureBox3;
