@@ -48,7 +48,7 @@ namespace EditorOfBIMS.DeviceFrom
                 if (textBox2.Text == "" || textBox1.Text == "" || textBox3.Text == "" || textBox6.Text == "")
                 {
                     MessageBox.Show("如果启用该设备，则必须填入图片，数据描述");
-
+                    bean.useing = false;
                 }
                 else
                 {

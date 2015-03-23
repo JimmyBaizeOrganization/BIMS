@@ -20,13 +20,13 @@ namespace EditorOfBIMS
     public partial class DFrmMain : Form 
     {
 
-        String[][] listItems = { new String[4] { "电量仪", "DED194E_9S1YK2K2.png","DED194E_9S1YK2K2","Left" }
-                               , new String[4] { "三相电量仪", "DED194E_9S1YK4K4.png","DED194E_9S1YK4K4","Left" }
-                               , new String[4] { "C2000MDxA", "C2000MDxA.jpg","C2000MDxA","Right"}
-                               , new String[4] { "C2000MD82", "C2000MDxA.png","C2000MD82","Right" }
-                               , new String[4] { "C2000M281", "ElectricityGauge.png","C2000M281","Right" }
-                               , new String[4] { "C2000MH08(交流电开关量)", "C2000MH08.jpg","C2000MH08","Left"}
-                               , new String[4] { "HIKVISION(海康威视数字摄像头)", "HIKVISION.jpg","HIKVISION","Left"}
+        String[][] listItems = { new String[2] { "电量仪", "DED194E_9S1YK2K2" }
+                               , new String[2] { "三相电量仪","DED194E_9S1YK4K4" }
+                               , new String[2] { "C2000MDxA", "C2000MDxA"}
+                               , new String[2] { "C2000MD82","C2000MD82" }
+                               , new String[2] { "C2000M281", "C2000M281" }
+                               , new String[2] { "C2000MH08(交流电开关量)","C2000MH08"}
+                               , new String[2] { "HIKVISION(海康威视数字摄像头)","HIKVISION"}
 
 };
         public DFrmMain()
@@ -291,21 +291,10 @@ namespace EditorOfBIMS
         private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             //Point contextMenuPoint = this.PanRight.PointToClient(Control.MousePosition);   
-            int index = listBox1.SelectedIndex;
-
-            switch (listItems[index][3].ToString())
-            {
-                case "Left":
-                    ReflectTools rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2]);
-                    rt.setPropertyInfo("MPanel", this.PanRight);
-                    this.PanRight.Controls.Add((Control)rt.MObj);
-                    break;
-                case "Right":
-                    rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][2], new object[] {this.PanRight, this.treeViewRight });
-                   // rt.setPropertyInfo("MPanel", this.PanRight);
-                    this.PanRight.Controls.Add((Control)rt.MObj);
-                    break;
-            }           
+            int index = listBox1.SelectedIndex;                    
+            ReflectTools   rt = new ReflectTools("EditorOfBIMS", "EditorOfBIMS", listItems[index][1],new object[]{ new object[] {null,this.PanRight, this.treeViewRight }});                
+            this.PanRight.Controls.Add((Control)rt.MObj);
+            
         }
 
         private void treeViewRight_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
