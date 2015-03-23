@@ -54,6 +54,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DLL\Oracle.DataAccess.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,8 +66,12 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseWin.xaml.cs">
+      <DependentUpon>BaseWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Ctrl_C2000MH08.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,7 +189,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Page Include="BaseWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{d7026dad-3aa0-4edc-83e0-85787f07f27e}</Project>
