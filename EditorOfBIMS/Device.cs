@@ -157,6 +157,10 @@ namespace EditorOfBIMS
         }
         public DED194E_9S1YK2K2(object[] o)
         {
+            if (o[0] == null)
+            {
+                o[0] = new Bean_DED194E_9S1YK2K2();
+            }
             bean = (Bean_DED194E_9S1YK2K2)o[0];
             MPanel = (Panel)o[1];
             Image = ImageTools.getImage("DED194E_9S1YK2K2.png", imageSize, imageSize);
@@ -197,6 +201,10 @@ namespace EditorOfBIMS
         }
         public DED194E_9S1YK4K4(object[] o)
         {
+            if (o[0] == null)
+            {
+                o[0] = new Bean_DED194E_9S1YK4K4();
+            }
             bean = (Bean_DED194E_9S1YK4K4)o[0];
             MPanel = (Panel)o[1];
             Image = ImageTools.getImage("DED194E_9S1YK4K4.png", imageSize, imageSize);
@@ -1097,6 +1105,10 @@ namespace EditorOfBIMS
         }
         public C2000MH08(object[] o)
         {
+            if (o[0] == null)
+            {
+                o[0] = new Bean_C2000MH08();
+            }
             bean = (Bean_C2000MH08)o[0];
             MPanel = (Panel)o[1];
             Image = ImageTools.getImage("C2000MH08.png", imageSize, imageSize);
@@ -1129,6 +1141,10 @@ namespace EditorOfBIMS
         }
         public HIKVISION(object[] o)
         {
+            if (o[0] == null)
+            {
+                o[0] = new Bean_HIKVISION();
+            }
             bean = (Bean_HIKVISION)o[0];
             MPanel = (Panel)o[1];
             Image = ImageTools.getImage("HIKVSION.png", imageSize, imageSize);
