@@ -23,6 +23,7 @@ namespace BIMS
         private int floorview;
         private bool wheelnum=false;
         private Hashtable beans = new Hashtable();
+        private ArrayList sortlist = new ArrayList(); 
 
         public DeFrmMain()
         {
@@ -34,7 +35,7 @@ namespace BIMS
         {
 
             FindFile(FileURL.ResourceDirRoot + @"/../bean/Client/");
-
+                       
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
             pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height  );
@@ -145,6 +146,11 @@ namespace BIMS
                     if (!beans.ContainsKey(b.getBeanKey()))
                     {
                         beans.Add(b.getBeanKey(),b);
+
+                        if (!sortlist.Contains(b.Sort))
+                        { 
+                            sortlist.Add(b.Sort);
+                        }
                         if (b.FloorNum > maxfloor)
                         {
                             maxfloor = b.FloorNum;
@@ -699,6 +705,26 @@ namespace BIMS
            // DrawPicture_2();
         }
 
+        private void leftlabel_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Label a = (Label)sender;
+            a.Image = ImageTools.getImage(@"\导航按钮\导航图标x.png");
+        }
+
+        private void leftlabel_MouseClick(object sender, MouseEventArgs e)
+        {
+            Label a = (Label)sender;
+            if (a.ForeColor == Color.White)
+            { a.ForeColor = Color.Black; }
+            else { a.ForeColor = Color.White; }
+        }
+
+        private void leftlabel_MouseLeave(object sender, EventArgs e)
+        {
+            Label a = (Label)sender;
+            a.Image = null;
+        }
+
         private void DrawPicture_1()
         {
             //foreach()
@@ -706,13 +732,26 @@ namespace BIMS
             
             //}
 
-            PictureBox backimg = new PictureBox();
-            backimg.Size = new Size(141, 38);
-            backimg.Top = 100;
-            backimg.Left = 2;
-            backimg.BackgroundImageLayout = ImageLayout.Stretch;
-            backimg.BackgroundImage = ImageTools.getImage(@"\导航按钮\导航图标x.png");
-            pictureBox5.Controls.Add(backimg);
+            for (int i = 0; i < sortlist.Count; i++)
+            {
+                Label leftlabel = new Label();
+                leftlabel.Text = sortlist[i].ToString();
+                leftlabel.Size = new Size(141, 38);
+                leftlabel.TextAlign = ContentAlignment.MiddleCenter;
+                leftlabel.Location = new Point(2, 100 +50 * i);
+                leftlabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.leftlabel_MouseEnter);
+                leftlabel.MouseLeave += new System.EventHandler(this.leftlabel_MouseLeave);
+                leftlabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leftlabel_MouseClick);
+                pictureBox5.Controls.Add(leftlabel);
+            }
+
+            //PictureBox backimg = new PictureBox();
+            //backimg.Size = new Size(141, 38);
+            //backimg.Top = 100;
+            //backimg.Left = 2;
+            //backimg.BackgroundImageLayout = ImageLayout.Stretch;
+            //backimg.BackgroundImage = ImageTools.getImage(@"\导航按钮\导航图标x.png");
+            //pictureBox5.Controls.Add(backimg);
 
             //Bitmap bit = new Bitmap(218, 49, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
