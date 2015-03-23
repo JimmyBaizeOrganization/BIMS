@@ -39,6 +39,7 @@ namespace BIMS
     }
     public abstract  class BaseDevice: PictureBox 
     {
+        public BaseBean bean;
         public static int imageSize = 30;
         private Form mform;
         public Form Mform
@@ -97,6 +98,8 @@ namespace BIMS
           public virtual  void newform() {
               
           }
+          
+
           public virtual void changeImageState(bool state) { }
     }
     public static class PublicResource
@@ -123,10 +126,11 @@ namespace BIMS
     public interface InterfaceDevice
     {
         Control[] getAllDevice();
+       
     }
     class DED194E_9S1YK2K2 : BaseDevice, InterfaceDevice
     {
-        private Bean_DED194E_9S1YK2K2 bean;
+        
         private string beanKey;
 
         decimal[] dataVaule = new decimal[9];
@@ -206,22 +210,22 @@ namespace BIMS
     }
     public class AI:BaseDevice
     {
-        public AIBean bean;
+        public AIBean iobean;
         decimal[] dataVaule;
         int druing;
      
         public override void newform()
         {
-            Mform = new Frm_AI(dataVaule, bean,druing);
+            Mform = new Frm_AI(dataVaule, iobean, druing);
         }
         public AI(AIBean b, int dur, decimal[] d)
         {
-            bean = b;
+            iobean = b;
             dataVaule = d;
             druing = dur;
-            this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
+            this.Image = ImageTools.getImage(iobean.imagePath, imageSize, imageSize);
             this.Size = Image.Size;
-            this.Location = bean.mpoint;
+            this.Location = iobean.mpoint;
         }
         public override void changeImageState(bool state)
         {
@@ -229,11 +233,11 @@ namespace BIMS
             {
                 if (state)
                 {
-                    this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
+                    this.Image = ImageTools.getImage(iobean.imagePath, imageSize, imageSize);
                 }
                 else
                 {
-                    this.Image = ImageTools.MakeGrayscale(bean.imagePath, imageSize, imageSize);
+                    this.Image = ImageTools.MakeGrayscale(iobean.imagePath, imageSize, imageSize);
                 }
             }
         }

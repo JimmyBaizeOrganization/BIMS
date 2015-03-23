@@ -165,6 +165,7 @@ namespace BIMS
                 return;
             }
         }
+
         public void getLittleDevice()
         {
             foreach(DictionaryEntry de in beans)
@@ -724,6 +725,36 @@ namespace BIMS
             Label a = (Label)sender;
             a.Image = null;
         }
+        private void leftall_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Label a = (Label)sender;
+            a.Image = ImageTools.getImage(@"\导航按钮\导航图标x.png");
+        }
+
+        private void leftall_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 1; i < sortlist.Count+1; i++)
+            {
+                pictureBox5.Controls[i].ForeColor = Color.White;
+            }
+        }
+
+        private void leftall_MouseLeave(object sender, EventArgs e)
+        {
+            Label a = (Label)sender;
+            a.Image = null;
+        }
+
+        private void searchDevices()
+        {
+            foreach (Panel a in mpanel.Controls)
+            {
+                foreach (BaseDevice b in a.Controls[0].Controls)
+                { 
+                   // b.get
+                }
+            }
+        }
 
         private void DrawPicture_1()
         {
@@ -731,17 +762,28 @@ namespace BIMS
             //{
             
             //}
+            Label leftall = new Label();
+            leftall.Text = "ALL";
+            leftall.Size = new Size(141, 38);
+            leftall.TextAlign = ContentAlignment.MiddleCenter;
+            leftall.Location = new Point(2, 50);
+            leftall.MouseMove += new System.Windows.Forms.MouseEventHandler(this.leftall_MouseEnter);
+            leftall.MouseLeave += new System.EventHandler(this.leftall_MouseLeave);
+            leftall.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leftall_MouseClick);
+            pictureBox5.Controls.Add(leftall);
 
             for (int i = 0; i < sortlist.Count; i++)
             {
                 Label leftlabel = new Label();
                 leftlabel.Text = sortlist[i].ToString();
+                leftlabel.ForeColor = Color.White;
                 leftlabel.Size = new Size(141, 38);
                 leftlabel.TextAlign = ContentAlignment.MiddleCenter;
                 leftlabel.Location = new Point(2, 100 +50 * i);
                 leftlabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.leftlabel_MouseEnter);
                 leftlabel.MouseLeave += new System.EventHandler(this.leftlabel_MouseLeave);
                 leftlabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leftlabel_MouseClick);
+                Console.WriteLine( pictureBox5.Controls.Count.ToString());
                 pictureBox5.Controls.Add(leftlabel);
             }
 
