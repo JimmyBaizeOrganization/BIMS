@@ -33,9 +33,9 @@ namespace BIMS
 
         private void DeFrmMain_Load(object sender, EventArgs e)
         {
-
+           
             FindFile(FileURL.ResourceDirRoot + @"/../bean/Client/");
-                       
+            new SearchForm(beans).Show();
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
             pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height  );

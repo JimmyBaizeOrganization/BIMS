@@ -45,7 +45,7 @@ namespace Tools
             get { return beizhu; }
             set { beizhu = value; }
         }
-
+        public string NikeName;
         public int Port
         {
             get { return port; }
@@ -175,6 +175,7 @@ namespace Tools
         public Point mpoint;
         public string detail;//输入描述
         public string sort;//
+        public string NikeName;
     }
     public class InputBaseBean : IOBaseBean
     {

@@ -28,6 +28,7 @@ namespace EditorOfBIMS.DeviceFrom
             textBox_time.Text = bean.During.ToString();
             tb_Sort.Text = bean.Sort;
             tb_beizhu.Text = bean.Beizhu;
+            textBox1.Text = bean.NikeName;
             if (bean.VorI)
             {
                 radioButton1.Checked = true;
@@ -50,6 +51,7 @@ namespace EditorOfBIMS.DeviceFrom
             bean.During = int.Parse(textBox_time.Text);
             bean.Sort = tb_Sort.Text;
             bean.Beizhu = tb_beizhu.Text;
+            bean.NikeName = textBox1.Text;
             //MessageBox.Show("成功保存");
             if (radioButton1.Checked)
             {

@@ -27,7 +27,7 @@ namespace EditorOfBIMS.DeviceFrom
 
             textBox6.Text = bean.sort;
             textBox1.Text = bean.imageClosePath;
-
+            textBox4.Text = bean.NikeName;
             if (bean.normalVaule)
             {
                 radioButton1.Checked = true;
@@ -43,6 +43,7 @@ namespace EditorOfBIMS.DeviceFrom
         private void button1_Click(object sender, EventArgs e)
         {
             bean.useing = checkBox_Run.Checked;
+            bean.NikeName = textBox4.Text;
             if (bean.useing)
             {
                 if (textBox2.Text == "" || textBox1.Text == "" || textBox3.Text == "" || textBox6.Text == "")

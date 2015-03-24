@@ -28,7 +28,7 @@ namespace EditorOfBIMS.DeviceFrom
             textBox_time.Text = bean.During.ToString();
             tb_Sort.Text = bean.Sort;
             tb_beizhu.Text = bean.Beizhu;
-
+            textBox1.Text = bean.NikeName;
         }
 
         private void button_Save_Click(object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace EditorOfBIMS.DeviceFrom
             bean.Sort = tb_Sort.Text;
             bean.Beizhu = tb_beizhu.Text;
             //MessageBox.Show("成功保存");
-
+            bean.NikeName = textBox1.Text;
             this.Close();
         }
     }
