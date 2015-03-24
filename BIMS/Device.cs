@@ -39,7 +39,7 @@ namespace BIMS
     }
     public abstract  class BaseDevice: PictureBox 
     {
-        public BaseBean bean;
+        
         public static int imageSize = 30;
         private Form mform;
         public Form Mform
@@ -126,11 +126,12 @@ namespace BIMS
     public interface InterfaceDevice
     {
         Control[] getAllDevice();
+        void isBelongSort(ArrayList sort);
        
     }
     class DED194E_9S1YK2K2 : BaseDevice, InterfaceDevice
     {
-        
+        Bean_DED194E_9S1YK2K2 bean;
         private string beanKey;
 
         decimal[] dataVaule = new decimal[9];
@@ -158,6 +159,17 @@ namespace BIMS
             this.Size = new Size(imageSize,imageSize);
             this.Location = bean.MPoint;
             return new BaseDevice[]{this};
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+            if (sort.Contains(bean.Sort))
+            {
+                SetVisibleCore(true);
+            }
+            else
+            {
+                SetVisibleCore(false);
+            }
         }
         public override  void newform() 
         {
@@ -208,24 +220,24 @@ namespace BIMS
         }
        
     }
-    public class AI:BaseDevice
+    public class AI:BaseDevice,InterfaceDevice
     {
-        public AIBean iobean;
+        public AIBean bean;
         decimal[] dataVaule;
         int druing;
      
         public override void newform()
         {
-            Mform = new Frm_AI(dataVaule, iobean, druing);
+            Mform = new Frm_AI(dataVaule, bean, druing);
         }
         public AI(AIBean b, int dur, decimal[] d)
         {
-            iobean = b;
+            bean = b;
             dataVaule = d;
             druing = dur;
-            this.Image = ImageTools.getImage(iobean.imagePath, imageSize, imageSize);
+            this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
             this.Size = Image.Size;
-            this.Location = iobean.mpoint;
+            this.Location = bean.mpoint;
         }
         public override void changeImageState(bool state)
         {
@@ -233,16 +245,31 @@ namespace BIMS
             {
                 if (state)
                 {
-                    this.Image = ImageTools.getImage(iobean.imagePath, imageSize, imageSize);
+                    this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
                 }
                 else
                 {
-                    this.Image = ImageTools.MakeGrayscale(iobean.imagePath, imageSize, imageSize);
+                    this.Image = ImageTools.MakeGrayscale(bean.imagePath, imageSize, imageSize);
                 }
             }
         }
+        public Control[] getAllDevice()
+        {
+            return null;
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+            if (sort.Contains(bean.sort))
+            {
+                SetVisibleCore(true);
+            }
+            else
+            {
+                SetVisibleCore(false);
+            }
+        }
     }
-    public class DI : BaseDevice
+    public class DI : BaseDevice,InterfaceDevice
     {
         public DIBean bean;
         
@@ -299,6 +326,21 @@ namespace BIMS
                 }
             }
         }
+        public Control[] getAllDevice()
+        {
+            return null;
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+            if (sort.Contains(bean.sort))
+            {
+                SetVisibleCore(true);
+            }
+            else
+            {
+                SetVisibleCore(false);
+            }
+        }
     }
     /// <summary>
     /// 控制DO输出，去执行TCPIP连接，返回值是改变之后的值，如果控制失败，则报警，返回值为原来的值
@@ -322,7 +364,7 @@ namespace BIMS
         }
     }
     
-    public class DO : BaseDevice
+    public class DO : BaseDevice,InterfaceDevice
     {
         public DOBean bean;
         
@@ -393,6 +435,21 @@ namespace BIMS
                 this.Image = ImageTools.MakeGrayscale(imagePath, imageSize, imageSize);
             }
             
+        }
+        public Control[] getAllDevice()
+        {
+            return null;
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+            if (sort.Contains(bean.sort))
+            {
+                SetVisibleCore(true);
+            }
+            else
+            {
+                SetVisibleCore(false);
+            }
         }
     }
     public class C2000MDxA: InterfaceDevice
@@ -470,6 +527,10 @@ namespace BIMS
             PublicResource.addTimer(bean.During, new ElapsedEventHandler(this.periodWork));
 
             return  (BaseDevice[])devices.Cast<BaseDevice>().ToArray();
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+       
         }
         public void periodWork(object o, ElapsedEventArgs e)
         {
@@ -663,6 +724,10 @@ namespace BIMS
             PublicResource.addTimer(bean.During, new ElapsedEventHandler(this.periodWork));
 
             return (BaseDevice[])devices.Cast<BaseDevice>().ToArray();
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+    
         }
         public void periodWork(object o, ElapsedEventArgs e)
         {
@@ -864,6 +929,10 @@ namespace BIMS
 
             return (BaseDevice[])devices.Cast<BaseDevice>().ToArray();
         }
+        public void isBelongSort(ArrayList sort)
+        {
+           
+        }
         public void periodWork(object o, ElapsedEventArgs e)
         {
             using (OracleConnection conn = new OracleConnection(OracleTools.connString))
@@ -977,6 +1046,10 @@ namespace BIMS
             }
 
         }
+        public void isBelongSort(ArrayList sort)
+        {
+         
+        }
     }
     public class HIKVISION : BaseDevice, InterfaceDevice
     {
@@ -997,6 +1070,17 @@ namespace BIMS
             this.Size = new Size(imageSize, imageSize);
             this.Location = bean.MPoint;
             return new BaseDevice[] { this };
+        }
+        public void isBelongSort(ArrayList sort)
+        {
+            if (sort.Contains(bean.Sort))
+            {
+                SetVisibleCore(true);
+            }
+            else
+            {
+                SetVisibleCore(false);
+            }
         }
     }
 }

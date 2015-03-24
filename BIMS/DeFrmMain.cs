@@ -718,6 +718,7 @@ namespace BIMS
             if (a.ForeColor == Color.White)
             { a.ForeColor = Color.Black; }
             else { a.ForeColor = Color.White; }
+            searchDevices();
         }
 
         private void leftlabel_MouseLeave(object sender, EventArgs e)
@@ -737,6 +738,7 @@ namespace BIMS
             {
                 pictureBox5.Controls[i].ForeColor = Color.White;
             }
+            searchDevices();
         }
 
         private void leftall_MouseLeave(object sender, EventArgs e)
@@ -747,11 +749,18 @@ namespace BIMS
 
         private void searchDevices()
         {
+            //将所有选中的加入Arraylist
+            ArrayList sorts  = new ArrayList();
+            foreach(Label c in pictureBox5.Controls ){
+                if(c.ForeColor==Color.White){
+                    sorts.Add(c.Text);
+                }
+            }
             foreach (Panel a in mpanel.Controls)
             {
-                foreach (BaseDevice b in a.Controls[0].Controls)
-                { 
-                   // b.get
+                foreach (InterfaceDevice b in a.Controls[0].Controls)
+                {
+                    b.isBelongSort(sorts);
                 }
             }
         }
