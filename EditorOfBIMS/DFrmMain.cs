@@ -249,7 +249,7 @@ namespace EditorOfBIMS
             {
                 bd.saveToXML(tb_buildingname.Text, floornum, newPath);
             }
-            MessageBox.Show("保存成功 生成路径为" + newPath);
+            MessageBox.Show("保存成功 生成路径为" + newPath[0] + "以及" + newPath[1]);
         }
 
         private void bt_selectPath_Click(object sender, EventArgs e)

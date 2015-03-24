@@ -17,7 +17,7 @@ namespace BIMS
         Hashtable beans;
         private class BeanNode : TreeNode
         {
-            BaseBean bean;
+            public BaseBean bean;
             public BeanNode(string text,BaseBean b):base(
                 text)
             {
@@ -33,7 +33,7 @@ namespace BIMS
             {
                 
                 BaseBean b = (BaseBean)de.Value;
-                 if(treeView.Nodes.ContainsKey(b.Sort))
+                if (treeView.Nodes.ContainsKey(b.DeviceType))
                  {
                      ///去前面已经添加了这个分类，则在这个分支下添加一个BeanNode                
                          //(new BeanNode(b.DeviceType,b));
@@ -42,17 +42,25 @@ namespace BIMS
                  {
                     //以前没有添加这个分类 ，则 这次添加上去
                     //treeView.Nodes.Find()
-                     treeView.Nodes.Add( new TreeNode(b.Sort));
+                     treeView.Nodes.Add(b.DeviceType, b.DeviceType);
                  }
-                TreeNode[] aa =  treeView.Nodes.Find(b.Sort, true);
-                Console.WriteLine(aa);
+                treeView.Nodes[treeView.Nodes.IndexOfKey(b.DeviceType)].Nodes.Add(new BeanNode(b.NikeName,b));
+               // treeView.Nodes[treeView.Nodes.IndexOfKey(b.DeviceType)].Nodes.Add(b.NikeName, b.NikeName);
                      //[0].Nodes.Add((new BeanNode(b.DeviceType, b)));
-        
-              
-               
-                
-            }
+           }
            
+        }
+
+
+
+        private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            
+            if (treeView.SelectedNode.Level == 1)
+            {
+                BeanNode bn = (BeanNode)treeView.SelectedNode;
+                Console.WriteLine(bn.bean.DeviceNum);
+            }
         }
     }
 }
