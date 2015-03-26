@@ -46,6 +46,7 @@
             this.label_Ainput = new System.Windows.Forms.Label();
             this.textBox_Ainput = new System.Windows.Forms.TextBox();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label_A
@@ -189,11 +190,22 @@
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(441, 256);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 18);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
             // Frm_DED194E_9S1YK2K2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 294);
+            this.ClientSize = new System.Drawing.Size(593, 315);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox_Ainput);
             this.Controls.Add(this.label_Ainput);
             this.Controls.Add(this.textBox_WYinShu);
@@ -236,5 +248,6 @@
         private System.Windows.Forms.Label label_Ainput;
         private System.Windows.Forms.TextBox textBox_Ainput;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Label label1;
     }
 }

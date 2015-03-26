@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Oracle.DataAccess.Client;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,70 +16,115 @@ namespace BIMS
     public partial class SearchForm : Form
     {
         Hashtable beans;
-        private BeanNode selectNode;
-        private class BeanNode : TreeNode
-        {
-            public BaseBean bean;
-            public BeanNode(string text,BaseBean b):base(
-                text)
-            {
-                bean = b;
-            }
-        }
-        public SearchForm(Hashtable ht)
+        string[] bb;
+        string cmd;
+
+        public SearchForm(String[] a, String b):base()
         {
             InitializeComponent();
-            beans = ht;
-            
-            foreach (DictionaryEntry de in beans)
-            {
-                
-                BaseBean b = (BaseBean)de.Value;
-                if (treeView.Nodes.ContainsKey(b.DeviceType))
-                 {
-                     ///去前面已经添加了这个分类，则在这个分支下添加一个BeanNode                
-                         //(new BeanNode(b.DeviceType,b));
-                 }
-                 else
-                 {
-                    //以前没有添加这个分类 ，则 这次添加上去
-                    //treeView.Nodes.Find()
-                     treeView.Nodes.Add(b.DeviceType, b.DeviceType);
-                 }
-                treeView.Nodes[treeView.Nodes.IndexOfKey(b.DeviceType)].Nodes.Add(new BeanNode(b.NikeName,b));
-               // treeView.Nodes[treeView.Nodes.IndexOfKey(b.DeviceType)].Nodes.Add(b.NikeName, b.NikeName);
-                     //[0].Nodes.Add((new BeanNode(b.DeviceType, b)));
-           }
-           
+            bb = a;
+            cmd = b;
         }
 
-
-
-        private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void SearchForm_Load(object sender, EventArgs e)
         {
-            
-            if (treeView.SelectedNode.Level == 1)
+            dataGridView.Columns.Add("时间", "时间");
+            for (int i = 0; i < bb.Length; i++)
             {
-                BeanNode bn = (BeanNode)treeView.SelectedNode;
-                selectNode = bn;
-         
-                string[] field = selectNode.bean.getDataBaseField();
-                //Console.WriteLine(field.ToString());
-                dataGridView.Columns.Clear();
-                dataGridView.Columns.Add("时间", "时间");
-                for (int i = 0; i < field.Length; i++)
-                {
-                    dataGridView.Columns.Add(field[i], field[i]);
-                }
+                dataGridView.Columns.Add(bb[i], bb[i]);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
+            string scmd = cmd + @"and CREAT_TIME>to_date('" + dateTimePicker1.Value.Year + dateTimePicker1.Value.Month + dateTimePicker1.Value.Day + " 00:00:00','yyyymmdd hh24:mi:ss') and CREAT_TIME<to_date('" + dateTimePicker2.Value.Year + dateTimePicker2.Value.Month + dateTimePicker2.Value.Day + " 00:00:00','yyyymmdd hh24:mi:ss') ";
+            using (OracleConnection conn = new OracleConnection(OracleTools.connString))
+            {
+                OracleCommand Ocmd = new OracleCommand(scmd, conn);
+                conn.Open();
+                OracleDataReader mOracleDataReader = Ocmd.ExecuteReader();
+                while (mOracleDataReader.Read())
+                {
+                    string[] datas= new string[10];
+                    datas[0]=mOracleDataReader["CREAT_TIME"].ToString();
+                    datas[1]=mOracleDataReader["VOLTAGE"].ToString();
+                    datas[2]=mOracleDataReader["I"].ToString();
+                    datas[3]=mOracleDataReader["STATE"].ToString();
+                    datas[4]=mOracleDataReader["P"].ToString();
+                    datas[5]=mOracleDataReader["Q"].ToString();
+                    datas[6]=mOracleDataReader["S"].ToString();
+                    datas[7]=mOracleDataReader["FREQ"].ToString();
+                    datas[8]=mOracleDataReader["PF"].ToString();
+                    datas[9]=mOracleDataReader["DCVAL"].ToString();
+                    dataGridView.Rows.Add(datas);
+                }
+            }
+        }
+        //private BeanNode selectNode;
+        //private class BeanNode : TreeNode
+        //{
+        //    public BaseBean bean;
+        //    public BeanNode(string text,BaseBean b):base(
+        //        text)
+        //    {
+        //        bean = b;
+        //    }
+        //}
+        //public SearchForm(Hashtable ht)
+        //{
+        //    InitializeComponent();
+        //    beans = ht;
+            
+        //    foreach (DictionaryEntry de in beans)
+        //    {
+                
+        //        BaseBean b = (BaseBean)de.Value;
+        //        if (treeView.Nodes.ContainsKey(b.DeviceType))
+        //         {
+        //             ///去前面已经添加了这个分类，则在这个分支下添加一个BeanNode                
+        //                 //(new BeanNode(b.DeviceType,b));
+        //         }
+        //         else
+        //         {
+        //            //以前没有添加这个分类 ，则 这次添加上去
+        //            //treeView.Nodes.Find()
+        //             treeView.Nodes.Add(b.DeviceType, b.DeviceType);
+        //         }
+        //        treeView.Nodes[treeView.Nodes.IndexOfKey(b.DeviceType)].Nodes.Add(new BeanNode(b.NikeName,b));
+        //       // treeView.Nodes[treeView.Nodes.IndexOfKey(b.DeviceType)].Nodes.Add(b.NikeName, b.NikeName);
+        //             //[0].Nodes.Add((new BeanNode(b.DeviceType, b)));
+        //   }
+           
+        //}
+
+
+
+        //private void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        //{
+            
+        //    if (treeView.SelectedNode.Level == 1)
+        //    {
+        //        BeanNode bn = (BeanNode)treeView.SelectedNode;
+        //        selectNode = bn;
+         
+        //        string[] field = selectNode.bean.getDataBaseField();
+        //        //Console.WriteLine(field.ToString());
+        //        dataGridView.Columns.Clear();
+        //        dataGridView.Columns.Add("时间", "时间");
+        //        for (int i = 0; i < field.Length; i++)
+        //        {
+        //            dataGridView.Columns.Add(field[i], field[i]);
+        //        }
+        //    }
+        //}
+
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+
 
             
 
-        }
+        //}
     }
 }

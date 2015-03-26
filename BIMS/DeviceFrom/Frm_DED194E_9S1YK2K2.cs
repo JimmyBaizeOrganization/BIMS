@@ -14,14 +14,15 @@ namespace BIMS
 {
     public partial class Frm_DED194E_9S1YK2K2 : Form
     {
-
+        Bean_DED194E_9S1YK2K2 bean;
 
         decimal[] dataVaule;
-        public Frm_DED194E_9S1YK2K2(decimal[] dv,int during)
+        public Frm_DED194E_9S1YK2K2(decimal[] dv,Bean_DED194E_9S1YK2K2 b)
         {
             InitializeComponent();
             dataVaule = dv;
-            timer.Interval = during/2;
+            bean = b;
+            timer.Interval = bean.During/2;
             timer.Start();
             timer_Tick(null, null);
         }
@@ -54,8 +55,31 @@ namespace BIMS
             textBox_WYinShu.Text = dataVaule[7].ToString();
         }
 
+        private void linkLabel1_MouseClick(object sender, MouseEventArgs e)
+        {
+           
+        }
 
-    
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            //String cmd = "select CREAT_TIME,VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2";
+            //SearchForm frm = new SearchForm(bean.getDataBaseField(), cmd);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //String cmd = "select CREAT_TIME,VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2";
+            //SearchForm frm = new SearchForm(bean.getDataBaseField(), cmd);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            String cmd = @"select CREAT_TIME,VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where  DEVICE_GUID ='"+bean.getBeanKey()+"'   ";
+            SearchForm frm = new SearchForm(bean.getDataBaseField(), cmd);
+            frm.Show();
+            frm.Focus();
+        }
+
 
     }
 }

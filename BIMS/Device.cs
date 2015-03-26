@@ -173,7 +173,7 @@ namespace BIMS
         }
         public override  void newform() 
         {
-            Mform = new Frm_DED194E_9S1YK2K2(dataVaule,bean.During);
+            Mform = new Frm_DED194E_9S1YK2K2(dataVaule,bean);
         }
         public override void changeImageState(bool state)
         {

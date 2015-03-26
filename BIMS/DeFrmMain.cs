@@ -39,7 +39,7 @@ namespace BIMS
         {
            
             FindFile(FileURL.ResourceDirRoot + @"/../bean/Client/");
-            new SearchForm(beans).Show();
+       
             pictureBox4.Parent = pictureBox3;
             pictureBox5.Parent = pictureBox4;
             pictureBox5.Location = new Point(pictureBox5.Location.X, pictureBox5.Location.Y-pictureBox1 .Height -pictureBox2 .Height  );
@@ -146,6 +146,7 @@ namespace BIMS
                 {
                     string[] filename = f.ToString().Split('.');
                     string typename = filename[filename.Length - 2];
+                   
                     BaseBean b = BeanTools.getBeanFromXML(typename, Dir + f.ToString());
                     if (!beans.ContainsKey(b.getBeanKey()))
                     {

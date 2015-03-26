@@ -470,8 +470,9 @@ namespace EditorOfBIMS
             {
                 bean =(Bean_C2000MDxA)os[0];                
             }
-
+            
             bean.DeviceNum = DeviceIndex++;
+            bean.NikeName = bean.DeviceType + bean.DeviceNum;
             mTreeNode = new TreeNode();
             mTreeNode.Text = "C2000MDxA(" + bean.DeviceNum + ")";
             this.Name = mTreeNode.Text;
@@ -692,6 +693,7 @@ namespace EditorOfBIMS
             }
 
             bean.DeviceNum = DeviceIndex++;
+            bean.NikeName = bean.DeviceType + bean.DeviceNum;
             mTreeNode = new TreeNode();
             mTreeNode.Text = "C2000MD82(" + bean.DeviceNum + ")";
             this.Name = mTreeNode.Text;
@@ -912,6 +914,7 @@ namespace EditorOfBIMS
             }
 
             bean.DeviceNum = DeviceIndex++;
+            bean.NikeName = bean.DeviceType + bean.DeviceNum;
             mTreeNode = new TreeNode();
             mTreeNode.Text = "C2000M281(" + bean.DeviceNum + ")";
             this.Name = mTreeNode.Text;
