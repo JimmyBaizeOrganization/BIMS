@@ -151,7 +151,7 @@ namespace BIMS
                     {
                         beans.Add(b.getBeanKey(),b);
 
-                        if (!sortlist.Contains(b.Sort))
+                        if (b.Sort!=null && (!sortlist.Contains(b.Sort)))
                         { 
                             sortlist.Add(b.Sort);
                         }

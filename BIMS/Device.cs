@@ -953,20 +953,20 @@ namespace BIMS
 
         }
     }
-    public class C2000MH08 : InterfaceDevice
+    public class C2000MH08 : Ctrl_C2000MH08,InterfaceDevice
     {
         public Bean_C2000MH08 bean;
         private string beanKey;
         private string scmd;
         string[] dataVaule = new string[9];
-        private Ctrl_C2000MH08 mCtrl_C2000MH08;
+       
         public StateRegister<bool> connectState = new StateRegister<bool>(true);
-        public C2000MH08(Bean_C2000MH08 b)
+        public C2000MH08(Bean_C2000MH08 b):base(b.detail)
         {
             bean = b;
             beanKey = bean.getBeanKey();
-            mCtrl_C2000MH08 = new Ctrl_C2000MH08(bean.detail);
-            mCtrl_C2000MH08.Location = bean.MPoint;
+           
+            this.Location = bean.MPoint;
            
             scmd = @"select * from (select STATE,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7 from C2000MH08 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
         }
@@ -974,7 +974,7 @@ namespace BIMS
         {          
             periodWork(null, null);
             PublicResource.addTimer(bean.During, new ElapsedEventHandler(this.periodWork));
-            return new Control[]{mCtrl_C2000MH08};
+            return new Control[]{this};
         }
         public void periodWork(object o, ElapsedEventArgs e)
         {
@@ -1009,15 +1009,23 @@ namespace BIMS
                 }
                 if (connectState.oldState)
                 {
-                    mCtrl_C2000MH08.changeVaule(dataVaule);
+                    this.changeVaule(dataVaule);
                 }
             }
 
         }
         public void isBelongSort(ArrayList sort)
         {
-         
+            if (bean.Sort != null && sort.Contains(sort))
+            {
+                SetVisibleCore(true);
+            }
+            else
+            {
+                SetVisibleCore(false);
+            }
         }
+
     }
     public class HIKVISION : BaseDevice, InterfaceDevice
     {
