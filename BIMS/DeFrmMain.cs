@@ -15,7 +15,7 @@ using System.Collections;
 using System .IO ;
 
 namespace BIMS
-{
+{ 
     public partial class DeFrmMain : Form
     {
         private int fullmode;
@@ -23,7 +23,11 @@ namespace BIMS
         private int floorview;
         private bool wheelnum=false;
         private Hashtable beans = new Hashtable();
-        private ArrayList sortlist = new ArrayList(); 
+        private ArrayList sortlist = new ArrayList();
+
+        static Color LightColor = Color.White ;
+        static Color NormalColor = Color.Black;
+        static Color OnColor = Color.LightBlue;
 
         public DeFrmMain()
         {
@@ -165,6 +169,7 @@ namespace BIMS
                 return;
             }
         }
+
         public void getLittleDevice()
         {
             foreach(DictionaryEntry de in beans)
@@ -714,15 +719,54 @@ namespace BIMS
         private void leftlabel_MouseClick(object sender, MouseEventArgs e)
         {
             Label a = (Label)sender;
-            if (a.ForeColor == Color.White)
-            { a.ForeColor = Color.Black; }
-            else { a.ForeColor = Color.White; }
+            if (a.ForeColor == LightColor)
+            { a.ForeColor = NormalColor ; }
+            else { a.ForeColor = LightColor; }
+            searchDevices();
         }
 
         private void leftlabel_MouseLeave(object sender, EventArgs e)
         {
             Label a = (Label)sender;
             a.Image = null;
+        }
+        private void leftall_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Label a = (Label)sender;
+            a.Image = ImageTools.getImage(@"\导航按钮\导航图标x.png");
+        }
+
+        private void leftall_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 1; i < sortlist.Count+1; i++)
+            {
+                pictureBox5.Controls[i].ForeColor = LightColor;
+            }
+            searchDevices();
+        }
+
+        private void leftall_MouseLeave(object sender, EventArgs e)
+        {
+            Label a = (Label)sender;
+            a.Image = null;
+        }
+
+        private void searchDevices()
+        {
+            //将所有选中的加入Arraylist
+            ArrayList sorts  = new ArrayList();
+            foreach(Label c in pictureBox5.Controls ){
+                if(c.ForeColor==LightColor){
+                    sorts.Add(c.Text);
+                }
+            }
+            foreach (Panel a in mpanel.Controls)
+            {
+                foreach (InterfaceDevice b in a.Controls[0].Controls)
+                {
+                    b.isBelongSort(sorts);
+                }
+            }
         }
 
         private void DrawPicture_1()
@@ -731,17 +775,31 @@ namespace BIMS
             //{
             
             //}
+            Label leftall = new Label();
+            leftall.Text = "显示全部";
+            leftall.Font = new Font("微软雅黑", 15);
+            leftall.ForeColor = NormalColor;
+            leftall.Size = new Size(141, 38);
+            leftall.TextAlign = ContentAlignment.MiddleCenter;
+            leftall.Location = new Point(2, 50);
+            leftall.MouseMove += new System.Windows.Forms.MouseEventHandler(this.leftall_MouseEnter);
+            leftall.MouseLeave += new System.EventHandler(this.leftall_MouseLeave);
+            leftall.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leftall_MouseClick);
+            pictureBox5.Controls.Add(leftall);
 
             for (int i = 0; i < sortlist.Count; i++)
             {
                 Label leftlabel = new Label();
                 leftlabel.Text = sortlist[i].ToString();
+                leftall.Font = new Font("微软雅黑", 15);
+                leftlabel.ForeColor = LightColor;
                 leftlabel.Size = new Size(141, 38);
                 leftlabel.TextAlign = ContentAlignment.MiddleCenter;
                 leftlabel.Location = new Point(2, 100 +50 * i);
                 leftlabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.leftlabel_MouseEnter);
                 leftlabel.MouseLeave += new System.EventHandler(this.leftlabel_MouseLeave);
                 leftlabel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.leftlabel_MouseClick);
+                Console.WriteLine( pictureBox5.Controls.Count.ToString());
                 pictureBox5.Controls.Add(leftlabel);
             }
 
