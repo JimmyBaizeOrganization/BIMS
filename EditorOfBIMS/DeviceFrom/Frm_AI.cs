@@ -28,6 +28,7 @@ namespace EditorOfBIMS.DeviceFrom
              textBox4.Text =bean.maxVaule;
              textBox6.Text=bean.sort ;
              textBox7.Text = bean.NikeName;
+             textBox8.Text = bean.unit;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -50,6 +51,7 @@ namespace EditorOfBIMS.DeviceFrom
                     bean.maxVaule = textBox4.Text;
                     bean.sort = textBox6.Text;
                     bean.NikeName = textBox7.Text;
+                    bean.unit = textBox8.Text;
                 }
             }
             this.Close();

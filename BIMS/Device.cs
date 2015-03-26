@@ -397,47 +397,15 @@ namespace BIMS
         private string beanKey;
         private string scmd;
         decimal[] dataVaule = new decimal[11];
-        delegate decimal CalHandler(decimal x) ;
-        private  CalHandler mCalHandler;
+
         public AI[] ais = new AI[8];
         public DI[] dis  =new DI[2];
-        public static class CalFunction
-        {
-            public static decimal ICalFun(decimal v)
-            {
-                if (v < 0x8000)
-                {
-                    return ((v * 5) * 1000 / 4080000) / 240;
-                }
-                else
-                {
-                    return ((65535 - v + 1) * 5) * 1000 / 4080000 / 240;
-                }
-            }
-            public static decimal VCalFun(decimal v)
-            {
-                if (v < 0x8000)
-                {
-                    return ((v * 5) * 1000 / 4080000);
-                }
-                else
-                {
-                    return ((65535 - v + 1) * 5) * 1000 / 4080000;
-                }
-            }
-        }
+
         public C2000MDxA(Bean_C2000MDxA b)
         {
             bean = b;
             beanKey = bean.getBeanKey();
-            if (bean.VorI)
-            {
-                mCalHandler = new CalHandler(CalFunction.VCalFun);
-            }
-            else
-            {
-                mCalHandler = new CalHandler(CalFunction.ICalFun);
-            }
+   
             scmd = @"select * from (select STATE,AI0,AI1,AI2,AI3,AI4,AI5,AI6,AI7,DI0,DI1 from C2000MDXA where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
            
            
@@ -497,7 +465,7 @@ namespace BIMS
                     {
                         if (aib.useing)
                         {
-                            dataVaule[aib.ioIndex] = FunctionTools.calculateByString(mCalHandler(dataVaule[0]), aib.function);
+                            //dataVaule[aib.ioIndex] = FunctionTools.calculateByString(mCalHandler(dataVaule[0]), aib.function);
                             ais[aib.ioIndex].changeImageState(0 == dataVaule[10]);
                         }
                         

@@ -31,6 +31,7 @@
             this.treeView = new System.Windows.Forms.TreeView();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,11 +61,22 @@
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 28);
             this.dateTimePicker1.TabIndex = 2;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1168, 63);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 52);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "搜索";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // SearchForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2107, 1248);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.treeView);
@@ -80,5 +92,6 @@
         private System.Windows.Forms.TreeView treeView;
         private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Button button1;
     }
 }

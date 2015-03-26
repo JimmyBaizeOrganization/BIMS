@@ -15,6 +15,7 @@ namespace BIMS
     public partial class SearchForm : Form
     {
         Hashtable beans;
+        private BeanNode selectNode;
         private class BeanNode : TreeNode
         {
             public BaseBean bean;
@@ -59,8 +60,25 @@ namespace BIMS
             if (treeView.SelectedNode.Level == 1)
             {
                 BeanNode bn = (BeanNode)treeView.SelectedNode;
-                Console.WriteLine(bn.bean.DeviceNum);
+                selectNode = bn;
+         
+                string[] field = selectNode.bean.getDataBaseField();
+                //Console.WriteLine(field.ToString());
+                dataGridView.Columns.Clear();
+                dataGridView.Columns.Add("时间", "时间");
+                for (int i = 0; i < field.Length; i++)
+                {
+                    dataGridView.Columns.Add(field[i], field[i]);
+                }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+
+            
+
         }
     }
 }

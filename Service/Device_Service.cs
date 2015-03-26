@@ -228,7 +228,8 @@ namespace Service
         byte[] cmd;
         private BIMSConnectState state;
         private Bean_C2000MDxA bean;
-
+        delegate decimal CalHandler(decimal x);
+        private CalHandler mCalHandler;
         public Bean_C2000MDxA Bean
         {
             get { return bean; }
@@ -245,14 +246,47 @@ namespace Service
             GUID = bean.getBeanKey();
             ipa = IPAddress.Parse(bean.Ip);//把ip地址字符串转换为IPAddress类型的实例 
             ipe = new IPEndPoint(ipa, bean.Port);//用指定的端口和ip初始化IPEndPoint类的新实例 
+            if (bean.VorI)
+            {
+                mCalHandler = new CalHandler(CalFunction.VCalFun);
+            }
+            else
+            {
+                mCalHandler = new CalHandler(CalFunction.ICalFun);
+            }
         }
         public BaseBean getBean()
         {
             return bean;
         }
+        public static class CalFunction
+        {
+            public static decimal ICalFun(decimal v)
+            {
+                if (v < 0x8000)
+                {
+                    return ((v * 5) * 1000 / 4080000) / 240;
+                }
+                else
+                {
+                    return ((65535 - v + 1) * 5) * 1000 / 4080000 / 240;
+                }
+            }
+            public static decimal VCalFun(decimal v)
+            {
+                if (v < 0x8000)
+                {
+                    return ((v * 5) * 1000 / 4080000);
+                }
+                else
+                {
+                    return ((65535 - v + 1) * 5) * 1000 / 4080000;
+                }
+            }
+        }
         public override void periodWork(object o, ElapsedEventArgs e)
         {
-            int[] ai = new int[8];
+            float[] ai = new float[8];
             int[] oi = new int[2];
             using (Socket c = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
@@ -269,7 +303,7 @@ namespace Service
                         {                            
                             byte h = buff[start];
                             byte l = buff[start + 1];
-                            ai[i] = h << 8 + l;
+                            int v = h << 8 + l;
                             //if (v < 0x8000)
                             //{
                             //    ai[i] = ((v * 5) * 1000.0f / 4080000.0f) / 240.0f;
@@ -278,6 +312,10 @@ namespace Service
                             //{
                             //    ai[i] = ((65535 - v+1) * 5) * 1000 / 4080000 / 240.0f;
                             //}
+                            if (bean.aiBeans[i].useing)
+                            {
+                                ai[i] = (float)FunctionTools.calculateByString(mCalHandler(v), bean.aiBeans[i].function);
+                            }
                         }
                         oi[0] = (int)buff[20];
                         oi[1] = (int)buff[22];

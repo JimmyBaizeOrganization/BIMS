@@ -113,6 +113,10 @@ namespace Tools
         public string getBeanKey(){
             return this.buildingName + this.floorNum + this.deviceNum;
         }
+        public virtual string[] getDataBaseField() 
+        { 
+            return null; 
+        }
     }
     public  class Bean_DED194E_9S1YK2K2 : BaseBean
     {
@@ -130,15 +134,14 @@ namespace Tools
             ClassName = "DED194E_9S1YK2K2";
             During = 5000;
             DeviceType = "DED194E_9S1YK2K2";
+            this.Sort = "电";
+        }
 
-        }
-        public Bean_DED194E_9S1YK2K2(string mip, int mport, int mdeviceNum, string mbuildingName
-            , int mfloorNum, string mdeviceType, int mslaveNum,int mduring)
-            : base(mip, mport, mdeviceNum, mbuildingName, mfloorNum, mdeviceType, mduring)
+        public override string[] getDataBaseField()
         {
-            slaveNum = mslaveNum;
+            //STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I
+            return new string[] {"电流有效值","电压有效值","有功功率","无功功率","视在功率","频率","功率因数","直流输入"};
         }
-       
     }
     public class Bean_DED194E_9S1YK4K4 : BaseBean
     {
@@ -156,7 +159,12 @@ namespace Tools
             ClassName = "DED194E_9S1YK4K4";
             During = 5000;
             DeviceType = "DED194E_9S1YK4K4";
-
+            this.Sort = "电";
+        }
+        public override string[] getDataBaseField()
+        {
+            //STATE,CREAT_TIME,DCVAL,PF,FREQ,S,Q,P,VOLTAGE,I
+            return new string[] { "电流有效值", "电压有效值", "有功功率", "无功功率", "视在功率", "频率", "功率因数", "直流输入","通讯状态" };
         }
     }
     public class BeanTools{
@@ -165,6 +173,7 @@ namespace Tools
             return (BaseBean)XMLSerializerHelper.XmlDeserialize(ReflectTools.getType("Tools", "Tools", beanname)
                             , filepath);
         }
+        
     }
     public class IOBaseBean
     {
@@ -173,13 +182,13 @@ namespace Tools
         public Boolean useing = false;
         //坐标
         public Point mpoint;
-        public string detail;//输入描述
+        public string detail;//输入描述,最终表现在  输出窗体和 数据库查询描述中
         public string sort;//
         public string NikeName;
     }
     public class InputBaseBean : IOBaseBean
     {
-       
+        public string unit;//单位
     }
 
     public class AIBean:InputBaseBean 
@@ -216,12 +225,64 @@ namespace Tools
             set { slaveNum = value; }
         }
         public  Bean_C2000MDxA()
-        {
+        {           
             Baud = 9600;
             slaveNum = 1;
             ClassName = "C2000MDxA";
             During = 5000;
             DeviceType = "C2000MDxA";
+        }
+        public override string[] getDataBaseField()
+        {
+            string[] temp = new string[10];
+            if (aiBeans != null)
+            {
+                for (int i=0;i<aiBeans.Length;i++)
+                {
+                    if (aiBeans[i].useing)
+                    {
+                        temp[i] = aiBeans[i].detail +" "+ aiBeans[i].unit;
+                    }
+                    else
+                    {
+                        temp[i] = "暂未使用";
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < aiBeans.Length; i++)
+                {
+                  
+                        temp[i] = "暂未使用";
+            
+                }
+            }
+            if (diBeans != null)
+            {
+                for (int i = 0; i < diBeans.Length; i++)
+                {
+                    if (diBeans[i].useing)
+                    {
+                        temp[8+i] = diBeans[i].detail;
+                    }
+                    else
+                    {
+                        temp[8+i] = "暂未使用";
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < diBeans.Length; i++)
+                {
+
+                    temp[8+i] = "暂未使用";
+
+                }
+            }
+           
+            return temp;
         }
     }
     public class Bean_C2000MD82 : BaseBean
@@ -242,6 +303,58 @@ namespace Tools
             ClassName = "C2000MD82";
             During = 5000;
             DeviceType = "C2000MD82";
+        }
+        public override string[] getDataBaseField()
+        {
+            string[] temp = new string[10];
+            if (diBeans != null)
+            {
+                for (int i = 0; i < diBeans.Length; i++)
+                {
+                    if (diBeans[i].useing)
+                    {
+                        temp[i] = diBeans[i].detail ;
+                    }
+                    else
+                    {
+                        temp[i] = "暂未使用";
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < diBeans.Length; i++)
+                {
+
+                    temp[i] = "暂未使用";
+
+                }
+            }
+            if (doBeans != null)
+            {
+                for (int i = 0; i < doBeans.Length; i++)
+                {
+                    if (doBeans[i].useing)
+                    {
+                        temp[8 + i] = doBeans[i].detail;
+                    }
+                    else
+                    {
+                        temp[8 + i] = "暂未使用";
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < doBeans.Length; i++)
+                {
+
+                    temp[8 + i] = "暂未使用";
+
+                }
+            }
+
+            return temp;
         }
     }
     public class Bean_C2000M281 : Bean_C2000MD82
@@ -265,7 +378,10 @@ namespace Tools
             During = 5000;
             DeviceType = "C2000MH08";
         }
-        
+        public override string[] getDataBaseField()
+        {
+            return detail ;
+        }
     }
     public class CameraBaseBean:BaseBean
     {
