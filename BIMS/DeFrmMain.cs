@@ -15,7 +15,7 @@ using System.Collections;
 using System .IO ;
 
 namespace BIMS
-{
+{ 
     public partial class DeFrmMain : Form
     {
         private int fullmode;
@@ -23,7 +23,11 @@ namespace BIMS
         private int floorview;
         private bool wheelnum=false;
         private Hashtable beans = new Hashtable();
-        private ArrayList sortlist = new ArrayList(); 
+        private ArrayList sortlist = new ArrayList();
+
+        static Color LightColor = Color.White ;
+        static Color NormalColor = Color.Black;
+        static Color OnColor = Color.LightBlue;
 
         public DeFrmMain()
         {
@@ -715,9 +719,9 @@ namespace BIMS
         private void leftlabel_MouseClick(object sender, MouseEventArgs e)
         {
             Label a = (Label)sender;
-            if (a.ForeColor == Color.White)
-            { a.ForeColor = Color.Black; }
-            else { a.ForeColor = Color.White; }
+            if (a.ForeColor == LightColor)
+            { a.ForeColor = NormalColor ; }
+            else { a.ForeColor = LightColor; }
             searchDevices();
         }
 
@@ -736,7 +740,7 @@ namespace BIMS
         {
             for (int i = 1; i < sortlist.Count+1; i++)
             {
-                pictureBox5.Controls[i].ForeColor = Color.White;
+                pictureBox5.Controls[i].ForeColor = LightColor;
             }
             searchDevices();
         }
@@ -752,7 +756,7 @@ namespace BIMS
             //将所有选中的加入Arraylist
             ArrayList sorts  = new ArrayList();
             foreach(Label c in pictureBox5.Controls ){
-                if(c.ForeColor==Color.White){
+                if(c.ForeColor==LightColor){
                     sorts.Add(c.Text);
                 }
             }
@@ -772,7 +776,9 @@ namespace BIMS
             
             //}
             Label leftall = new Label();
-            leftall.Text = "ALL";
+            leftall.Text = "显示全部";
+            leftall.Font = new Font("微软雅黑", 15);
+            leftall.ForeColor = NormalColor;
             leftall.Size = new Size(141, 38);
             leftall.TextAlign = ContentAlignment.MiddleCenter;
             leftall.Location = new Point(2, 50);
@@ -785,7 +791,8 @@ namespace BIMS
             {
                 Label leftlabel = new Label();
                 leftlabel.Text = sortlist[i].ToString();
-                leftlabel.ForeColor = Color.White;
+                leftall.Font = new Font("微软雅黑", 15);
+                leftlabel.ForeColor = LightColor;
                 leftlabel.Size = new Size(141, 38);
                 leftlabel.TextAlign = ContentAlignment.MiddleCenter;
                 leftlabel.Location = new Point(2, 100 +50 * i);
