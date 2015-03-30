@@ -15,30 +15,33 @@ namespace BIMS
 {
     public partial class SearchForm : Form
     {
-        Hashtable beans;
-        string[] bb;
+       
+        string[][] SearchKey;
         string cmd;
 
-        public SearchForm(String[] a, String b):base()
+        public SearchForm(String[][] a, String b):base()
         {
             InitializeComponent();
-            bb = a;
+            SearchKey = a;
             cmd = b;
         }
 
         private void SearchForm_Load(object sender, EventArgs e)
         {
-            dataGridView.Columns.Add("时间", "时间");
-            for (int i = 0; i < bb.Length; i++)
+            
+            for (int i = 0; i < SearchKey[1].Length; i++)
             {
-                dataGridView.Columns.Add(bb[i], bb[i]);
+                dataGridView.Columns.Add(SearchKey[1][i], SearchKey[1][i]);
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+          
+           string cformat = "yyyy-MM-dd HH:mm:ss";
+           string oracleformat = "yyyy-MM-dd HH24:MI:ss";
 
-            string scmd = cmd + @"and CREAT_TIME>to_date('" + dateTimePicker1.Value.Year + dateTimePicker1.Value.Month + dateTimePicker1.Value.Day + " 00:00:00','yyyymmdd hh24:mi:ss') and CREAT_TIME<to_date('" + dateTimePicker2.Value.Year + dateTimePicker2.Value.Month + dateTimePicker2.Value.Day + " 00:00:00','yyyymmdd hh24:mi:ss') ";
+           string scmd = cmd + @"and CREAT_TIME>to_date('" + dateTimePicker1.Value.ToString(cformat) + "','" + oracleformat + "') and CREAT_TIME<to_date('" + dateTimePicker2.Value.ToString(cformat) + "','" + oracleformat + "') ";
             using (OracleConnection conn = new OracleConnection(OracleTools.connString))
             {
                 OracleCommand Ocmd = new OracleCommand(scmd, conn);
@@ -47,16 +50,18 @@ namespace BIMS
                 while (mOracleDataReader.Read())
                 {
                     string[] datas= new string[10];
-                    datas[0]=mOracleDataReader["CREAT_TIME"].ToString();
-                    datas[1]=mOracleDataReader["VOLTAGE"].ToString();
-                    datas[2]=mOracleDataReader["I"].ToString();
-                    datas[3]=mOracleDataReader["STATE"].ToString();
-                    datas[4]=mOracleDataReader["P"].ToString();
-                    datas[5]=mOracleDataReader["Q"].ToString();
-                    datas[6]=mOracleDataReader["S"].ToString();
-                    datas[7]=mOracleDataReader["FREQ"].ToString();
-                    datas[8]=mOracleDataReader["PF"].ToString();
-                    datas[9]=mOracleDataReader["DCVAL"].ToString();
+                    ArrayList data = new ArrayList();
+
+                    for (int i = 0; i < SearchKey[0].Length; i++)
+                    {
+                        data.Add(mOracleDataReader[SearchKey[0][i]].ToString());
+                    }
+                    //最后一条数据是状态 单独分析
+
+                    mOracleDataReader["STATE"].ToString();
+
+                    datas = (string[])data.ToArray(typeof(string));
+                 
                     dataGridView.Rows.Add(datas);
                 }
             }

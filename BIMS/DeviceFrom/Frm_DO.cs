@@ -17,12 +17,14 @@ namespace BIMS.DeviceFrom
         
         public DOBean bean;
         DOFunDelegates mDOFunDelegates;
-        public Frm_DO(DOBean b, DOFunDelegates dofb,byte nowVaule)
+        BaseBean basebean;
+        public Frm_DO(DOBean b, DOFunDelegates dofb,byte nowVaule, BaseBean bb)
         {
             //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             InitializeComponent();
             mDOFunDelegates = dofb;
             bean = b;
+            basebean = bb;
             if (nowVaule == 0)
             {
                // toggleSwitch1.IsOn = false;
@@ -53,6 +55,41 @@ namespace BIMS.DeviceFrom
                
             //}
         }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+            String[][] s = new string[][]
+            {
+                new string[]{"CREAT_TIME","NEW_VAULE"},
+                new string[]{"时间",bean.detail}
+            };
+            String cmd = @"select CREAT_TIME,NEW_VAULE,STATE from DO_RECORD where  DEVICE_GUID ='" + basebean.getBeanKey() + "'   ";
+            SearchForm frm = new SearchForm(s, cmd);
+            frm.Show();
+            frm.Focus();
+        }
+
+        private void toggleSwitch1_Toggled_1(object sender, EventArgs e)
+        {
+            byte newVaule;
+            if (this.toggleSwitch1.IsOn)
+            {
+                newVaule = 1;
+            }
+            else
+            {
+                newVaule = 0;
+            }
+
+            BIMSConnectState state = mDOFunDelegates.mDOControlDelegate(newVaule, (byte)bean.ioIndex);
+            if (state != BIMSConnectState.OK)
+            {
+                MessageBox.Show(FunctionTools.GetEnumDes(state));
+
+            }
+        }
+
+    
 
      
     }

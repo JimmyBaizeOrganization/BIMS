@@ -222,15 +222,16 @@ namespace BIMS
     }
     public class AI:BaseDevice,InterfaceDevice
     {
+        public BaseBean basebean;
         public AIBean bean;
         decimal[] dataVaule;
         int druing;
      
         public override void newform()
         {
-            Mform = new Frm_AI(dataVaule, bean, druing);
+            Mform = new Frm_AI(dataVaule, bean, druing, basebean);
         }
-        public AI(AIBean b, int dur, decimal[] d)
+        public AI(AIBean b, int dur, decimal[] d,BaseBean bb)
         {
             bean = b;
             dataVaule = d;
@@ -238,6 +239,7 @@ namespace BIMS
             this.Image = ImageTools.getImage(bean.imagePath, imageSize, imageSize);
             this.Size = Image.Size;
             this.Location = bean.mpoint;
+            basebean = bb;
         }
         public override void changeImageState(bool state)
         {
@@ -272,16 +274,16 @@ namespace BIMS
     public class DI : BaseDevice,InterfaceDevice
     {
         public DIBean bean;
-        
+        public BaseBean basebean;
       
         public StateRegister<int> vauleState ;
         
         public string imagePath;
         public override void newform()
         {
-            Mform = new Frm_DI( bean);
+            Mform = new Frm_DI( bean, basebean);
         }
-        public DI(DIBean b)
+        public DI(DIBean b, BaseBean bb)
         {
             bean = b;          
             
@@ -297,6 +299,7 @@ namespace BIMS
             }
             this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
             this.Size = Image.Size;
+            basebean = bb;
         }
         public override void changeImageState(bool state)
         {
@@ -367,28 +370,29 @@ namespace BIMS
     public class DO : BaseDevice,InterfaceDevice
     {
         public DOBean bean;
-        
+        public BaseBean basebean;
         public string imagePath;
         private DOFunDelegates mDOFunDelegates ;
         private byte nowVaule;
         
         public override void newform()
         {
-            Mform = new Frm_DO(bean, mDOFunDelegates, nowVaule);
+            Mform = new Frm_DO(bean, mDOFunDelegates, nowVaule,basebean);
            
         }
 
        
-        public DO(DOBean b,DOFunDelegates dofd)
+        public DO(DOBean b,DOFunDelegates dofd,BaseBean bb)
         {
             bean = b;
+            basebean = bb;
             mDOFunDelegates = dofd;
             this.Location = bean.mpoint;
             changeOutputState(null,null);
             
             this.Image = ImageTools.getImage(imagePath, imageSize, imageSize);
             this.Size = Image.Size;
-            Mform = new Frm_DO(bean, mDOFunDelegates, nowVaule);
+            Mform = new Frm_DO(bean, mDOFunDelegates, nowVaule,basebean);
            // Mform.LostFocus += new EventHandler(this.changeOutputState);
             Mform.Disposed += new EventHandler(this.changeOutputState);
            // Mform.FormClosed += new FormClosedEventHandler(this.changeOutputState);
@@ -478,7 +482,7 @@ namespace BIMS
             if (bean.aiBeans != null) { 
                 foreach (AIBean aib in bean.aiBeans)
                 {
-                    ais[aib.ioIndex] = new AI(aib, bean.During, dataVaule);
+                    ais[aib.ioIndex] = new AI(aib, bean.During, dataVaule,bean);
                     devices.Add(ais[aib.ioIndex]);
                 }
             }
@@ -486,7 +490,7 @@ namespace BIMS
             { 
                 foreach (DIBean dib in bean.diBeans)
                 {
-                    dis[dib.ioIndex-8] = new DI(dib);
+                    dis[dib.ioIndex - 8] = new DI(dib, bean);
                     devices.Add(dis[dib.ioIndex - 8]);
                 }
             }
@@ -676,15 +680,15 @@ namespace BIMS
             {
                 foreach (DIBean dib in bean.diBeans)
                 {
-                    dis[dib.ioIndex] = new DI(dib);
+                    dis[dib.ioIndex] = new DI(dib, bean);
                     devices.Add(dis[dib.ioIndex]);
                 }
             }
             if (bean.doBeans != null)
             {
                 foreach (DOBean dob in bean.doBeans)
-                {                  
-                    dos[dob.ioIndex-8] = new DO(dob,new DOFunDelegates(this.controlDO,this.getDOVaule));
+                {
+                    dos[dob.ioIndex - 8] = new DO(dob, new DOFunDelegates(this.controlDO, this.getDOVaule), bean);
                     devices.Add(dos[dob.ioIndex-8]);
                 }
             }
@@ -880,7 +884,7 @@ namespace BIMS
             {
                 foreach (DIBean dib in bean.diBeans)
                 {
-                    dis[dib.ioIndex] = new DI(dib);
+                    dis[dib.ioIndex] = new DI(dib, bean);
                     devices.Add(dis[dib.ioIndex]);
                 }
             }
@@ -888,7 +892,7 @@ namespace BIMS
             {
                 foreach (DOBean dob in bean.doBeans)
                 {
-                    dos[dob.ioIndex - 8] = new DO(dob, new DOFunDelegates(this.controlDO, this.getDOVaule));
+                    dos[dob.ioIndex - 8] = new DO(dob, new DOFunDelegates(this.controlDO, this.getDOVaule), bean);
                     devices.Add(dos[dob.ioIndex - 8]);
                 }
             }
@@ -961,15 +965,16 @@ namespace BIMS
         string[] dataVaule = new string[9];
        
         public StateRegister<bool> connectState = new StateRegister<bool>(true);
-        public C2000MH08(Bean_C2000MH08 b):base(b.detail)
+        public C2000MH08(Bean_C2000MH08 b):base(b)
         {
             bean = b;
             beanKey = bean.getBeanKey();
            
             this.Location = bean.MPoint;
-           
+
             scmd = @"select * from (select STATE,DI0,DI1,DI2,DI3,DI4,DI5,DI6,DI7 from C2000MH08 where DEVICE_GUID='" + beanKey + "' order by CREAT_TIME desc) where rownum=1 ";
         }
+
         public Control[] getAllDevice()
         {          
             periodWork(null, null);

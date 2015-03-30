@@ -74,8 +74,13 @@ namespace BIMS
 
         private void label1_Click(object sender, EventArgs e)
         {
-            String cmd = @"select CREAT_TIME,VOLTAGE,I,STATE,P,Q,S,FREQ,PF,DCVAL from DED194E_9S1YK2K2 where  DEVICE_GUID ='"+bean.getBeanKey()+"'   ";
-            SearchForm frm = new SearchForm(bean.getDataBaseField(), cmd);
+            String[][] s = new string[][]
+            {
+                new string[]{"CREAT_TIME","VOLTAGE","I","P","Q","S","FREQ","PF","DCVAL"},
+                new string[]{"时间","电压有效值","电流有效值","有功功率","无功功率","视在功率","频率","功率因数","直流输入"}
+            };
+            String cmd = @"select CREAT_TIME,VOLTAGE,I,P,Q,S,FREQ,PF,DCVAL,STATE from DED194E_9S1YK2K2 where  DEVICE_GUID ='" + bean.getBeanKey() + "'   ";
+            SearchForm frm = new SearchForm(s, cmd);
             frm.Show();
             frm.Focus();
         }
